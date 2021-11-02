@@ -6,3 +6,13 @@ pdbtranslate -x 20.0 -y 20.0 -z 20.0 3ujt_1_Ag.pdb > 3ujt_1_Ag_tr.pdb
 
 #Rotating Antigen:
 pdbrotate -x 20.0 -y 20.0 -z 20.0 3ujt_1_Ag_tr.pdb > 3ujt_1_Ag_tr_rot.pdb
+
+#Generating random numbers for translation:
+$(($RANDOM%50-25))
+#this would generate a random number in the range -25 > x < 25
+
+#Generating a number in the range 45 > x < 315 for the rotation:
+$((($RANDOM%270)+45))
+
+
+
