@@ -14,5 +14,13 @@ $(($RANDOM%50-25))
 #Generating a number in the range 45 > x < 315 for the rotation:
 $((($RANDOM%270)+45))
 
+#Test script for single pdb file (3ujt_1.pdb):
+pdbgetchain h /serv/data/af2/cleanpdbstructures/pdb3ujt_1.pdb | pdbtranslate -x $(($RANDOM%50-25)) -y $(($RANDOM%50-25)) -z $(($RANDOM%50-25)) | pdbrotate -x $((($RANDOM%270)+45)) -y $((($RANDOM%270)+45)) -z $((($RANDOM%270)+45)) > 3ujt_1_Ag.pdb
 
-
+#Test script for extracting chain identifier from each antigen in 'cleanpdbstructures/*' 
+for file in /serv/data/af2/cleanpdbstructures/*.pdb
+do
+$chainid = grep 'CHAIN A' /serv/data/af2/cleanpdbstructures/$file.pdb | awk '{print $5}'
+pdbgetchain $chainid /serv/data/af2/cleanpdbstructures/$file.pdb | pdbtranslate -x $(($RANDOM%50-25)) -y $(($RANDOM%50-25)) -z $(($RANDOM%50-25)) | pdbrotate -x $((($RANDOM%270)+45)) -y $((($RANDOM%270)+45)) -z $((($RANDOM%270)+45)) > $file_Ag.pdb
+done
+#don't think it worked :(
