@@ -36,4 +36,9 @@ V1.0   04.11.21   Original   By: OECH
 #*************************************************************************
 
 # Import Libraries
+import sys
 from bioptools import (pdbgetchain, pdbtranslate, pdbrotate)
+import Bio.PDB
+
+#*************************************************************************
+
