@@ -42,3 +42,17 @@ import Bio.PDB
 
 #*************************************************************************
 
+def getantigenchainid(file):
+   """
+   Read input file and extract the chain identifier for the antigen chain
+   (if present)
+
+   >>> getantigenchainid("test1.pdb")
+   None
+   >>> getantigenchainid("test2.pdb")
+   'C'
+   >>> getantigenchainid("test3.pdb")
+   'C'
+   'D'
+
+   
