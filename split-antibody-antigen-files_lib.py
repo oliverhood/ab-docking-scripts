@@ -38,11 +38,10 @@ V1.0   04.11.21   Original   By: OECH
 # Import Libraries
 import sys
 from bioptools import (pdbgetchain, pdbtranslate, pdbrotate)
-import Bio.PDB
 
 #*************************************************************************
 
-def getantigenchainid(file):
+def getantigenchainid(PDBfile):
    """
    Read input file and extract the chain identifier for the antigen chain
    (if present)
@@ -54,5 +53,27 @@ def getantigenchainid(file):
    >>> getantigenchainid("test3.pdb")
    'C'
    'D'
+   >>>
 
-   
+   """
+   #Set antigen_count to zero
+   antigen_count = 0
+   #Give a default chainid
+   agchainid = 'No Antigen'
+   #Open PDB file
+   with open(PDBfile as file):
+      #Read rows in file
+      rows = file.readlines()
+      #Identify Antigen chains from PDB Header
+      for line in rows:
+         if 'CHAIN A' in line:
+            #Increase antigen_count by 1
+            antigen_count += 1
+            #Split the line into individual words
+            contents=line.split()
+            #Extract the antigen chainid
+            agchainid = contents[4]
+         #Break loop when first ATOM coordinate is encountered
+         if 'ATOM' in line:
+            break
+   return agchainid
