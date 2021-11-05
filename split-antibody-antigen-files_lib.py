@@ -47,12 +47,11 @@ def getantigenchainid(PDBfile):
    (if present)
 
    >>> getantigenchainid("test1.pdb")
-   None
+   'None'
    >>> getantigenchainid("test2.pdb")
    'C'
    >>> getantigenchainid("test3.pdb")
-   'C'
-   'D'
+   'Multiple chains'
    >>>
 
    """
@@ -76,4 +75,10 @@ def getantigenchainid(PDBfile):
          #Break loop when first ATOM coordinate is encountered
          if 'ATOM' in line:
             break
-   return agchainid
+   #Return chainid for single antigen chain
+   if antigen_count == 1:
+      return agchainid
+   elif antigen_count > 1:
+      return 'Multiple chains'
+   else:
+      return 'No chains'
