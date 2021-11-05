@@ -61,7 +61,7 @@ def getantigenchainid(PDBfile):
    #Give a default chainid
    agchainid = 'No Antigen'
    #Open PDB file
-   with open(PDBfile as file):
+   with open(PDBfile) as file:
       #Read rows in file
       rows = file.readlines()
       #Identify Antigen chains from PDB Header
