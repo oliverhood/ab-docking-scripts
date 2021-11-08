@@ -51,9 +51,9 @@ agchainid = getantigenchainid(PDBfile)
 
 # Filter out files with multiple or no antigen chains
 if agchainid == 'Multiple chains':
-   exit()
+   sys.exit()
 elif agchainid == 'No chains':
-   exit()
+   sys.exit()
 else:
    # Extract antibody chains from PDB
    antibody_chains = extractantibodychains(PDBfile)
