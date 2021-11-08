@@ -24,16 +24,47 @@ file.
 
 Usage:
 ======
-split-antibody-antigen-files PDBFILE
+split-antibody-antigen-files.py PDBFILE
 
 --------------------------------------------------------------------------
 
 Revision History:
 =================
-V1.0   04.11.21   Original   By: OECH
+V1.0   08.11.21   Original   By: OECH
 """
 
 #*************************************************************************
 
 # Import Libraries
-from
+import sys
+import os
+import random
+from split-antibody-antigen-files_lib import (getantigenchainid, extractantibodychains, extractantigenchain)
+
+#*************************************************************************
+
+# Get PDB files from command line
+PDBfile = sys.argv[1]
+
+# Extract antibody chains from PDB
+antibody_chains = extractantibodychains(PDBfile)
+
+# Extract and process antigen chain from PDB
+processed_antigen_chain = extractantigenchain(PDBfile)
+
+# Get the base filename from input file
+filename = os.path.splitext(PDBfile)[0]
+
+# Specifying new filenames
+ab_filename = "%s_ab.pdb" filename
+ag_filename = "%s_ag.pdb" filename
+
+# Write Antibody file
+ab_file = open(ab_filename, "w")
+ab_file.write(antibody_chains)
+ab_file.close()
+
+# Write Antigen file
+ag_file = open(ag_filename, "w")
+ag_file.write(processed_antigen_chain)
+ag_file.close()
