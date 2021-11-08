@@ -5,7 +5,7 @@ File:    split-antibody-antigen-files.py
 
 Version: V1.0
 Date: 04.11.21
-Function: Extract and process antigen and antibody chains from a PDB file 
+Function:   Library:   Functions for split-antibody-antigen-files,extracts and processes antigen and antibody chains from a PDB file 
           for input to docking algorithms.
 
 Author: Oliver E. C. Hood
@@ -14,11 +14,7 @@ Author: Oliver E. C. Hood
 
 Description:
 ============
-This program takes a PDB file containing the structure of an antibody (that
-may or may not be bound by an antigen(s)) and returns the antibody and 
-antigen(s) chains as separate PDB files. The antigen chain is processed 
-(randomly rotated and transformed) before being written to the new PDB 
-file.
+This program takes a PDB file containing the structure of an antibody (that may or may not be bound by an antigen(s)) and returns the antibody and antigen(s) chains as separate PDB files. The antigen chain is processed (randomly rotated and transformed) before being written to the new PDB file.
 
 --------------------------------------------------------------------------
 
@@ -37,7 +33,7 @@ V1.0   04.11.21   Original   By: OECH
 
 # Import Libraries
 import sys
-from bioptools import (pdbgetchain, pdbtranslate, pdbrotate)
+import os
 import random
 
 #*************************************************************************
@@ -107,10 +103,15 @@ def extractantigen_antibodychains(PDBfile):
       return 'No antigen'
    else:
       #Extract the antigen chain
-      antigen_chain = pdbgetchain agchainid PDBfile
+      antigen_chain = os.system("pdbgetchain " + agchainid + " " + PDBfile)
+      #Process the antigen chain (rotation)
+      rotated_antigen = os.system("pdbrotate -x " + str((random.randint(45,315))) + " -y " + str((random.randint(45,315))) + " -z " + str((random.randint(45,315))) + " " + antigen_chain)
+      #Process the antigen chain (translation)
+      processed_antigen = os.system("pdbtranslate -x " + str((random.randint(-25,25))) + " -y " + str((random.randint(-25,25))) + " -z " +  str((random.randint(-25,25))) + " " + rotated_antigen)
       #Extract the antibody chains
-      antibody_chains = pdbgetchain H,L PDBfile
+      antibody_chains = os.system("pdbgetchain H,L " + PDBfile)
    return antigen_chain
+   return processed_antigen
    return antibody_chains
 
 
@@ -124,9 +125,9 @@ def processantigenchain(antigen_chain):
    """
 
    #Randomly rotate the antigen
-   rotatedfile = pdbrotate -x (random.randint(45,315)) -y (random.randint(45,315)) -z (random.randint(45,315)) antigen_chain
+   rotatedfile = os.system("pdbrotate -x " + str((random.randint(45,315))) + " -y " + str((random.randint(45,315))) + " -z " + str((random.randint(45,315))) + " " + antigen_chain)
    #Randomly translate the antigen
-   processed_antigen_chain = pdbtranslate -x (random.randint(-25,25)) -y (random.randint(-25,25)) -z (random.randint(-25,25)) rotatedfile
+   processed_antigen_chain = os.system("pdbtranslate -x " + str((random.randint(-25,25))) + " -y " + str((random.randint(-25,25))) + " -z " +  str((random.randint(-25,25))) + " " + rotatedfile)
    #Return the processed antigen chain
    return processed_antigen_chain
 
