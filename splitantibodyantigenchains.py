@@ -66,10 +66,10 @@ if agchainid != 'Multiple chains' and agchainid != 'No chains':
 
    # Write Antibody file
    ab_file = open(ab_filename, "w")
-   ab_file.write(antibody_chains)
+   ab_file.write(str(antibody_chains))
    ab_file.close()
 
    # Write Antigen file
    ag_file = open(ag_filename, "w")
-   ag_file.write(processed_antigen_chain)
+   ag_file.write(str(processed_antigen_chain))
    ag_file.close()
