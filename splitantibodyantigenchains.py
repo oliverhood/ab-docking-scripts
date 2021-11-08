@@ -50,11 +50,7 @@ PDBfile = sys.argv[1]
 agchainid = getantigenchainid(PDBfile)
 
 # Filter out files with multiple or no antigen chains
-if agchainid == 'Multiple chains':
-   quit()
-elif agchainid == 'No chains':
-   quit()
-else:
+if agchainid != 'Multiple chains' and agchainid != 'No chains':
    # Extract antibody chains from PDB
    antibody_chains = extractantibodychains(PDBfile)
 
