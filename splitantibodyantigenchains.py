@@ -46,25 +46,34 @@ from splitantibodyantigenchains_lib import (getantigenchainid, extractantibodych
 # Get PDB files from command line
 PDBfile = sys.argv[1]
 
-# Extract antibody chains from PDB
-antibody_chains = extractantibodychains(PDBfile)
+# Get the antigen's chain id
+agchainid = getantigenchainid(PDBfile)
 
-# Extract and process antigen chain from PDB
-processed_antigen_chain = extractantigenchain(PDBfile)
+# Filter out files with multiple or no antigen chains
+if agchainid == 'Multiple chains':
+   exit()
+elif agchainid == 'No chains':
+   exit()
+else:
+   # Extract antibody chains from PDB
+   antibody_chains = extractantibodychains(PDBfile)
 
-# Get the base filename from input file
-filename = os.path.splitext(PDBfile)[0]
+   # Extract and process antigen chain from PDB
+   processed_antigen_chain = extractantigenchain(PDBfile)
 
-# Specifying new filenames
-ab_filename = "%s_ab.pdb" % filename
-ag_filename = "%s_ag.pdb" % filename
+   # Get the base filename from input file
+   filename = os.path.splitext(PDBfile)[0]
 
-# Write Antibody file
-ab_file = open(ab_filename, "w")
-ab_file.write(antibody_chains)
-ab_file.close()
+   # Specifying new filenames
+   ab_filename = "%s_ab.pdb" % filename
+   ag_filename = "%s_ag.pdb" % filename
 
-# Write Antigen file
-ag_file = open(ag_filename, "w")
-ag_file.write(processed_antigen_chain)
-ag_file.close()
+   # Write Antibody file
+   ab_file = open(ab_filename, "w")
+   ab_file.write(antibody_chains)
+   ab_file.close()
+
+   # Write Antigen file
+   ag_file = open(ag_filename, "w")
+   ag_file.write(processed_antigen_chain)
+   ag_file.close()
