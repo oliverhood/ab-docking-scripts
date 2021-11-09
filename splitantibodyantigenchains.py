@@ -47,12 +47,12 @@ from splitantibodyantigenchains_lib import (getantigenchainid, extractantibodych
 PDBfile = sys.argv[1]
 
 # Get output path from command line (if present)
-OUTPath = '/'
+OUTPath = ''
 try:
    OUTPath = sys.argv[2] + '/'
 except IndexError:
    print('No output directory specified, writing files to current directory')
-   OUTPath = '/'
+   OUTPath = ''
 # Get the antigen's chain id
 agchainid = getantigenchainid(PDBfile)
 
