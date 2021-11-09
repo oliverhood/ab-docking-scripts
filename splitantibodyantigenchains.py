@@ -47,11 +47,9 @@ from splitantibodyantigenchains_lib import (getantigenchainid, extractantibodych
 PDBfile = sys.argv[1]
 
 # Get output path from command line (if present)
+OUTPath = '/'
 if len(sys.argv) >= 2:
    OUTPath = sys.argv[2] + '/'
-# If no output path is specified write to current directory
-else:
-   OUTPath = '/'
 
 # Get the antigen's chain id
 agchainid = getantigenchainid(PDBfile)
