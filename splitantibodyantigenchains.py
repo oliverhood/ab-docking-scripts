@@ -48,8 +48,10 @@ PDBfile = sys.argv[1]
 
 # Get output path from command line (if present)
 OUTPath = '/'
-if len(sys.argv) >= 2:
+try:
    OUTPath = sys.argv[2] + '/'
+except IndexError:
+   print('Specify both the input file and the outputdirectory')
 
 # Get the antigen's chain id
 agchainid = getantigenchainid(PDBfile)
