@@ -24,7 +24,7 @@ file.
 
 Usage:
 ======
-split-antibody-antigen-files.py PDBFILE
+split-antibody-antigen-files.py PDBFILE OUTPath
 
 --------------------------------------------------------------------------
 
@@ -43,8 +43,15 @@ from splitantibodyantigenchains_lib import (getantigenchainid, extractantibodych
 
 #*************************************************************************
 
-# Get PDB files from command line
+# Get PDB file from command line
 PDBfile = sys.argv[1]
+
+# Get output path from command line (if present)
+if len(sys.argv) >= 2:
+   OUTPath = sys.argv[2] + '/'
+# If no output path is specified write to current directory
+else:
+   OUTPath = '/'
 
 # Get the antigen's chain id
 agchainid = getantigenchainid(PDBfile)
@@ -58,18 +65,18 @@ if agchainid != 'Multiple chains' and agchainid != 'No chains':
    processed_antigen_chain = extractantigenchain(PDBfile)
 
    # Get the base filename from input file
-   filename = os.path.splitext(PDBfile)[0]
+   filename = os.path.basename(PDBfile).split('.')[0]
 
    # Specifying new filenames
    ab_filename = "%s_ab.pdb" % filename
    ag_filename = "%s_ag.pdb" % filename
 
    # Write Antibody file
-   ab_file = open(ab_filename, "w")
+   ab_file = open(str(OUTPath+ab_filename), "w")
    ab_file.write(antibody_chains)
    ab_file.close()
 
    # Write Antigen file
-   ag_file = open(ag_filename, "w")
+   ag_file = open(str(OUTPath+ag_filename), "w")
    ag_file.write(processed_antigen_chain)
    ag_file.close()
