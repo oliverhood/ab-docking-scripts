@@ -172,3 +172,8 @@ def extractantigenchain(PDBfile):
    return processed_antigen_chain
 
 #*************************************************************************
+
+# Testing functions
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
