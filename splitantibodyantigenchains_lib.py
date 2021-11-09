@@ -104,7 +104,7 @@ def extractantibodychains(PDBfile):
       return PDBfile + ' has no antigen'
    else:
       #Extract the antibody chains
-      get_antibody_chains = subprocess.run(["pdbgetchain H,L " + PDBfile], stdout=subprocess.PIPE, universal_newlines=True, shell=True)
+      get_antibody_chains = subprocess.run(["pdbgetchain H,L " + PDBfile], shell=True, universal_newlines=True, stdout=subprocess.PIPE)
    antibody_chains = get_antibody_chains.stdout
    return antibody_chains
 
