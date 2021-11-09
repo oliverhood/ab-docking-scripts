@@ -51,7 +51,7 @@ OUTPath = '/'
 try:
    OUTPath = sys.argv[2] + '/'
 except IndexError:
-   print('No output directory specified, writing files to current directory)
+   print('No output directory specified, writing files to current directory')
    OUTPath = '/'
 # Get the antigen's chain id
 agchainid = getantigenchainid(PDBfile)
