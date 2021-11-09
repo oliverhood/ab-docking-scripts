@@ -91,41 +91,8 @@ def extractantibodychains(PDBfile):
    'test/test1.pdb has no antigen'
    >>> extractantibodychains('test/test3.pdb')
    'test/test3.pdb has multiple antigen chains'
-   >>> extractantibodychains("test/test4.pdb")
-   REMARK 950 CHAIN-TYPE  LABEL ORIGINAL
-   REMARK 950 CHAIN L     L     A
-   REMARK 950 CHAIN H     H     B
-   REMARK 950 CHAIN A     C     C
-   ATOM      1  N   ASP L   1      23.963  -0.947  -1.031  1.00 37.52           N  
-   ATOM      2  CA  ASP L   1      25.119  -0.797  -1.881  1.00 32.56           C  
-   ATOM      3  C   ASP L   1      25.715   0.493  -1.356  1.00 29.72           C  
-   ATOM      4  O   ASP L   1      24.964   1.396  -0.971  1.00 28.87           O  
-   ATOM      5  CB  ASP L   1      24.721  -0.606  -3.341  1.00 34.71           C  
-   ATOM      6  CG  ASP L   1      24.061  -1.777  -4.067  1.00 35.11           C  
-   ATOM      7  OD1 ASP L   1      23.841  -2.849  -3.496  1.00 35.99           O  
-   ATOM      8  OD2 ASP L   1      23.798  -1.612  -5.255  1.00 38.08           O  
-   ATOM      9  H1  ASP L   1      23.429  -0.061  -1.100  1.00 20.00           H  
-   ATOM     10  H2  ASP L   1      23.417  -1.821  -1.194  1.00 20.00           H  
-   ATOM     11  H3  ASP L   1      24.348  -0.968  -0.067  1.00 20.00           H  
-   TER      12      ASP L   1                                                      
-   ATOM   1022  N   GLN H   1      53.626  -9.527 -20.890  1.00 47.05           N  
-   ATOM   1023  CA  GLN H   1      53.065  -8.221 -21.175  1.00 45.24           C  
-   ATOM   1024  C   GLN H   1      51.591  -8.519 -20.891  1.00 40.44           C  
-   ATOM   1025  O   GLN H   1      51.089  -9.519 -21.415  1.00 39.85           O  
-   ATOM   1026  CB  GLN H   1      53.350  -7.855 -22.663  1.00 52.20           C  
-   ATOM   1027  CG  GLN H   1      52.676  -8.630 -23.848  1.00 61.79           C  
-   ATOM   1028  CD  GLN H   1      52.713 -10.160 -23.726  1.00 66.73           C  
-   ATOM   1029  OE1 GLN H   1      53.667 -10.694 -23.137  1.00 69.55           O  
-   ATOM   1030  NE2 GLN H   1      51.676 -10.926 -24.065  1.00 67.03           N  
-   ATOM   1031  H1  GLN H   1      53.092 -10.197 -21.491  1.00 20.00           H  
-   ATOM   1032  H2  GLN H   1      54.629  -9.655 -21.094  1.00 20.00           H  
-   ATOM   1033  H3  GLN H   1      53.385  -9.812 -19.917  1.00 20.00           H  
-   ATOM   1034 HE21 GLN H   1      51.822 -11.902 -24.048  1.00  0.00           H  
-   ATOM   1035 HE22 GLN H   1      50.827 -10.505 -24.333  1.00  0.00           H  
-   TER    1036      GLN H   1                                                      
-   MASTER        4    0    0    0    0    0    0    0   25    2    0    0          
-   END                                                                             
-   0
+   >>> extractantibodychains('test/test4.pdb')
+   'REMARK 950 CHAIN-TYPE  LABEL ORIGINAL\nREMARK 950 CHAIN L     L     A\nREMARK 950 CHAIN H     H     B\nREMARK 950 CHAIN A     C     C\nATOM      1  N   ASP L   1      23.963  -0.947  -1.031  1.00 37.52           N  \nATOM      2  CA  ASP L   1      25.119  -0.797  -1.881  1.00 32.56           C  \nATOM      3  C   ASP L   1      25.715   0.493  -1.356  1.00 29.72           C  \nATOM      4  O   ASP L   1      24.964   1.396  -0.971  1.00 28.87           O  \nATOM      5  CB  ASP L   1      24.721  -0.606  -3.341  1.00 34.71           C  \nATOM      6  CG  ASP L   1      24.061  -1.777  -4.067  1.00 35.11           C  \nATOM      7  OD1 ASP L   1      23.841  -2.849  -3.496  1.00 35.99           O  \nATOM      8  OD2 ASP L   1      23.798  -1.612  -5.255  1.00 38.08           O  \nATOM      9  H1  ASP L   1      23.429  -0.061  -1.100  1.00 20.00           H  \nATOM     10  H2  ASP L   1      23.417  -1.821  -1.194  1.00 20.00           H  \nATOM     11  H3  ASP L   1      24.348  -0.968  -0.067  1.00 20.00           H  \nTER      12      ASP L   1                                                      \nATOM   1022  N   GLN H   1      53.626  -9.527 -20.890  1.00 47.05           N  \nATOM   1023  CA  GLN H   1      53.065  -8.221 -21.175  1.00 45.24           C  \nATOM   1024  C   GLN H   1      51.591  -8.519 -20.891  1.00 40.44           C  \nATOM   1025  O   GLN H   1      51.089  -9.519 -21.415  1.00 39.85           O  \nATOM   1026  CB  GLN H   1      53.350  -7.855 -22.663  1.00 52.20           C  \nATOM   1027  CG  GLN H   1      52.676  -8.630 -23.848  1.00 61.79           C  \nATOM   1028  CD  GLN H   1      52.713 -10.160 -23.726  1.00 66.73           C  \nATOM   1029  OE1 GLN H   1      53.667 -10.694 -23.137  1.00 69.55           O  \nATOM   1030  NE2 GLN H   1      51.676 -10.926 -24.065  1.00 67.03           N  \nATOM   1031  H1  GLN H   1      53.092 -10.197 -21.491  1.00 20.00           H  \nATOM   1032  H2  GLN H   1      54.629  -9.655 -21.094  1.00 20.00           H  \nATOM   1033  H3  GLN H   1      53.385  -9.812 -19.917  1.00 20.00           H  \nATOM   1034 HE21 GLN H   1      51.822 -11.902 -24.048  1.00  0.00           H  \nATOM   1035 HE22 GLN H   1      50.827 -10.505 -24.333  1.00  0.00           H  \nTER    1036      GLN H   1                                                      \nMASTER        4    0    0    0    0    0    0    0   25    2    0    0          \nEND                                                                             \n'
 
    """
    #Get the antigen's chain id
