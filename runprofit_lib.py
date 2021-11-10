@@ -63,6 +63,30 @@ def combineabdagfiles(Ab_file, DAg_file):
    """
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
-   """
-   # I think this function could be combined with the removePDBtail function, will test later
-      # Think combining could be done by creating variables containing the contents of each input file (e.g. Ab_contents = ... DAg_contents = ..., then adding lists together using 'list3 = list1+list2')
+   """   
+   # Get the base filename from input files
+   filename = os.path.basename(Ab_file).split('.')[0]
+
+   # Define new filename
+   ab_dag_name = "%s_Dag.pdb" % filename
+
+   # Open antibody file
+   with open(Ab_file) as file:
+      # Extract contents
+      ab = file.readlines()
+
+   # Open docked antigen file
+   with open(DAg_file) as file:
+      dag = file.readlines()
+
+   # Combine antibody and docked antigen files
+   AbDag = ab + dag
+
+   # Write new PDB file
+   with open(ab_dag_name, "w") as file:
+      for line in AbDag:
+         # Skip lines containing 'END'
+         if 'END' not in line.strip('\n'):
+            file.write(line)
+   # Return written file (?)
+   return ab_dag_name
