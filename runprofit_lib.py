@@ -4,8 +4,8 @@ Program: runprofit
 File:    runprofit.py
 
 Version: V1.0
-Date:    
-Function: Process the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit.
+Date:    10.11.21
+Function:   Library:   Functions for runprofit, processes the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit.
 
 Author: Oliver E. C. Hood
 
@@ -37,7 +37,7 @@ import os
 
 #*************************************************************************
 
-def combineabdagfiles(Ab_file, DAg_file):
+def combineabdagfiles(Ab_file, DAg_file, OUTPath=''):
    """
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
@@ -60,7 +60,7 @@ def combineabdagfiles(Ab_file, DAg_file):
    # Combine antibody and docked antigen files
    AbDag = ab + dag
    # Write new PDB file
-   with open(ab_dag_name, "w") as file:
+   with open(str(OUTPath+ab_dag_name), "w") as file:
       for line in AbDag:
          # Skip lines containing 'END'
          if 'END' not in line.strip('\n'):
@@ -112,7 +112,7 @@ def getantigenchainid(PDBfile):
 
 #*************************************************************************
 
-def writecontrolscript(PDBfile): # Input file must be the unsplit PDB
+def writecontrolscript(PDBfile, OUTPath=''): # Input file must be the unsplit PDB
    """
    Write control script for profit using the antigen chainid from the original PDB file for the argument 'rzone'
 
@@ -131,7 +131,7 @@ def writecontrolscript(PDBfile): # Input file must be the unsplit PDB
    # Create list of lines to add to script
    script = ["align L*:L*", "align H*:H* APPEND", "fit", ag_arg, "ratoms ca"]
    # Write script file
-   with open(scriptname, "w") as file:
+   with open(str(OUTPath+scriptname), "w") as file:
       for line in script:
          file.write("%s\n" % line)
    return "Writing " + scriptname
