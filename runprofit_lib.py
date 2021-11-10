@@ -37,7 +37,7 @@ import os
 
 #*************************************************************************
 
-def combineabdagfiles(Ab_file, DAg_file, OUTPath=''):
+def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
    """
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
@@ -112,7 +112,7 @@ def getantigenchainid(PDBfile):
 
 #*************************************************************************
 
-def writecontrolscript(PDBfile, OUTPath=''): # Input file must be the unsplit PDB
+def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit PDB
    """
    Write control script for profit using the antigen chainid from the original PDB file for the argument 'rzone'
 
