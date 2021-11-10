@@ -56,3 +56,13 @@ def removePDBtail(PDBfile):
       for line in rows:
          if 'END' not in line.strip('\n'):
             file.write(line)
+
+#*************************************************************************
+
+def combineabdagfiles(Ab_file, DAg_file):
+   """
+   Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
+
+   """
+   # I think this function could be combined with the removePDBtail function, will test later
+      # Think combining could be done by creating variables containing the contents of each input file (e.g. Ab_contents = ... DAg_contents = ..., then adding lists together using 'list3 = list1+list2')
