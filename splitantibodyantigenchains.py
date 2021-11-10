@@ -20,7 +20,7 @@ This program takes a PDB file containing the structure of an antibody (that may 
 
 Usage:
 ======
-split-antibody-antigen-files.py PDBFILE OUTPath
+splitantibodyantigenchains.py PDBFILE OUTPath
 
 --------------------------------------------------------------------------
 
