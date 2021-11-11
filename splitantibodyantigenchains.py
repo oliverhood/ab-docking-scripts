@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Program: split-antibody-antigen-files
-File:    split-antibody-antigen-files.py
+Program: splitantibodyantigenchains
+File:    splitantibodyantigenchains.py
 
 Version: V1.0
 Date: 04.11.21
