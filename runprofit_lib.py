@@ -42,13 +42,13 @@ def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
    >>> combineabdagfiles('test/test5_ab.pdb', 'test/test5_dag.pdb')
-   'Writing test5_AbDag.pdb'
+   './test5_abDag.pdb'
    >>>
    """   
    # Get the base filename from input files
-   filename = os.path.basename(Ab_file).split('.')[0].split('_')[0]
+   filename = os.path.basename(Ab_file).split('.')[0]
    # Define new filename
-   ab_dag_name = "%s_AbDag.pdb" % filename
+   ab_dag_name = "%sDag.pdb" % filename
    # Open antibody file
    with open(Ab_file) as file:
       # Extract contents
@@ -59,14 +59,16 @@ def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
       dag = file.readlines()
    # Combine antibody and docked antigen files
    AbDag = ab + dag
+   # Define OUTfile
+   OUTfile = OUTPath+ab_dag_name
    # Write new PDB file
-   with open(str(OUTPath+ab_dag_name), "w") as file:
+   with open(OUTfile, "w") as file:
       for line in AbDag:
          # Skip lines containing 'END'
          if 'END' not in line.strip('\n'):
             file.write(line)
    # Return written file 
-   return "Writing " + ab_dag_name
+   return OUTfile
 
 #*************************************************************************
 def getantigenchainid(PDBfile):
@@ -117,7 +119,7 @@ def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit 
    Write control script for profit using the antigen chainid from the original PDB file for the argument 'rzone'
 
    >>> writecontrolscript('test/test5.pdb')
-   'Writing test5.prf'
+   './test5.prf'
 
    """
    # Get the base filename from the input file
@@ -130,11 +132,13 @@ def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit 
    ag_arg = "rzone " + agchainid + "*:" + agchainid + "*"
    # Create list of lines to add to script
    script = ["align L*:L*", "align H*:H* APPEND", "fit", ag_arg, "ratoms ca"]
+   # Define OUTfile
+   OUTfile = OUTPath + scriptname
    # Write script file
-   with open(str(OUTPath+scriptname), "w") as file:
+   with open(str(OUTfile), "w") as file:
       for line in script:
          file.write("%s\n" % line)
-   return "Writing " + scriptname
+   return OUTfile
 
 #*************************************************************************
 
