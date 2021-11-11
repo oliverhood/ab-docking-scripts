@@ -67,3 +67,4 @@ result = subprocess.check_output("profit -f" + " " + script + " " + OG_file + " 
 # Code below works, testing line above to see if it works as well
 # result = subprocess.check_output(['profit','-f',script,OG_file,testfile])
 result = str(result, 'utf-8')
+print(result)
