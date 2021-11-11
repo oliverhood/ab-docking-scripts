@@ -42,7 +42,7 @@ def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
    >>> combineabdagfiles('test/test5_ab.pdb', 'test/test5_dag.pdb')
-   './test5_abDag.pdb'
+   'test5_abDag.pdb'
    >>>
    """   
    # Get the base filename from input files
@@ -68,7 +68,7 @@ def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
          if 'END' not in line.strip('\n'):
             file.write(line)
    # Return name/path of written file 
-   return OUTfile
+   return ab_dag_name
 
 #*************************************************************************
 def getantigenchainid(PDBfile):
@@ -119,7 +119,7 @@ def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit 
    Write control script for profit using the antigen chainid from the original PDB file for the argument 'rzone'
 
    >>> writecontrolscript('test/test5.pdb')
-   './test5.prf'
+   'test5.prf'
 
    """
    # Get the base filename from the input file
@@ -139,7 +139,7 @@ def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit 
       for line in script:
          file.write("%s\n" % line)
    # Return name/path of written file 
-   return OUTfile
+   return scriptname
 
 #*************************************************************************
 
