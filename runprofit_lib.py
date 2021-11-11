@@ -67,7 +67,7 @@ def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
          # Skip lines containing 'END'
          if 'END' not in line.strip('\n'):
             file.write(line)
-   # Return written file 
+   # Return name/path of written file 
    return OUTfile
 
 #*************************************************************************
@@ -138,6 +138,7 @@ def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit 
    with open(str(OUTfile), "w") as file:
       for line in script:
          file.write("%s\n" % line)
+   # Return name/path of written file 
    return OUTfile
 
 #*************************************************************************
