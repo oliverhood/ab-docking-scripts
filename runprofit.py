@@ -62,6 +62,5 @@ testfile = str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
 script = str(writecontrolscript(OG_file))
 
 # Run profit
-result = subprocess.check_output(['profit','-f',script,OG_file,testfile])
+result = subprocess.check_output(['profit','-f',script,OG_file,testfile, " | grep 'RMS' | tail -2"])
 result = str(result, 'utf-8')
-print(result)
