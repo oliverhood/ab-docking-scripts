@@ -70,8 +70,12 @@ script = str(writecontrolscript(OG_file))
 result = subprocess.check_output("profit -f" + " " + script + " " + OG_file + " " + testfile + " | grep 'RMS' | tail -2", shell=True)
 # Decode results
 result = str(result, 'utf-8')
-# Print result
-print(result)
 # Split result text into list
-result1 = result.splitlines()
-print(result1)
+result = result.split()
+# Set all_atoms RMSD
+all_atoms = result[1]
+# Set CA atoms RMSD
+CA_atoms = result[3]
+# Print RMSD values
+print('All atoms RMSD:  '+all_atoms)
+print('CA atoms RMSD:   '+CA_atoms)
