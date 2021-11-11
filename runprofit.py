@@ -64,3 +64,4 @@ script = str(writecontrolscript(OG_file))
 # Run profit
 result = subprocess.check_output(['profit','-f',script,OG_file,test_file])
 result = str(result, 'utf-8')
+print(result)
