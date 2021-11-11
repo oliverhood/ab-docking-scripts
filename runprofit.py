@@ -19,7 +19,12 @@ Description:
 
 Usage:
 ======
+runprofit OG_file Ab_file DAg_file OUTPath
 
+Where OG_file is the original, unsplit antibody/antigen complex
+Ab_file is the split antibody file
+DAg_file is the docked antigen file (output from docking algorithm)
+OUTPath (optional) is the directory that new files will be written to
 
 --------------------------------------------------------------------------
 
@@ -68,5 +73,5 @@ result = str(result, 'utf-8')
 # Print result
 print(result)
 # Split result text into list
-result1 = result.split()
+result1 = result.splitlines()
 print(result1)
