@@ -61,10 +61,12 @@ testfile = str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
 # Write the profit control script
 script = str(writecontrolscript(OG_file))
 
-# Run profit
+# Run profit, returning the RMS values across all atoms and across CA atoms
 result = subprocess.check_output("profit -f" + " " + script + " " + OG_file + " " + testfile + " | grep 'RMS' | tail -2", shell=True)
-
-# Code below works, testing line above to see if it works as well
-# result = subprocess.check_output(['profit','-f',script,OG_file,testfile])
+# Decode results
 result = str(result, 'utf-8')
+# Print result
 print(result)
+# Split result text into list
+result1 = result.split()
+print(result1)
