@@ -85,4 +85,4 @@ CA_atoms = result[3]
 print('All atoms RMSD:  '+all_atoms)
 print('CA atoms RMSD:   '+CA_atoms)
 # Remove .prf file
-subprocess.run(['rm ' + script])
+subprocess.run(['rm ' + script], shell=True)
