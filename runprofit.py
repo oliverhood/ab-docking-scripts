@@ -33,3 +33,34 @@ Revision History:
 
 # Import Libraries
 
+import sys
+import os
+import subprocess
+from runprofit_lib import (combineabdagfiles, )
+
+#*************************************************************************
+
+# Get input files from command line
+# Original PDB file
+OG_file = sys.argv[1]
+# Antibody file
+Ab_file = sys.argv[2]
+# Docked antigen file
+DAg_file = sys.argv[3]
+# Get output path from command line (if present)
+OUTPath = ''
+try:
+   OUTPath = sys.argv[4] + '/'
+except IndexError:
+   print('No output directory specified, writing files to current directory')
+   OUTPath = './'
+
+# Combine the antibody and docked antigen files
+testfile = str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
+
+# Write the profit control script
+script = str(writecontrolscript(OG_file))
+
+# Run profit
+result = subprocess.check_output(['profit','-f',script,OG_file,test_file])
+result = str(result, 'utf-8')
