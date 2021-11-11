@@ -5,7 +5,7 @@ File:    split-antibody-antigen-files.py
 
 Version: V1.0
 Date: 04.11.21
-Function:   Library:   Functions for split-antibody-antigen-files,extracts and processes antigen and antibody chains from a PDB file 
+Function:   Library:   Functions for splitantibodyantigenchains, extracts and processes antigen and antibody chains from a PDB file 
           for input to docking algorithms.
 
 Author: Oliver E. C. Hood
@@ -20,7 +20,7 @@ This program takes a PDB file containing the structure of an antibody (that may 
 
 Usage:
 ======
-split-antibody-antigen-files PDBFILE
+splitantibodyantigenchains.py PDBFILE OUTPath
 
 --------------------------------------------------------------------------
 

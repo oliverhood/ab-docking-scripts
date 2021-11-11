@@ -14,17 +14,13 @@ Author: Oliver E. C. Hood
 
 Description:
 ============
-This program takes a PDB file containing the structure of an antibody (that
-may or may not be bound by an antigen(s)) and returns the antibody and 
-antigen(s) chains as separate PDB files. The antigen chain is processed 
-(randomly rotated and transformed) before being written to the new PDB 
-file.
+This program takes a PDB file containing the structure of an antibody (that may or may not be bound by an antigen(s)) and returns the antibody and antigen(s) chains as separate PDB files. The antigen chain is processed (randomly rotated and transformed) before being written to the new PDB file.
 
 --------------------------------------------------------------------------
 
 Usage:
 ======
-split-antibody-antigen-files.py PDBFILE OUTPath
+splitantibodyantigenchains.py PDBFILE OUTPath
 
 --------------------------------------------------------------------------
 

@@ -4,8 +4,8 @@ Program: runprofit
 File:    runprofit.py
 
 Version: V1.0
-Date:    
-Function: Process the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit.
+Date:    10.11.21
+Function:   Library:   Functions for runprofit, processes the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit.
 
 Author: Oliver E. C. Hood
 
@@ -33,36 +33,117 @@ Revision History:
 
 # Import Libraries
 
-#*************************************************************************
-
-def removePDBtail(PDBfile):
-   """
-   Remove the line 'END' from PDB files so they can be combined to give a single PDB file.
-
-   """
-   # Get the base filename from input file
-   filename = os.path.basename(PDBfile).split('.')[0]
-
-   # Specify new filename
-   new_filename = "%s_strip.pdb" % filename
-
-   # Open PDB file
-   with open(PDBfile) as file:
-      #Read rows in file
-      rows = file.readlines()
-
-   # Write new PDB file
-   with open(new_filename, "w") as file:
-      for line in rows:
-         if 'END' not in line.strip('\n'):
-            file.write(line)
+import os
 
 #*************************************************************************
 
-def combineabdagfiles(Ab_file, DAg_file):
+def combineabdagfiles(Ab_file, DAg_file, OUTPath='./'):
    """
    Write new PDB file containing the contents of Ab_file and DAg_file with 'END' lines removed from each
 
+   >>> combineabdagfiles('test/test5_ab.pdb', 'test/test5_dag.pdb')
+   './test5_abDag.pdb'
+   >>>
+   """   
+   # Get the base filename from input files
+   filename = os.path.basename(Ab_file).split('.')[0]
+   # Define new filename
+   ab_dag_name = "%sDag.pdb" % filename
+   # Open antibody file
+   with open(Ab_file) as file:
+      # Extract contents
+      ab = file.readlines()
+   # Open docked antigen file
+   with open(DAg_file) as file:
+      # Extract contents
+      dag = file.readlines()
+   # Combine antibody and docked antigen files
+   AbDag = ab + dag
+   # Define OUTfile
+   OUTfile = OUTPath+ab_dag_name
+   # Write new PDB file
+   with open(OUTfile, "w") as file:
+      for line in AbDag:
+         # Skip lines containing 'END'
+         if 'END' not in line.strip('\n'):
+            file.write(line)
+   # Return name/path of written file 
+   return OUTfile
+
+#*************************************************************************
+def getantigenchainid(PDBfile):
    """
-   # I think this function could be combined with the removePDBtail function, will test later
-      # Think combining could be done by creating variables containing the contents of each input file (e.g. Ab_contents = ... DAg_contents = ..., then adding lists together using 'list3 = list1+list2')
+   Read input file and extract the chain identifier for the antigen chain
+   (if present)
+
+   >>> getantigenchainid("test/test1.pdb")
+   'No chains'
+   >>> getantigenchainid("test/test2.pdb")
+   'C'
+   >>> getantigenchainid("test/test3.pdb")
+   'Multiple chains'
+   >>> getantigenchainid('test/test4.pdb')
+   'C'
+
+   """
+   #Set antigen_count to zero
+   antigen_count = 0
+   #Open PDB file
+   with open(PDBfile) as file:
+      #Read rows in file
+      rows = file.readlines()
+      #Identify Antigen chains from PDB Header
+      for line in rows:
+         if 'CHAIN A' in line:
+            #Increase antigen_count by 1
+            antigen_count += 1
+            #Split the line into individual words
+            contents=line.split()
+            #Extract the antigen chainid
+            agchainid = contents[4]
+         #Break loop when first ATOM coordinate is encountered
+         if 'ATOM' in line:
+            break
+   #Return chainid for single antigen chain
+   if antigen_count == 1:
+      return agchainid
+   elif antigen_count > 1:
+      return 'Multiple chains'
+   else:
+      return 'No chains'
+
+#*************************************************************************
+
+def writecontrolscript(PDBfile, OUTPath='./'): # Input file must be the unsplit PDB
+   """
+   Write control script for profit using the antigen chainid from the original PDB file for the argument 'rzone'
+
+   >>> writecontrolscript('test/test5.pdb')
+   './test5.prf'
+
+   """
+   # Get the base filename from the input file
+   filename = os.path.basename(PDBfile).split('.')[0]
+   # Define the script filename
+   scriptname = "%s.prf" % filename
+   # Get the antigen's chain id
+   agchainid = getantigenchainid(PDBfile)
+   # Create antigen chain argument
+   ag_arg = "rzone " + agchainid + "*:" + agchainid + "*"
+   # Create list of lines to add to script
+   script = ["align L*:L*", "align H*:H* APPEND", "fit", ag_arg, "ratoms ca"]
+   # Define OUTfile
+   OUTfile = OUTPath + scriptname
+   # Write script file
+   with open(str(OUTfile), "w") as file:
+      for line in script:
+         file.write("%s\n" % line)
+   # Return name/path of written file 
+   return OUTfile
+
+#*************************************************************************
+
+# Testing functions
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
