@@ -67,3 +67,6 @@ result = subprocess.check_output("profit -f" + " " + script + " " + OG_file + " 
 result = str(result, 'utf-8')
 # Print result
 print(result)
+# Split result text into list
+result1 = result.split()
+print(result1)
