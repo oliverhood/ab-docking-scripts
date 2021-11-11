@@ -62,6 +62,6 @@ testfile = str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
 script = str(writecontrolscript(OG_file))
 
 # Run profit
-result = subprocess.check_output(['profit','-f',script,OG_file,test_file])
+result = subprocess.check_output(['profit','-f',script,OG_file,testfile])
 result = str(result, 'utf-8')
 print(result)
