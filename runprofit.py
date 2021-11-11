@@ -13,7 +13,11 @@ Author: Oliver E. C. Hood
 
 Description:
 ============
-
+This program automates the process of comparing the results of a docking algorithm (using split antibody/antigen complexes as input) to the original antibody/antigen complex using ProFit to calculate the RMSD between the two structures. The program can be split into a number of steps:
+   1. Combine the split antibody (_ab.pdb) and docked antigen (_dag.pdb) files into a single PDB file (_abDag.pdb).
+   2. Write a control script for ProFit, specifying the chainid for the antigen chain.
+   3. Run ProFit to compare the structures of the combined antibody/docked antigen structure with the original antibody/antigen structure.
+   4. Output the RMSD values across all atoms and across the C-alpha atoms.
 
 --------------------------------------------------------------------------
 
@@ -21,7 +25,8 @@ Usage:
 ======
 runprofit OG_file Ab_file DAg_file OUTPath
 
-Where OG_file is the original, unsplit antibody/antigen complex
+Where:
+OG_file is the original, unsplit antibody/antigen complex
 Ab_file is the split antibody file
 DAg_file is the docked antigen file (output from docking algorithm)
 OUTPath (optional) is the directory that new files will be written to
@@ -30,7 +35,7 @@ OUTPath (optional) is the directory that new files will be written to
 
 Revision History:
 =================
-
+V1.0   11.11.21   Original   By: OECH
 
 """
 
