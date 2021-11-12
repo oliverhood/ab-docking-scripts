@@ -57,3 +57,5 @@ inputfilename = filenamecontents[0] + "_" filenamecontents[1] # This should give
 outfile = inputfilename + "_Dag.pdb"
 # Extract top docking result from megadock using decoygen
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + ligand + " megadock.out 1"], shell=True)
+# Remove megadock.out file
+subprocess.run(["rm megadock.out"], shell=True)
