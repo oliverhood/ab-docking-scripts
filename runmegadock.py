@@ -52,7 +52,7 @@ except IndexError:
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/megadock -R " + receptor + " -L " + ligand + " -o megadock.out"], shell=True)
 # Get input file basename
 filenamecontents = os.path.basename(receptor).split('.')[0].split('_')
-inputfilename = filenamecontents[0] + "_" filenamecontents[1]
+inputfilename = filenamecontents[0] + "_" + filenamecontents[1]
 # Define output filename
 outfile = inputfilename + "_Dag.pdb"
 # Extract top docking result from megadock using decoygen
