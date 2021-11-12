@@ -3,8 +3,8 @@
 Program: splitantibodyantigenchains
 File:    splitantibodyantigenchains.py
 
-Version: V1.0
-Date: 04.11.21
+Version:  V1.0
+Date:     04.11.21
 Function: Extract and process antigen and antibody chains from a PDB file 
           for input to docking algorithms.
 
