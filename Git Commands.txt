@@ -1,9 +1,0 @@
-Git Commands:
-
-git clone 'URL' - Adds github repository to current working directory through command line
-
-git status - identifies differences between github repository and working directory
-
-git add 'filename' - Adds new file to the github repository
-
-git push - Syncs working directory with the repository stored on GitHub
