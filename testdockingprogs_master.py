@@ -83,8 +83,8 @@ output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile +
 output = str(output, 'utf-8')
 # Extract the result lines from output
 contents = output.split('\n')
-all_atoms = contents[1]
-CA_atoms = contents[2]
+all_atoms = contents[0]
+CA_atoms = contents[1]
 # Add lines to results file
 dockingresults += [method]
 dockingresults += [all_atoms]
@@ -100,5 +100,5 @@ results_file.close()
 
 #*************************************************************************
 
-# Remove _ab and _ag files
-subprocess.run(["rm " + ab_filename + " " + ag_filename], shell=True)
+# Remove _ab, _ag, and _Dag files
+subprocess.run(["rm " + ab_filename + " " + ag_filename + " " + Dag_filename], shell=True)

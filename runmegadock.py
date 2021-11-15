@@ -59,5 +59,3 @@ outfile = inputfilename + "_Dag.pdb"
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + ligand + " megadock.out 1"], shell=True)
 # Remove megadock.out file
 subprocess.run(["rm megadock.out"], shell=True)
-# Print finished to commandline
-print("runmegadock: Done")

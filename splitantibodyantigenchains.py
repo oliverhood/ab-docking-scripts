@@ -76,5 +76,3 @@ if agchainid != 'Multiple chains' and agchainid != 'No chains':
    ag_file = open(str(OUTPath+ag_filename), "w")
    ag_file.write(processed_antigen_chain)
    ag_file.close()
-# Print finished to commandline
-print("splitantibodyantigenchains: Done")
