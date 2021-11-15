@@ -44,7 +44,7 @@ ligand = sys.argv[2]
 # Get output path from command line (if present)
 OUTPath = ''
 try:
-   OUTPath = sys.argv[4] + '/'
+   OUTPath = sys.argv[3] + '/'
 except IndexError:
    print('No output directory specified, writing files to current directory')
    OUTPath = './'
