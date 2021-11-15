@@ -93,7 +93,7 @@ dockingresults += [CA_atoms]
 #*************************************************************************
 
 # Write results file
-results_file = open(str(OUTPath + filename + "_" + today_), "w")
+results_file = open(str(OUTPath + filename + "_" + "dockingresults_" + today_), "w")
 for line in dockingresults:
    results_file.write(line)
 results_file.close()
