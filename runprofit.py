@@ -87,4 +87,4 @@ print('CA atoms RMSD:   '+CA_atoms)
 # Remove .prf file
 subprocess.run(['rm ' + script], shell=True)
 # Print finished to commandline
-print("Done")
+print("runprofit: Done")
