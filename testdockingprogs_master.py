@@ -89,6 +89,8 @@ CA_atoms = contents[1]
 dockingresults += [method]
 dockingresults += [all_atoms]
 dockingresults += [CA_atoms]
+# Add spacer line before next method
+dockingresults += ""
 
 #*************************************************************************
 
