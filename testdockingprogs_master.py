@@ -94,5 +94,11 @@ dockingresults += [CA_atoms]
 
 # Write results file
 results_file = open(str(OUTPath + filename + "_" + today_), "w")
-results_file.write(dockingresults)
+for line in dockingresults:
+   results_file.write(line)
 results_file.close()
+
+#*************************************************************************
+
+# Remove _ab and _ag files
+subprocess.run(["rm " + ab_filename + " " + ag_filename], shell=True)
