@@ -35,6 +35,7 @@ V1.0   12.11.21   Original   By: OECH
 import sys
 import os
 import subprocess
+from datetime import date
 
 #*************************************************************************
 
@@ -44,7 +45,7 @@ PDBfile = sys.argv[1]
 # Get output path from command line (if present)
 OUTPath = './'
 try:
-   OUTPath = sys.argv[4] + '/'
+   OUTPath = sys.argv[2] + '/'
 except IndexError:
    print('No output directory specified, writing files to current directory')
    OUTPath = './'
@@ -57,13 +58,41 @@ filename = os.path.basename(PDBfile).split('.')[0]
 ab_filename = OUTPath + "%s_ab.pdb" % filename
 ag_filename = OUTPath + "%s_ag.pdb" % filename
 # Define filename for the docked antigen
-Dag_filename = "%s_Dag.pdb" % filename
+Dag_filename = OUTPath + "%s_Dag.pdb" % filename
 
 #*************************************************************************
 
+# Get today's date
+today = date.today()
+todaydot = today.strftime("%d.%m.%Y")
+today_ = today.strftime("%d_%m_%Y")
+# Create Results file header
+header = "Docking test using " + PDBfile + " " + todaydot
+# Create list starting with results file header
+dockingresults = [header]
+
+#*************************************************************************
+
+# Name docking method for results file
+method = "Megadock-4.1.1 CPU Single Node"
 # Run Megadock-4.1.1
 subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath], shell=True)
 
 # Evaluate docking result
-subprocess.run(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath], shell=True)
+output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath], shell=True)
+output = str(output, 'utf-8')
+# Extract the result lines from output
+contents = output.split('\n')
+all_atoms = contents[1]
+CA_atoms = contents[2]
+# Add lines to results file
+dockingresults += [method]
+dockingresults += [all_atoms]
+dockingresults += [CA_atoms]
 
+#*************************************************************************
+
+# Write results file
+results_file = open(str(OUTPath + filename + "_" + today_), "w")
+results_file.write(dockingresults)
+results_file.close()
