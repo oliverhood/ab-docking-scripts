@@ -62,7 +62,6 @@ OUTPath = ''
 try:
    OUTPath = sys.argv[4] + '/'
 except IndexError:
-   print('No output directory specified, writing files to current directory')
    OUTPath = './'
 
 # Combine the antibody and docked antigen files

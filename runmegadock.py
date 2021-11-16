@@ -46,7 +46,6 @@ OUTPath = ''
 try:
    OUTPath = sys.argv[3] + '/'
 except IndexError:
-   print('No output directory specified, writing files to current directory')
    OUTPath = './'
 # Run Megadock
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/megadock -R " + receptor + " -L " + ligand + " -o megadock.out"], shell=True)
