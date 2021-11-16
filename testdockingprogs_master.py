@@ -81,7 +81,7 @@ method = "Megadock-4.1.1   CPU Single Node   " + current_time
 subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath], shell=True)
 
 # Evaluate docking result
-output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath], shell=True)
+output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename], shell=True)
 output = str(output, 'utf-8')
 # Extract the result lines from output
 contents = output.split('\n')
