@@ -65,7 +65,7 @@ except IndexError:
    OUTPath = './'
 
 # Combine the antibody and docked antigen files
-testfile = str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
+testfile = OUTPath + str(combineabdagfiles(Ab_file, DAg_file, OUTPath))
 
 # Write the profit control script
 script = str(writecontrolscript(OG_file))
