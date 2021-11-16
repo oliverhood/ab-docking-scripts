@@ -74,7 +74,7 @@ dockingresults = [header,spacer]
 #*************************************************************************
 
 # Get date and time that method is being run at
-current_time = time.strftime(r"%d.%m.%Y %H:%M:%S", time.localtime())
+current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
 # Name docking method for results file
 method = "Megadock-4.1.1   CPU Single Node   " + current_time
 # Run Megadock-4.1.1
