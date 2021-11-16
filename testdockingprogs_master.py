@@ -35,7 +35,7 @@ V1.0   12.11.21   Original   By: OECH
 import sys
 import os
 import subprocess
-from datetime import date
+import time
 
 #*************************************************************************
 
@@ -63,18 +63,20 @@ Dag_filename = OUTPath + "%s_Dag.pdb" % filename
 #*************************************************************************
 
 # Get today's date
-today = date.today()
-todaydot = today.strftime("%d.%m.%Y")
-today_ = today.strftime("%d_%m_%Y")
+current_date = time.strftime(r"%d.%m.%Y", time.localtime())
+current_date_f2 = time.strftime(r"%d_%m_%Y", time.localtime())
 # Create Results file header
-header = "Docking test using " + PDBfile + " " + todaydot
+header = "Docking test on " + PDBfile + "   " + current_date
+spacer = ""
 # Create list starting with results file header
-dockingresults = [header]
+dockingresults = [header,spacer]
 
 #*************************************************************************
 
+# Get date and time that method is being run at
+current_time = time.strftime(r"%d.%m.%Y %H:%M:%S", time.localtime())
 # Name docking method for results file
-method = "Megadock-4.1.1 CPU Single Node"
+method = "Megadock-4.1.1   CPU Single Node   " + current_time
 # Run Megadock-4.1.1
 subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath], shell=True)
 
@@ -95,7 +97,7 @@ dockingresults += ""
 #*************************************************************************
 
 # Write results file
-results_file = open(str(OUTPath + filename + "_" + "dockingresults_" + today_), "w")
+results_file = open(str(OUTPath + filename + "_" + "dockingresults_" + current_date_f2), "w")
 for line in dockingresults:
    results_file.write("%s\n" % line)
 results_file.close()
