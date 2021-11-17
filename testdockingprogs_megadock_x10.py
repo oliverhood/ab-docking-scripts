@@ -27,6 +27,7 @@ testdockingprogs_master.py PDBFile OUTPath
 Revision History:
 =================
 V1.0   12.11.21   Original   By: OECH
+V1.1   17.11.21   Modified   By: OECH
 
 """
 
@@ -74,8 +75,8 @@ dockingresults = [header,spacer]
 
 #*************************************************************************
 
-# Line to loop megadock for 10 times
-for i in range(10):
+# Line to loop megadock for 5 times
+for i in range(5):
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
    # Name docking method for results file
