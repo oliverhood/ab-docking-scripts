@@ -50,16 +50,6 @@ except IndexError:
    print('No output directory specified, writing files to current directory')
    OUTPath = './'
 
-# Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
-subprocess.run(["~/ab-docking-scripts/splitantibodyantigenchains.py " + PDBfile + " " + OUTPath], shell=True)
-# Get the base filename from the input file
-filename = os.path.basename(PDBfile).split('.')[0]
-# Get the filenames for the split antibody/antigen chains
-ab_filename = OUTPath + "%s_ab.pdb" % filename
-ag_filename = OUTPath + "%s_ag.pdb" % filename
-# Define filename for the docked antigen
-Dag_filename = OUTPath + "%s_Dag.pdb" % filename
-
 #*************************************************************************
 
 # Get today's date
@@ -72,6 +62,19 @@ spacer = ""
 dockingresults = [header,spacer]
 
 #*************************************************************************
+
+# Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
+subprocess.run(["~/ab-docking-scripts/splitantibodyantigenchains.py " + PDBfile + " " + OUTPath], shell=True)
+# Get the base filename from the input file
+filename = os.path.basename(PDBfile).split('.')[0]
+# Get the filenames for the split antibody/antigen chains
+ab_filename = OUTPath + "%s_ab.pdb" % filename
+ag_filename = OUTPath + "%s_ag.pdb" % filename
+# Define filename for the docked antigen
+Dag_filename = OUTPath + "%s_Dag.pdb" % filename
+
+#*************************************************************************
+
 
 # Get date and time that method is being run at
 current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
