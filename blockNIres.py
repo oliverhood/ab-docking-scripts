@@ -227,7 +227,7 @@ if sys.argv[4] == 'antigen':
          if 'TER ' and agchainid in line and 'ATOM' not in line:
             AGcontents = line.split()
             # Get length of chain
-            AGlength = AGlength[4]
+            AGlength = AGcontents[4]
 
 #*************************************************************************
    # Create list of residues to be blocked
