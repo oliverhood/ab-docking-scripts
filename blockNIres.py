@@ -232,7 +232,7 @@ if sys.argv[4] == 'antigen':
 #*************************************************************************
    # Create list of residues to be blocked
    AGblock = []
-   for i in range(int(AGblock)+1):
+   for i in range(int(AGlength)+1):
       if str(i) not in AG_res:
          AGblock += [str(i)]
    # Turn AGblock into string
