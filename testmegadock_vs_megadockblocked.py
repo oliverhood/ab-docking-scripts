@@ -125,7 +125,7 @@ for i in range(10):
    # Change ab_filename to differentiate between megadock and megadock blocked files
    ab_b_filename = OUTPath_i + "%s_ab_" % filename + "b.pdb"
    # Copy ab file to new file ab_b.pdb
-   subprocess.run(["cp " + ab_filename + " " + ab_b_filename])   
+   subprocess.run(["cp " + ab_filename + " " + ab_b_filename], shell =True)   
    # Evaluate docking result
    output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_b_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
    output = str(output, 'utf-8')
