@@ -69,7 +69,7 @@ for i in range(10):
 #*************************************************************************
 
    # Make new directory to put results in
-   OUTPath_i = OUTPath + str(i)
+   OUTPath_i = OUTPath + str(i) + "/"
    #Make directory
    subprocess.run(["mkdir " + OUTPath_i], shell=True)
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
