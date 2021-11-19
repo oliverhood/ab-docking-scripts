@@ -68,15 +68,19 @@ for i in range(10):
 
 #*************************************************************************
 
+   # Make new directory to put results in
+   OUTPath_i = OUTPath + str(i)
+   #Make directory
+   subprocess.run(["mkdir " + OUTPath_i], shell=True)
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
-   subprocess.run(["~/ab-docking-scripts/splitantibodyantigenchains.py " + PDBfile + " " + OUTPath], shell=True)
+   subprocess.run(["~/ab-docking-scripts/splitantibodyantigenchains.py " + PDBfile + " " + OUTPath_i], shell=True)
    # Get the base filename from the input file
    filename = os.path.basename(PDBfile).split('.')[0]
    # Get the filenames for the split antibody/antigen chains
-   ab_filename = OUTPath + "%s_ab_" % filename + str(i) + ".pdb"
-   ag_filename = OUTPath + "%s_ag.pdb" % filename
+   ab_filename = OUTPath_i + "%s_ab.pdb" % filename
+   ag_filename = OUTPath_i + "%s_ag.pdb" % filename
    # Define filename for the docked antigen
-   Dag_filename = OUTPath + "%s_Dag.pdb" % filename
+   Dag_filename = OUTPath_i + "%s_Dag.pdb" % filename
 
 #*************************************************************************
 
@@ -85,10 +89,10 @@ for i in range(10):
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
    # Evaluate docking result
-   output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath], shell=True)
+   output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
    output = str(output, 'utf-8')
    # Extract the result lines from output
    contents = output.split('\n')
@@ -104,10 +108,10 @@ for i in range(10):
 #*************************************************************************
 
    # Run blockNIres.py on split input files
-   subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " " + OUTPath], shell=True)
+   subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
    # Define filename for the blocked antibody file
-   ab_blocked = OUTPath + "%s_ab_blocked.pdb" % filename
+   ab_blocked = OUTPath_i + "%s_ab_blocked.pdb" % filename
 
 #*************************************************************************
 
@@ -116,12 +120,12 @@ for i in range(10):
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_blocked + " " + ag_filename + " " + OUTPath], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_blocked + " " + ag_filename + " " + OUTPath_i], shell=True)
 
    # Change ab_filename to differentiate between megadock and megadock blocked files
-   ab_filename = OUTPath + "%s_ab_" + i + "b.pdb" % filename
+   ab_filename = OUTPath_i + "%s_ab_" % filename + "b.pdb" 
    # Evaluate docking result
-   output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath], shell=True)
+   output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
    output = str(output, 'utf-8')
    # Extract the result lines from output
    contents = output.split('\n')
