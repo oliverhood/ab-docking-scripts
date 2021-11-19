@@ -73,7 +73,7 @@ for i in range(10):
    # Get the base filename from the input file
    filename = os.path.basename(PDBfile).split('.')[0]
    # Get the filenames for the split antibody/antigen chains
-   ab_filename = OUTPath + "%s_ab_" + str(i) + ".pdb" % filename
+   ab_filename = OUTPath + "%s_ab_" % filename + str(i) + ".pdb"
    ag_filename = OUTPath + "%s_ag.pdb" % filename
    # Define filename for the docked antigen
    Dag_filename = OUTPath + "%s_Dag.pdb" % filename
