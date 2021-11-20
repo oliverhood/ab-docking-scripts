@@ -90,7 +90,7 @@ for i in range(10):
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ag_filename + " " + ab_filename + " " + OUTPath_i], shell=True)
 
    # Evaluate docking result
    output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
@@ -121,7 +121,7 @@ for i in range(10):
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   Blocked Antigen   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_blocked + " " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ag_blocked + " " + ab_filename + " " + OUTPath_i], shell=True)
 
    # Change ab_filename to differentiate between megadock and megadock blocked files
    ab_b_filename = OUTPath_i + "%s_ab_" % filename + "b.pdb"
