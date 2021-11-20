@@ -246,7 +246,7 @@ if sys.argv[4] == 'antigen':
    # Define output file name
    AGblocked = OUTPath + filename + "_blocked.pdb"
    # Run megadock's blocking program to block antigen chain residues
-   subprocess.run(["~/DockingSoftware/megadock-4.1.1/block " + Ag_file + agchainid + AGblock + " > " + AGblocked], shell=True)
+   subprocess.run(["~/DockingSoftware/megadock-4.1.1/block " + Ag_file + " " + agchainid + " " + AGblock + " > " + AGblocked], shell=True)
 
 #*************************************************************************
    # Remove unneeded files
