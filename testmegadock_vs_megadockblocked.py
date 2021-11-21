@@ -66,6 +66,9 @@ dockingresults = [header,spacer]
 
 # For loop to run megadock and megadock_blocked 10 times
 for i in range(10):
+   # Give run number
+   run = "Run " + str(i)
+   dockingresults += ["", run]
 
 #*************************************************************************
 
@@ -84,6 +87,7 @@ for i in range(10):
    Dag_filename = OUTPath_i + "%s_Dag.pdb" % filename
 
 #*************************************************************************
+   # MEGADOCK
 
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
@@ -107,14 +111,12 @@ for i in range(10):
    dockingresults += " "
 
 #*************************************************************************
-
+   # MEGADOCK BLOCKED
    # Run blockNIres.py on split input files
    subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " antibody " + OUTPath_i], shell=True)
 
    # Define filename for the blocked antigen file
    ab_blocked = OUTPath_i + "%s_ab_blocked.pdb" % filename
-
-#*************************************************************************
 
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
@@ -140,6 +142,34 @@ for i in range(10):
    dockingresults += [CA_atoms]
    # Add spacer line before next method
    dockingresults += " "
+
+#*************************************************************************
+   # MEGADOCK RANKED
+
+   # Get date and time that method is being run at
+   current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
+   # Name docking method for results file
+   method = "Megadock-4.1.1   CPU Single Node   ZRANK Ranked Output" + current_time
+
+   # Run Megadockranked on unblocked antibody/antigen files
+   subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
+   # Define output filename
+   Dag_rank_filename = OUTPath_i + "%s_rank_Dag.pdb" % filename
+
+   # Evaluate docking result
+   output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_rank_filename + " " + OUTPath_i], shell=True)
+   output = str(output, 'utf-8')
+   # Extract the result lines from output
+   contents = output.split('\n')
+   all_atoms = contents[0]
+   CA_atoms = contents[1]
+   # Add lines to results file
+   dockingresults += [method]
+   dockingresults += [all_atoms]
+   dockingresults += [CA_atoms]
+   # Add spacer line before next method
+   dockingresults += " "
+
 
 #*************************************************************************
 
