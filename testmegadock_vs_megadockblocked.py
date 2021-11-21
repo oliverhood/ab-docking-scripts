@@ -90,7 +90,7 @@ for i in range(10):
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ag_filename + " " + ab_filename + " " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
    # Evaluate docking result
    output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
@@ -104,24 +104,24 @@ for i in range(10):
    dockingresults += [all_atoms]
    dockingresults += [CA_atoms]
    # Add spacer line before next method
-   dockingresults += ""
+   dockingresults += " "
 
 #*************************************************************************
 
    # Run blockNIres.py on split input files
-   subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " antigen " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " antibody " + OUTPath_i], shell=True)
 
    # Define filename for the blocked antigen file
-   ag_blocked = OUTPath_i + "%s_ag_blocked.pdb" % filename
+   ab_blocked = OUTPath_i + "%s_ab_blocked.pdb" % filename
 
 #*************************************************************************
 
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   Blocked Antigen   " + current_time
+   method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   " + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ag_blocked + " " + ab_filename + " " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_blocked + " " + ab_filename + " " + OUTPath_i], shell=True)
 
    # Change ab_filename to differentiate between megadock and megadock blocked files
    ab_b_filename = OUTPath_i + "%s_ab_" % filename + "b.pdb"
@@ -139,7 +139,7 @@ for i in range(10):
    dockingresults += [all_atoms]
    dockingresults += [CA_atoms]
    # Add spacer line before next method
-   dockingresults += ""
+   dockingresults += " "
 
 #*************************************************************************
 
@@ -151,5 +151,5 @@ results_file.close()
 
 #*************************************************************************
 
-# Remove _ab, _ag, _Dag files, _ag_blocked, and ab_b files
-subprocess.run(["rm " + ab_filename + " " + ag_filename + " " + Dag_filename + " " + ag_blocked + " " + ab_b_filename], shell=True)
+# Remove _ab, _ag, _Dag files, _ab_blocked, and ab_b files
+subprocess.run(["rm " + ab_filename + " " + ag_filename + " " + Dag_filename + " " + ab_blocked + " " + ab_b_filename], shell=True)
