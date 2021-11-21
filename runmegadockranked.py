@@ -83,4 +83,4 @@ with open('megadock.out.zr.out') as file:
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + ligand + " megadock.out " + top_hit], shell=True)
 
 # Remove megadock.out and megadock.out.zr.out files
-subprocess.run(["rm megadock.out megadock.zr.out"], shell=True)
+subprocess.run(["rm megadock.out megadock.out.zr.out"], shell=True)
