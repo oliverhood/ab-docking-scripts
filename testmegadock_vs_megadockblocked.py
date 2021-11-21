@@ -151,7 +151,7 @@ for i in range(10):
    # Define filename for the blocked antigen file
    ag_blocked = OUTPath_i + "%s_ag_blocked.pdb" % filename
    # Change ab_filename to differentiate between megadock and megadock blocked files
-   ab_b1_filename = OUTPath_i + "%s_ab_" % filename + "b.pdb"
+   ab_b1_filename = OUTPath_i + "%s_ab_" % filename + "b1.pdb"
    # Copy ab file to new file ab_b.pdb
    subprocess.run(["cp " + ab_filename + " " + ab_b1_filename], shell =True)   
 
