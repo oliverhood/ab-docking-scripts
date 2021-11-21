@@ -60,4 +60,27 @@ inputfilename = filenamecontents[0] + "_" + filenamecontents[1]
 outfile = OUTPath+inputfilename + "_Dag.pdb"
 
 #*************************************************************************
-# Run ZRank
+# Run ZRank on megadock outfile
+subprocess.run(["~/DockingSoftware/zdock3.0.2/zrank megadock.out 1 2000"], shell=True)
+
+# Extracting top ranked output
+# Initiate max out variable
+max_out = 0
+
+# Read Zrank out file
+with open('megadock.out.zr.out') as file:
+   # Read lines
+   rows = file.readlines()
+   # Identify highest scoring output
+   for line in rows:
+      contents = line.split()
+      if float(contents[1]) > max_out:
+         max_out = float(contents[1])
+         # Get number of the top hit
+         top_hit = contents[0]
+
+# Extract top docking result from megadock using decoygen
+subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + ligand + " megadock.out " + top_hit], shell=True)
+
+# Remove megadock.out and megadock.out.zr.out files
+subprocess.run(["rm megadock.out megadock.zr.out"], shell=True)
