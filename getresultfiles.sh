@@ -41,7 +41,7 @@ for file in ./run*
       # Copy the megadock blocked antibody result
       cp ${file}/1yqv_0_ab_bDag.pdb result_files/${file}_megadock_blocked_ab.pdb
       # Copy the megadock blocked antigen result
-      cp ${file}/1yqv_0_b1Dag.pdb result_files/${file}_megadock_blocked_ag.pdb
+      cp ${file}/1yqv_0_ab_b1Dag.pdb result_files/${file}_megadock_blocked_ag.pdb
       # Copy the megadock ranked result
       cp ${file}/1yqv_0_ab_rDag.pdb result_files/${file}_megadock_ranked.pdb
    done
