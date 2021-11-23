@@ -64,8 +64,8 @@ outfile = OUTPath+inputfilename + "_rank_Dag.pdb"
 subprocess.run(["~/DockingSoftware/zdock3.0.2/zrank megadock.out 1 200"], shell=True)
 
 # Extracting top ranked output
-# Initiate max out variable
-max_out = 0
+# Initiate min out variable
+min_out = 0
 
 # Read Zrank out file
 with open('megadock.out.zr.out') as file:
@@ -74,8 +74,8 @@ with open('megadock.out.zr.out') as file:
    # Identify highest scoring output
    for line in rows:
       contents = line.split()
-      if float(contents[1]) > max_out:
-         max_out = float(contents[1])
+      if float(contents[1]) < min_out:
+         min_out = float(contents[1])
          # Get number of the top hit
          top_hit = contents[0]
 
