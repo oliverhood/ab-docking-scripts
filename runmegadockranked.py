@@ -61,7 +61,7 @@ outfile = OUTPath+inputfilename + "_rank_Dag.pdb"
 
 #*************************************************************************
 # Run ZRank on megadock outfileq
-subprocess.run(["~/DockingSoftware/zdock3.0.2/zrank megadock.out 1 200"], shell=True)
+subprocess.run(["~/DockingSoftware/zdock3.0.2/zrank megadock.out 1 2000"], shell=True)
 
 # Extracting top ranked output
 # Initiate min out variable
