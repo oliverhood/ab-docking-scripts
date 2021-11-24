@@ -143,7 +143,8 @@ for i in range(10):
    # Add spacer line before next method
    dockingresults += " "
 
-   #*************************************************************************
+   #**********************************************************************
+
    # MEGADOCK BLOCKED Antigen
    # Run blockNIres.py on split input files
    #subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " antigen " + OUTPath_i], shell=True)
@@ -214,20 +215,19 @@ for i in range(10):
     # Run blockNIres.py on split input files
    subprocess.run(["~/ab-docking-scripts/blockNIres.py " + PDBfile + " " + ab_filename + " " + ag_filename + " antibody " + OUTPath_i], shell=True)
 
-   # Define filename for the blocked antibody file
-   ab_blocked = OUTPath_i + "%s_ab_blocked.pdb" % filename
+   # Change ab_filename to differentiate between megadock and megadock blocked files
+   ab_brank_filename = OUTPath_i + "%s_ab_" % filename + "blockedrank.pdb"
+   # Copy ab file to new file ab_b.pdb
+   subprocess.run(["cp " + ab_filename + " " + ab_brank_filename], shell =True) 
 
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
    # Name docking method for results file
    method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output" + current_time
    # Run Megadock-4.1.1
-   subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_blocked + " " + ag_filename + " " + OUTPath_i], shell=True)
+   subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_brank_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
-   # Change ab_filename to differentiate between megadock and megadock blocked files
-   ab_brank_filename = OUTPath_i + "%s_ab_" % filename + "brank.pdb"
-   # Copy ab file to new file ab_b.pdb
-   subprocess.run(["cp " + ab_filename + " " + ab_brank_filename], shell =True) 
+   
    # Evaluate docking result
    output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_brank_filename + " " + Dag_filename + " " + OUTPath_i], shell=True)
    output = str(output, 'utf-8')
