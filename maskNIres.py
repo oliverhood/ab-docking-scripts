@@ -157,3 +157,10 @@ outfile = OUTPath + filename + '_maskfile.pdb'
 with open(outfile, "w") as file:
    for line in PDBline:
       file.write(line)
+
+#*************************************************************************
+
+# Clean up
+
+# Remove 'int_res' file
+subprocess.run(["rm int_res"], shell=True)
