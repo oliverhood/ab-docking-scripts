@@ -38,7 +38,6 @@ import os
 import sys
 import subprocess
 import re
-from runprofit_lib import getantigenchainid
 
 #*************************************************************************
 
@@ -163,4 +162,4 @@ with open(outfile, "w") as file:
 # Clean up
 
 # Remove 'int_res' file
-subprocess.run(["rm int_res"], shell=True)
+subprocess.run([f"rm {int_res}"], shell=True)
