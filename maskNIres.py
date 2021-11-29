@@ -124,7 +124,7 @@ for i in range(int(Llength)+1):
 PDBline = []
 # Opem Ab file
 with open(Ab_file) as file:
-   rows = file.readlines()[4:]
+   rows = file.readlines()
    # Loop through lines
    for line in rows:
       # Filter 'ATOM' lines
