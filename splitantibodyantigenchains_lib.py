@@ -129,9 +129,9 @@ def extractantigenchain(PDBfile):
       #Extract the antigen chain
       get_processed_antigen_chain = subprocess.run(["pdbgetchain " + agchainid + " " + PDBfile
       #Rotate the antigen chain
-      + " | pdbrotate -x " + str((random.randint(45,315))) + " -y " + str((random.randint(45,315))) + " -z " + str((random.randint(45,315)))
+      + " | pdbrotate -x " + str((random.randint(-8,8))) + " -y " + str((random.randint(-8,8))) + " -z " + str((random.randint(-8,8)))
       #Translate the antigen chain
-      + " | pdbtranslate -x " + str((random.randint(-25,25))) + " -y " + str((random.randint(-25,25))) + " -z " + str((random.randint(-25,25)))], stdout=subprocess.PIPE, universal_newlines=True, shell=True)
+      + " | pdbtranslate -x " + str((random.randint(2,5))) + " -y " + str((random.randint(2,5))) + " -z " + str((random.randint(2,5)))], stdout=subprocess.PIPE, universal_newlines=True, shell=True)
    processed_antigen_chain = get_processed_antigen_chain.stdout
    #Return the processed antibody chain
    return processed_antigen_chain
