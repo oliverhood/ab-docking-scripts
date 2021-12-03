@@ -54,7 +54,7 @@ def writeprepack_flags(PDBfile):
       # Spacer
       "", 
       # Input filename
-      f"-in:file:s {filename}", 
+      f"-in:file:s {PDBfile}", 
       # Docking partners (Heavy/Light chain, Antigen chain)
       f"-docking:partners HL_{agchainid}", 
       # Spacer
