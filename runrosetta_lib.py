@@ -47,8 +47,6 @@ def writeprepack_flags(PDBfile):
    agchainid = getantigenchainid(PDBfile)
    # Get the input filename
    filename = os.path.basename(PDBfile).split('.')[0]
-   # Define processed file name (output of splitantibodyantigenchains_rosetta.py)
-   processed_filename = filename + "_processed.pdb"
    # Write list of prepack_flags contents
    flags = [
       # Location of the rosetta database
@@ -56,7 +54,7 @@ def writeprepack_flags(PDBfile):
       # Spacer
       "", 
       # Input filename
-      f"-in:file:s {processed_filename}", 
+      f"-in:file:s {filename}", 
       # Docking partners (Heavy/Light chain, Antigen chain)
       f"-docking:partners HL_{agchainid}", 
       # Spacer
@@ -85,7 +83,7 @@ def writedocking_flags(PDBfile, nstructures=25):
    # Get the input filename
    filename = os.path.basename(PDBfile).split('.')[0]
    # Define prepacked filename (output of Rosetta prepack)
-   prepacked_filename = filename + "_processed_prepack_0001.pdb"
+   prepacked_filename = filename + "_prepack_0001.pdb"
    # Write list of docking_flags contents
    flags = [
       # Location of the rosetta database
