@@ -63,7 +63,7 @@ except IndexError:
 # Prepack the input structure
 
 # Write prepack_flags
-writeprepack_flags(PDBfile, runs)
+writeprepack_flags(PDBfile)
 
 # Run the prepack protocol
 subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_prepack_protocol.default.linuxgccrelease @prepack_flags"], shell=True)
@@ -73,7 +73,7 @@ subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/d
 # Perform docking run
 
 # Write docking_flags
-writedocking_flags(PDBfile)
+writedocking_flags(PDBfile, runs)
 
 # Run the docking protocol
 subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_protocol.default.linuxgccrelease @docking_flags"], shell=True)
