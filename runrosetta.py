@@ -19,7 +19,7 @@ This program takes a PDB file containing an antibody and an antigen as input, pr
 
 Usage:
 ======
-runrosetta.py PDBfile OUTPath
+runrosetta.py PDBfile num_outputs OUTPath
 
 --------------------------------------------------------------------------
 
@@ -44,10 +44,13 @@ from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresul
 # Processed (splitantibodyantigenchains_rosetta.py) file
 PDBfile = sys.argv[1]
 
+# Get number of docking runs to carry out (num_outputs)
+runs = int(sys.argv[2])
+
 # Define OUTPath
 OUTPath = './'
 try:
-   OUTPath = sys.argv[2] + '/'
+   OUTPath = sys.argv[3] + '/'
 except IndexError:
    OUTPath = './'
 
@@ -56,7 +59,7 @@ except IndexError:
 # Prepack the input structure
 
 # Write prepack_flags
-writeprepack_flags(PDBfile)
+writeprepack_flags(PDBfile, runs)
 
 # Run the prepack protocol
 subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_prepack_protocol.default.linuxgccrelease @prepack_flags"], shell=True)
