@@ -114,3 +114,36 @@ def writedocking_flags(PDBfile, nstructures=25):
 
 #*************************************************************************
 
+def getbestresult(docking_scores):
+   """
+   Find best docking result from docking files, copy to new file 'Docking result (with number)'
+
+   """
+   # Open score file
+   with open(docking_scores) as file:
+      # Split into rows
+      rows = file.readlines()
+   # Extract 'score' lines
+   scores = []
+   for line in rows:
+      if 'SCORE' in line:
+         scores += [line]
+   # Get header from scores
+   scores_header = scores[0].split()
+   # Get index of I_sc score
+   I_sc_index = scores_header.index("I_sc")
+   # Find best scoring docked structure
+   # Initialise top (lowest) score
+   top_score = 0
+   best_structure = 'None'
+   # Loop through scores
+   for item in scores[1:]: #Excluding header row
+      individual_scores = item.split()
+      I_sc = float(individual_scores[I_sc_index])
+      if I_sc < top_score:
+         top_score = I_sc
+         best_structure = individual_scores[-1] # Last item is name of scored structure
+   # Define file name of best structure
+   docking_outfile = best_structure + ".pdb"
+   # Return best docked structure
+   return(docking_outfile)

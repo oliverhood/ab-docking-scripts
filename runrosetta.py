@@ -33,7 +33,20 @@ V1.0   03.12.2021   Original   By: OECH
 
 # Import Libraries
 
+import subprocess
 
 #*************************************************************************
 
 # Define Input Files
+# Processed (splitantibodyantigenchains_rosetta.py) file
+PDBfile = sys.argv[1]
+
+# Define OUTPath
+OUTPath = './'
+try:
+   OUTPath = sys.argv[2] + '/'
+except IndexError:
+   OUTPath = './'
+
+#*************************************************************************
+
