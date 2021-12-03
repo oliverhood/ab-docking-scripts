@@ -70,3 +70,14 @@ def getantigenchainid(PDBfile):
       return 'Multiple chains'
    else:
       return 'No chains'
+
+#*************************************************************************
+
+def writefile(filename, list):
+   """
+   Take a list as input and write it to a file in the current working directory
+
+   """
+   with open(str(filename), "w") as file:
+      for line in list:
+         file.write("%s\n" % line)
