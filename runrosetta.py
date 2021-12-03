@@ -45,7 +45,11 @@ from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresul
 PDBfile = sys.argv[1]
 
 # Get number of docking runs to carry out (num_outputs)
-runs = int(sys.argv[2])
+runs = 10
+try:
+   runs = sys.argv[2]
+except IndexError:
+   runs = 10
 
 # Define OUTPath
 OUTPath = './'
