@@ -34,6 +34,9 @@ V1.0   03.12.2021   Original   By: OECH
 # Import Libraries
 
 import subprocess
+import sys
+import os
+from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresult)
 
 #*************************************************************************
 
@@ -50,3 +53,37 @@ except IndexError:
 
 #*************************************************************************
 
+# Prepack the input structure
+
+# Write prepack_flags
+writeprepack_flags(PDBfile)
+
+# Run the prepack protocol
+subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_prepack_protocol.default.linuxgccrelease @prepack_flags"], shell=True)
+
+#*************************************************************************
+
+# Perform docking run
+
+# Write docking_flags
+writedocking_flags(PDBfile)
+
+# Run the docking protocol
+subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_protocol.default.linuxgccrelease @docking_flags"], shell=True)
+
+#*************************************************************************
+
+# Get the best docked structure from the scores file
+scores_file = "score_local_dock.sc"
+best_structure = getbestresult(scores_file)
+best_structure_file = OUTPath + best_structure
+
+# Get input filename
+filename = os.path.basename(PDBfile).split('.')[0]
+# Define new filename for best structure
+rosetta_out = OUTPath + filename + "_docked.pdb"
+
+# Copy the file contents to new file
+subprocess.run([f"cp {best_structure_file} {rosetta_out}"], shell=True)
+
+#*************************************************************************
