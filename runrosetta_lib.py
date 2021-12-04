@@ -42,7 +42,7 @@ def writeprepack_flags(PDBfile):
    """
    Write the prepack_flags file needed to run the Rosetta prepack protocol.
 
-   >>> writeprepack_flags(test/test6.pdb)
+   >>> writeprepack_flags('test/test6.pdb')
    -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
 
    -in:file:s 1yqv_0_processed.pdb
@@ -91,7 +91,7 @@ def writedocking_flags(PDBfile, nstructures=25):
    """
    Write the docking_flags file needed to run the Rosetta docking protocol.
 
-   >>> writedocking_flags(test/test6.pdb)
+   >>> writedocking_flags('test/test6.pdb')
    -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
 
    -in:file:s 1yqv_0_processed_prepack_0001.pdb
