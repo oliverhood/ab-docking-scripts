@@ -145,6 +145,9 @@ def getbestresult(docking_scores):
    """
    Find best docking result from docking files, copy to new file 'Docking result (with number)'
 
+   >>> getbestresult('test/test7.sc')
+   '1yqv_0_processed_prepack_0001_local_dock_0005.pdb'
+
    """
    # Open score file
    with open(docking_scores) as file:
