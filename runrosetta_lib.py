@@ -174,3 +174,10 @@ def getbestresult(docking_scores):
    docking_outfile = best_structure + ".pdb"
    # Return best docked structure
    return(docking_outfile)
+
+#*************************************************************************
+
+# Testing functions
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
