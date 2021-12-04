@@ -90,6 +90,18 @@ def writeprepack_flags(PDBfile):
 def writedocking_flags(PDBfile, nstructures=25):
    """
    Write the docking_flags file needed to run the Rosetta docking protocol.
+
+   >>> writedocking_flags(test/test6.pdb)
+   -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
+
+   -in:file:s 1yqv_0_processed_prepack_0001.pdb
+   -docking:partners HL_Y
+   -nstruct 25
+
+   -ex1
+   -ex2aro
+
+   -out:suffix _local_dock
   
    """
    # Get the antigen chain ID from the input PDB file
@@ -123,6 +135,9 @@ def writedocking_flags(PDBfile, nstructures=25):
    docking_flags = "docking_flags"
    # Write docking_flags file
    writefile(docking_flags, flags)
+   # Return the flags list
+   for item in flags:
+      print(item)
 
 #*************************************************************************
 
