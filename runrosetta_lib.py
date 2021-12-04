@@ -42,6 +42,17 @@ def writeprepack_flags(PDBfile):
    """
    Write the prepack_flags file needed to run the Rosetta prepack protocol.
 
+   >>> writeprepack_flags(test/test6.pdb)
+   -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
+
+   -in:file:s 1yqv_0_processed.pdb
+   -docking:partners HL_Y
+
+   -ex1
+   -ex2aro
+
+   -out:suffix _prepack
+
    """
    # Get the antigen chain ID from the input PDB file
    agchainid = getantigenchainid(PDBfile)
@@ -70,6 +81,9 @@ def writeprepack_flags(PDBfile):
    prepack_flags = "prepack_flags"
    # Write prepack_flags file
    writefile(prepack_flags, flags)
+   # Return the flags list
+   for item in flags:
+      print(item)
 
 #*************************************************************************
 
