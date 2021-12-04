@@ -43,15 +43,15 @@ def writeprepack_flags(PDBfile):
    Write the prepack_flags file needed to run the Rosetta prepack protocol.
 
    >>> writeprepack_flags('test/test6.pdb')
-   -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
-
-   -in:file:s 1yqv_0_processed.pdb
-   -docking:partners HL_Y
-
-   -ex1
-   -ex2aro
-
-   -out:suffix _prepack
+    -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
+    <BLANKLINE>
+    -in:file:s test/test6.pdb
+    -docking:partners HL_Y
+    <BLANKLINE>
+    -ex1
+    -ex2aro
+    <BLANKLINE>
+    -out:suffix _prepack
 
    """
    # Get the antigen chain ID from the input PDB file
@@ -92,16 +92,16 @@ def writedocking_flags(PDBfile, nstructures=25):
    Write the docking_flags file needed to run the Rosetta docking protocol.
 
    >>> writedocking_flags('test/test6.pdb')
-   -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
-
-   -in:file:s 1yqv_0_processed_prepack_0001.pdb
-   -docking:partners HL_Y
-   -nstruct 25
-
-   -ex1
-   -ex2aro
-
-   -out:suffix _local_dock
+    -database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database
+    <BLANKLINE>
+    -in:file:s test6_prepack_0001.pdb
+    -docking:partners HL_Y
+    -nstruct 25
+    <BLANKLINE>
+    -ex1
+    -ex2aro
+    <BLANKLINE>
+    -out:suffix _local_dock
   
    """
    # Get the antigen chain ID from the input PDB file
