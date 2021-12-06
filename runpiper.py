@@ -19,7 +19,7 @@ This program takes an antibody and an antigen chain as input, processes them for
 
 Usage:
 ======
-runpiper.py receptorfile ligandfile OUTPath
+runpiper.py OG_file receptorfile ligandfile OUTPath
 
 Note: Piper takes a long time to run (~2 hours per receptor/ligand pair) so run in background using:
 
@@ -46,16 +46,19 @@ import subprocess
 
 # Define input files
 
+# Define original (unsplit) PDB file
+OG_file = sys.argv[1]
+
 # Define receptor (antibody) file
-receptor = sys.argv[1]
+receptor = sys.argv[2]
 
 # Define ligand (antigen) file
-ligand = sys.argv[2]
+ligand = sys.argv[3]
 
 # Get outpath from command line (if present)
 OUTPath = './'
 try:
-   OUTPath = sys.argv[3] + '/'
+   OUTPath = sys.argv[4] + '/'
 except IndexError:
    OUTPath = './'
 
@@ -78,9 +81,20 @@ ligand_name = os.path.basename(ligand).split('.')[0]
 ligand_processed = OUTPath + ligand_name + "_pnon.pdb"
 
 #*************************************************************************
+# Mask non-interface residues
+
+# Write maskfile using maskNIres.py
+subprocess.run([f"~/ab-docking-scripts/maskNIres.py {OG_file} {receptor} {ligand} {OUTPath}"], shell=True)
+
+# Define maskfile name (+location)
+OG_filename = os.path.basename(OG_file).split('.')[0]
+maskfile = OUTPath + OG_filename + "_maskfile.pdb"
+
+
+#*************************************************************************
 
 # Run piper on processed files
-subprocess.run([f"~/DockingSoftware/piper/piper -p ~/DockingSoftware/piper/prms/atoms.prm -f ~/DockingSoftware/piper/prms/coeffs.0.0.6.antibody.prm -r ~/DockingSoftware/piper/prms/rots.prm {receptor_processed} {ligand_processed}"], shell=True)
+subprocess.run([f"~/DockingSoftware/piper/piper --maskrec={maskfile} -p ~/DockingSoftware/piper/prms/atoms.prm -f ~/DockingSoftware/piper/prms/coeffs.0.0.6.antibody.prm -r ~/DockingSoftware/piper/prms/rots.prm {receptor_processed} {ligand_processed}"], shell=True)
 
 #*************************************************************************
 
