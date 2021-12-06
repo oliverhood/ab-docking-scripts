@@ -44,9 +44,8 @@ V1.0   11.11.21   Original   By: OECH
 # Import Libraries
 
 import sys
-import os
 import subprocess
-from runprofit_lib import (combineabdagfiles, getantigenchainid, writecontrolscript)
+from runprofit_lib import (combineabdagfiles, writecontrolscript)
 
 #*************************************************************************
 
