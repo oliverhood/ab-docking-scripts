@@ -114,9 +114,9 @@ def evaluate_results(OG_file, *args, single_file=True, method='Method name not s
    """
    Take either a single docked antibody/antigen structure, or separate antibody and antigen structures as input, run the relevant runprofit script on the structures and output the results into a results file. (Will later add functionality to determine the proportion of correctly predicted contacts)
 
-   >>> evaluate_results('test8_OG.pdb', 'test8_single.pdb')
+   >>> evaluate_results('test/test8_OG.pdb', 'test/test8_single.pdb')
    ['Docking test on test8_OG.pdb   07.12.2021', '', 'Method name not specified', 'All atoms RMSD:  10.751', 'CA atoms RMSD:   10.572']
-   >>> evaluate_results('test8_OG.pdb', 'test8_ab.pdb', 'test8_Dag.pdb')
+   >>> evaluate_results('test/test8_OG.pdb', 'test/test8_ab.pdb', 'test/test8_Dag.pdb')
    ['Docking test on test8_OG.pdb   07.12.2021', '', 'Method name not specified', 'All atoms RMSD:  1.652', 'CA atoms RMSD:   1.622']
 
    """
