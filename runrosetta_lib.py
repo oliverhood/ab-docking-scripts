@@ -123,9 +123,9 @@ def writedocking_flags(PDBfile, nstructures=25):
       # Docking partners (Heavy/Light chain, Antigen chain)
       f"-docking:partners HL_{agchainid}", 
       # Write output PDBs to new directory
-      "-out:path:pdb docking_out/"
+      "-out:path:pdb docking_out/", 
       # Gzip files to save space
-      "-out:pdb_gz"
+      "-out:pdb_gz", 
       # Number of output structures
       f"-nstruct {nstructures}", 
       # Spacer
