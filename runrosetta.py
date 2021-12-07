@@ -60,6 +60,12 @@ except IndexError:
 
 #*************************************************************************
 
+# Create directory to output docked PDBs
+outdir = OUTPath + "docking_out"
+subprocess.run([f"mkdir {outdir}"], shell=True)
+
+#*************************************************************************
+
 # Prepack the input structure
 
 # Write prepack_flags
@@ -84,13 +90,16 @@ subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/d
 scores_file = "score_local_dock.sc"
 best_structure = getbestresult(scores_file)
 best_structure_file = OUTPath + best_structure
+best_structure_file_compressed = best_structure_file + ".gz"
 
 # Get input filename
 filename = os.path.basename(PDBfile).split('.')[0]
 # Define new filename for best structure
 rosetta_out = OUTPath + filename + "_docked.pdb"
 
+# Decompress best result
+subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"])
 # Copy the file contents to new file
-subprocess.run([f"cp {best_structure_file} {rosetta_out}"], shell=True)
+subprocess.run([f"cp {outdir}/{best_structure_file} {rosetta_out}"], shell=True)
 
 #*************************************************************************
