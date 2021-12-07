@@ -96,6 +96,8 @@ def writedocking_flags(PDBfile, nstructures=25):
    <BLANKLINE>
    -in:file:s test6_prepack_0001.pdb
    -docking:partners HL_Y
+   -out:path:pdb docking_out/
+   -out:pdb_gz
    -nstruct 25
    <BLANKLINE>
    -ex1
@@ -120,6 +122,10 @@ def writedocking_flags(PDBfile, nstructures=25):
       f"-in:file:s {prepacked_filename}", 
       # Docking partners (Heavy/Light chain, Antigen chain)
       f"-docking:partners HL_{agchainid}", 
+      # Write output PDBs to new directory
+      "-out:path:pdb docking_out/"
+      # Gzip files to save space
+      "-out:pdb_gz"
       # Number of output structures
       f"-nstruct {nstructures}", 
       # Spacer
