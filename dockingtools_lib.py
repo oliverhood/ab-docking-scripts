@@ -171,3 +171,10 @@ def evaluate_results(OG_file, *args, single_file=True, method='Method name not s
       dockingresults += ""
    # Return docking results
    return dockingresults
+
+#*************************************************************************
+
+# Testing functions
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
