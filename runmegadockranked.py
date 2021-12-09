@@ -39,7 +39,7 @@ import os
 import subprocess
 
 #*************************************************************************
-# Run Megadock
+# Get input files
 
 # Define receptor (antibody) file
 receptor = sys.argv[1]
@@ -51,11 +51,25 @@ try:
    OUTPath = sys.argv[3] + '/'
 except IndexError:
    OUTPath = './'
-# Run Megadock
-subprocess.run(["~/DockingSoftware/megadock-4.1.1/megadock -R " + receptor + " -L " + ligand + " -o megadock.out"], shell=True)
+
+#*************************************************************************
+# Add hydrogens to input files
+
 # Get input file basename
 filenamecontents = os.path.basename(receptor).split('.')[0].split('_')
 inputfilename = filenamecontents[0] + "_" + filenamecontents[1]
+# Define output antibody file name
+antibody_hydrogens = OUTPath + inputfilename + "_ab_hydrogens.pdb"
+# Define output antigen file name
+antigen_hydrogens = OUTPath + inputfilename + "_ag_hydrogens.pdb"
+# Antibody file
+subprocess.run([f"pdbhadd -a {receptor} {antibody_hydrogens}"], shell=True)
+# Antigen file
+subprocess.run([f"pdbhadd -a {ligand} {antigen_hydrogens}"], shell=True)
+
+#*************************************************************************
+# Run Megadock
+subprocess.run([f"~/DockingSoftware/megadock-4.1.1/megadock -R {antibody_hydrogens} -L {antigen_hydrogens} -o megadock.out"], shell=True)
 # Define output filename
 outfile = OUTPath+inputfilename + "_rank_Dag.pdb"
 
@@ -80,7 +94,7 @@ with open('megadock.out.zr.out') as file:
          top_hit = contents[0]
 
 # Extract top docking result from megadock using decoygen
-subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + ligand + " megadock.out " + top_hit], shell=True)
+subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + antigen_hydrogens + " megadock.out " + top_hit], shell=True)
 
 # Remove megadock.out and megadock.out.zr.out files
 subprocess.run(["rm megadock.out megadock.out.zr.out"], shell=True)
