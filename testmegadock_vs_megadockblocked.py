@@ -78,7 +78,7 @@ BLOCKED_RANKED_ca = []
 #*************************************************************************
 
 # For loop to run megadock and megadock_blocked 50 times
-for i in range(5):
+for i in range(50):
    # Give run number
    run = "Run " + str(i)
    dockingresults += ["", run]
@@ -329,21 +329,25 @@ dockingresults += [Megadock_name]
 dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[0]), "CA atoms:   " + str(avg_scores[1])]
 dockingresults += ["Best Score", "All atoms:   " + str(best_scores[0]), "CA atoms:   " + str(best_scores[1])]
 dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[0])]
+dockingresults += [" "]
 # Megadock blocked
 dockingresults += [Blocked_name]
 dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[2]), "CA atoms:   " + str(avg_scores[3])]
 dockingresults += ["Best Score", "All atoms:   " + str(best_scores[2]), "CA atoms:   " + str(best_scores[3])]
 dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[2])]
+dockingresults += [" "]
 # Megadock Ranked
 dockingresults += [Ranked_name]
 dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[4]), "CA atoms:   " + str(avg_scores[5])]
 dockingresults += ["Best Score", "All atoms:   " + str(best_scores[4]), "CA atoms:   " + str(best_scores[5])]
 dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[4])]
+dockingresults += [" "]
 # Megadock blocked and ranked
 dockingresults += [Blocked_ranked_name]
 dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[6]), "CA atoms:   " + str(avg_scores[7])]
 dockingresults += ["Best Score", "All atoms:   " + str(best_scores[6]), "CA atoms:   " + str(best_scores[7])]
 dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[6])]
+dockingresults += [" "]
 
 
 #*************************************************************************
