@@ -37,6 +37,8 @@ import sys
 import os
 import subprocess
 import time
+import re
+import statistics
 
 #*************************************************************************
 
@@ -63,9 +65,20 @@ spacer = ""
 dockingresults = [header,spacer]
 
 #*************************************************************************
+# Collect method scores to get average scores etc
+MEGADOCK_all = []
+MEGADOCK_ca = []
+BLOCKED_all = []
+BLOCKED_ca = []
+RANKED_all = []
+RANKED_ca = []
+BLOCKED_RANKED_all = []
+BLOCKED_RANKED_ca = []
 
-# For loop to run megadock and megadock_blocked 10 times
-for i in range(10):
+#*************************************************************************
+
+# For loop to run megadock and megadock_blocked 50 times
+for i in range(5):
    # Give run number
    run = "Run " + str(i)
    dockingresults += ["", run]
@@ -109,6 +122,12 @@ for i in range(10):
    dockingresults += [CA_atoms]
    # Add spacer line before next method
    dockingresults += " "
+   # Get floats from result lines
+   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
+   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   # Add floats to result lists
+   MEGADOCK_all += [RMSD_all]
+   MEGADOCK_ca += [RMSD_ca]
 
 #*************************************************************************
    # MEGADOCK BLOCKED Antibody
@@ -142,6 +161,12 @@ for i in range(10):
    dockingresults += [CA_atoms]
    # Add spacer line before next method
    dockingresults += " "
+   # Get floats from result lines
+   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
+   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   # Add floats to result lists
+   BLOCKED_all += [RMSD_all]
+   BLOCKED_ca += [RMSD_ca]
 
    #**********************************************************************
 
@@ -207,6 +232,12 @@ for i in range(10):
    dockingresults += [CA_atoms]
    # Add spacer line before next method
    dockingresults += " "
+   # Get floats from result lines
+   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
+   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   # Add floats to result lists
+   RANKED_all += [RMSD_all]
+   RANKED_ca += [RMSD_ca]
 
 
 #*************************************************************************
@@ -223,7 +254,7 @@ for i in range(10):
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output" + current_time
+   method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output   " + current_time
    # Run Megadock-4.1.1
    subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_brank_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
@@ -241,6 +272,71 @@ for i in range(10):
    dockingresults += [CA_atoms]
    # Add spacer line before next method
    dockingresults += " "
+   # Get floats from result lines
+   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
+   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   # Add floats to result lists
+   BLOCKED_RANKED_all += [RMSD_all]
+   BLOCKED_RANKED_ca += [RMSD_ca]
+
+#*************************************************************************
+# Calculate average scores, best result etc from lists of results
+scores_all = [MEGADOCK_all, MEGADOCK_ca, BLOCKED_all, BLOCKED_ca, RANKED_all, RANKED_ca, BLOCKED_RANKED_all, BLOCKED_RANKED_ca]
+
+# Function to get best (lowest) score from list
+def getbestscore(list):
+   bestscore = 10
+   for item in list:
+      if item < bestscore:
+         bestscore = item
+   return bestscore
+
+# Function to get number of good (<3.0 RMSD) hits
+def getnumberhits(list):
+   hits = 0
+   for item in list:
+      if item < 3.0:
+         hits +=1
+   return hits
+
+# Calculate scores for each method
+avg_scores = []
+best_scores = []
+num_hits = []
+for item in (scores_all):
+   avg_scores += [statistics.mean(item)]
+   best_scores += [getbestscore(item)]
+   num_hits += [getnumberhits(item)]
+
+# Write scores to dockingresults
+# Define method names
+Megadock_name = "Megadock-4.1.1   CPU Single Node"
+Blocked_name = "Megadock-4.1.1   CPU Single Node   Blocked Antibody"
+Ranked_name = "Megadock-4.1.1   CPU Single Node   ZRANK Ranked Output"
+Blocked_ranked_name = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output"
+
+# Write scores to dockingresults
+# Megadock
+dockingresults += [Megadock_name]
+dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[0], "CA atoms:   " + avg_scores[1]]
+dockingresults += ["Best Score", "All atoms:   " + best_scores[0], "CA atoms:   " + best_scores[1]]
+dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[0]]
+# Megadock blocked
+dockingresults += [Blocked_name]
+dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[2], "CA atoms:   " + avg_scores[3]]
+dockingresults += ["Best Score", "All atoms:   " + best_scores[2], "CA atoms:   " + best_scores[3]]
+dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[2]]
+# Megadock Ranked
+dockingresults += [Ranked_name]
+dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[4], "CA atoms:   " + avg_scores[5]]
+dockingresults += ["Best Score", "All atoms:   " + best_scores[4], "CA atoms:   " + best_scores[5]]
+dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[4]]
+# Megadock blocked and ranked
+dockingresults += [Blocked_ranked_name]
+dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[6], "CA atoms:   " + avg_scores[7]]
+dockingresults += ["Best Score", "All atoms:   " + best_scores[6], "CA atoms:   " + best_scores[7]]
+dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[6]]
+
 
 #*************************************************************************
 
