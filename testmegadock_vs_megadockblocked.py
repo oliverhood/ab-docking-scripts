@@ -123,11 +123,13 @@ for i in range(5):
    # Add spacer line before next method
    dockingresults += " "
    # Get floats from result lines
-   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
-   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   RMSD_all = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   RMSD_ca = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
    # Add floats to result lists
-   MEGADOCK_all += [RMSD_all]
-   MEGADOCK_ca += [RMSD_ca]
+   for item in RMSD_all:
+      MEGADOCK_all += [float(item)]
+   for item in RMSD_ca:
+      MEGADOCK_ca += [float(item)]
 
 #*************************************************************************
    # MEGADOCK BLOCKED Antibody
@@ -162,11 +164,13 @@ for i in range(5):
    # Add spacer line before next method
    dockingresults += " "
    # Get floats from result lines
-   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
-   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   RMSD_all = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   RMSD_ca = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
    # Add floats to result lists
-   BLOCKED_all += [RMSD_all]
-   BLOCKED_ca += [RMSD_ca]
+   for item in RMSD_all:
+      BLOCKED_all += [float(item)]
+   for item in RMSD_ca:
+      BLOCKED_ca += [float(item)]
 
    #**********************************************************************
 
@@ -233,11 +237,13 @@ for i in range(5):
    # Add spacer line before next method
    dockingresults += " "
    # Get floats from result lines
-   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
-   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   RMSD_all = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   RMSD_ca = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
    # Add floats to result lists
-   RANKED_all += [RMSD_all]
-   RANKED_ca += [RMSD_ca]
+   for item in RMSD_all:
+      RANKED_all += [float(item)]
+   for item in RMSD_ca:
+      RANKED_ca += [float(item)]
 
 
 #*************************************************************************
@@ -273,11 +279,13 @@ for i in range(5):
    # Add spacer line before next method
    dockingresults += " "
    # Get floats from result lines
-   RMSD_all = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms))
-   RMSD_ca = float(re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms))
+   RMSD_all = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   RMSD_ca = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
    # Add floats to result lists
-   BLOCKED_RANKED_all += [RMSD_all]
-   BLOCKED_RANKED_ca += [RMSD_ca]
+   for item in RMSD_all:
+      BLOCKED_RANKED_all += [float(item)]
+   for item in RMSD_ca:
+      BLOCKED_RANKED_ca += [float(item)]
 
 #*************************************************************************
 # Calculate average scores, best result etc from lists of results
