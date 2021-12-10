@@ -326,24 +326,24 @@ Blocked_ranked_name = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRA
 # Write scores to dockingresults
 # Megadock
 dockingresults += [Megadock_name]
-dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[0], "CA atoms:   " + avg_scores[1]]
-dockingresults += ["Best Score", "All atoms:   " + best_scores[0], "CA atoms:   " + best_scores[1]]
-dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[0]]
+dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[0]), "CA atoms:   " + str(avg_scores[1])]
+dockingresults += ["Best Score", "All atoms:   " + str(best_scores[0]), "CA atoms:   " + str(best_scores[1])]
+dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[0])]
 # Megadock blocked
 dockingresults += [Blocked_name]
-dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[2], "CA atoms:   " + avg_scores[3]]
-dockingresults += ["Best Score", "All atoms:   " + best_scores[2], "CA atoms:   " + best_scores[3]]
-dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[2]]
+dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[2]), "CA atoms:   " + str(avg_scores[3])]
+dockingresults += ["Best Score", "All atoms:   " + str(best_scores[2]), "CA atoms:   " + str(best_scores[3])]
+dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[2])]
 # Megadock Ranked
 dockingresults += [Ranked_name]
-dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[4], "CA atoms:   " + avg_scores[5]]
-dockingresults += ["Best Score", "All atoms:   " + best_scores[4], "CA atoms:   " + best_scores[5]]
-dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[4]]
+dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[4]), "CA atoms:   " + str(avg_scores[5])]
+dockingresults += ["Best Score", "All atoms:   " + str(best_scores[4]), "CA atoms:   " + str(best_scores[5])]
+dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[4])]
 # Megadock blocked and ranked
 dockingresults += [Blocked_ranked_name]
-dockingresults += ["Average RMSD", "All atoms:   " + avg_scores[6], "CA atoms:   " + avg_scores[7]]
-dockingresults += ["Best Score", "All atoms:   " + best_scores[6], "CA atoms:   " + best_scores[7]]
-dockingresults += ["Number of good hits (<3.0 RMSD)", num_hits[6]]
+dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[6]), "CA atoms:   " + str(avg_scores[7])]
+dockingresults += ["Best Score", "All atoms:   " + str(best_scores[6]), "CA atoms:   " + str(best_scores[7])]
+dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[6])]
 
 
 #*************************************************************************
