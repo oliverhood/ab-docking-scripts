@@ -38,7 +38,7 @@ import os
 import sys
 import subprocess
 import re
-from runprofit_lib import getantigenchainid
+from dockingtools_lib import getantigenchainid
 
 #*************************************************************************
 
