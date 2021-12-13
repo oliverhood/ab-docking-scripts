@@ -71,7 +71,7 @@ subprocess.run([f"pdbhadd -a {ligand} {antigen_hydrogens}"], shell=True)
 # Run Megadock
 subprocess.run([f"~/DockingSoftware/megadock-4.1.1/megadock -R {antibody_hydrogens} -L {antigen_hydrogens} -o megadock.out"], shell=True)
 # Define output filename
-outfile = OUTPath+inputfilename + "_rank_Dag.pdb"
+outfile = OUTPath+inputfilename + "_megadockranked_Dag.pdb"
 
 #*************************************************************************
 # Run ZRank on megadock outfileq
