@@ -221,7 +221,7 @@ for i in range(2):
    # Copy ab file to new file ab_r.pdb
    subprocess.run(["cp " + ab_filename + " " + ab_r_filename], shell =True) 
    # Define Dag output filename
-   Dag_rank_filename = OUTPath_i + "%s_rank_Dag.pdb" % filename
+   Dag_rank_filename = OUTPath_i + "%s_megadockranked_Dag.pdb" % filename
 
    # Evaluate docking result
    output=subprocess.check_output(["~/ab-docking-scripts/runprofit.py " + PDBfile + " " + ab_r_filename + " " + Dag_rank_filename + " " + OUTPath_i], shell=True)
