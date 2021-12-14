@@ -37,6 +37,7 @@ V1.0   19.11.2021   Original   By: OECH
 import sys
 import os
 import subprocess
+from runprofit_lib import combineabdagfiles
 
 #*************************************************************************
 # Get input files
@@ -95,6 +96,31 @@ with open('megadock.out.zr.out') as file:
 
 # Extract top docking result from megadock using decoygen
 subprocess.run(["~/DockingSoftware/megadock-4.1.1/decoygen " + outfile + " " + antigen_hydrogens + " megadock.out " + top_hit], shell=True)
+
+#*************************************************************************
+
+# Combine ab and dag files to give single docked output file
+
+# Output filename
+resultfile = OUTPath + inputfilename + "_MegadockRanked_result.pdb"
+# Open antibody file
+with open(receptor) as file:
+   # Extract contents
+   ab = file.readlines()
+   # Open docked antigen file
+with open(outfile) as file:
+   # Extract contents
+   dag = file.readlines()
+   # Combine antibody and docked antigen files
+AbDag = ab + dag
+# Write new PDB file
+with open(resultfile, "w") as file:
+   for line in AbDag:
+   # Skip lines containing 'END'
+      if 'END' not in line.strip('\n'):
+         file.write(line)
+
+#*************************************************************************
 
 # Remove megadock.out and megadock.out.zr.out files
 subprocess.run(["rm megadock.out megadock.out.zr.out"], shell=True)
