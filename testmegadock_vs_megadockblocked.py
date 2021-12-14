@@ -78,7 +78,7 @@ BLOCKED_RANKED_ca = []
 #*************************************************************************
 
 # For loop to run megadock and megadock_blocked 50 times
-for i in range(50):
+for i in range(2):
    # Give run number
    run = "Run " + str(i)
    dockingresults += ["", run]
@@ -103,9 +103,9 @@ for i in range(50):
    # MEGADOCK
 
    # Get date and time that method is being run at
-   current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   " + current_time
+   method = "Megadock-4.1.1 | CPU Single Node | " + current_time
    # Run Megadock-4.1.1
    subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
@@ -140,9 +140,9 @@ for i in range(50):
    ab_blocked = OUTPath_i + "%s_ab_blocked.pdb" % filename
 
    # Get date and time that method is being run at
-   current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   " + current_time
+   method = "Megadock-4.1.1 | CPU Single Node | Blocked Antibody | " + current_time
    # Run Megadock-4.1.1
    subprocess.run(["~/ab-docking-scripts/runmegadock.py " + ab_blocked + " " + ag_filename + " " + OUTPath_i], shell=True)
 
@@ -210,9 +210,9 @@ for i in range(50):
    # MEGADOCK RANKED
 
    # Get date and time that method is being run at
-   current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   ZRANK Ranked Output   " + current_time
+   method = "Megadock-4.1.1 | CPU Single Node | ZRANK Ranked Output | " + current_time
 
    # Run Megadockranked on unblocked antibody/antigen files
    subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
@@ -258,9 +258,9 @@ for i in range(50):
    subprocess.run(["cp " + ab_filename + " " + ab_brank_filename], shell =True) 
 
    # Get date and time that method is being run at
-   current_time = time.strftime(r"%d.%m.%Y   %H:%M:%S", time.localtime())
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
-   method = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output   " + current_time
+   method = "Megadock-4.1.1 | CPU Single Node | Blocked Antibody | ZRANK Ranked Output | " + current_time
    # Run Megadock-4.1.1
    subprocess.run(["~/ab-docking-scripts/runmegadockranked.py " + ab_brank_filename + " " + ag_filename + " " + OUTPath_i], shell=True)
 
@@ -286,6 +286,11 @@ for i in range(50):
       BLOCKED_RANKED_all += [float(item)]
    for item in RMSD_ca:
       BLOCKED_RANKED_ca += [float(item)]
+
+#*************************************************************************
+
+   # Indicate end of run
+   dockingresults += ["**********"]
 
 #*************************************************************************
 # Calculate average scores, best result etc from lists of results
@@ -318,10 +323,14 @@ for item in (scores_all):
 
 # Write scores to dockingresults
 # Define method names
-Megadock_name = "Megadock-4.1.1   CPU Single Node"
-Blocked_name = "Megadock-4.1.1   CPU Single Node   Blocked Antibody"
-Ranked_name = "Megadock-4.1.1   CPU Single Node   ZRANK Ranked Output"
-Blocked_ranked_name = "Megadock-4.1.1   CPU Single Node   Blocked Antibody   ZRANK Ranked Output"
+Megadock_name = "Megadock-4.1.1 | CPU Single Node"
+Blocked_name = "Megadock-4.1.1 | CPU Single Node | Blocked Antibody"
+Ranked_name = "Megadock-4.1.1 | CPU Single Node | ZRANK Ranked Output"
+Blocked_ranked_name = "Megadock-4.1.1 | CPU Single Node | Blocked Antibody | ZRANK Ranked Output"
+
+# Write summary scores header
+dockingresults += ["Summary Evaluation Metrics"]
+dockingresults += ["=========================="]
 
 # Write scores to dockingresults
 # Megadock
@@ -346,7 +355,7 @@ dockingresults += [" "]
 dockingresults += [Blocked_ranked_name]
 dockingresults += ["Average RMSD", "All atoms:   " + str(avg_scores[6]), "CA atoms:   " + str(avg_scores[7])]
 dockingresults += ["Best Score", "All atoms:   " + str(best_scores[6]), "CA atoms:   " + str(best_scores[7])]
-dockingresults += ["Number of good hits (<3.0 RMSD)", str(num_hits[6])]
+dockingresults += ["Number of good hits (<3.0 RMSD):", str(num_hits[6])]
 dockingresults += [" "]
 
 
