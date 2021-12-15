@@ -127,7 +127,7 @@ inputfilename = os.path.basename(OG_file).split('.')[0]
 # Define output file name
 resultfile = OUTPath + inputfilename + "_Piper_result.pdb"
 # Define Dag filename
-dag_filename = OUTPath + "lig.000.00.pdb"
+dag_filename = "lig.000.00.pdb"
 # Combine antibody and Dag files
 with open(receptor) as file:
    # Extract contents
