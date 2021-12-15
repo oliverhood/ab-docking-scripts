@@ -182,7 +182,7 @@ for i in range(3):
    dockingresults += [method]
 
    # Run piper
-   subprocess.run([f"~/ab-docking-scripts/runpiper.py {ab_filename} {ag_filename} {OUTPath_i}"], shell=True)
+   subprocess.run([f"~/ab-docking-scripts/runpiper.py {PDBfile} {ab_filename} {ag_filename} {OUTPath_i}"], shell=True)
 
    # Define output filename
    piper_resultfile = OUTPath_i + inputfilename + "_Piper_result.pdb"
