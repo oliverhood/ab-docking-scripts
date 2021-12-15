@@ -93,13 +93,41 @@ with open('zdock.out.zr.out') as file:
          # Get number of the top hit
          top_hit = contents[0]
 
+# Print top_hit incase structures weren't generated (next block)
+print(f"Best ZRANK hit is : {top_hit}")
+
 #*************************************************************************
 
-# Define output filename
-outfile = OUTPath+inputfilename + "_zdock_Dag.pdb"
+# Create output Dag files (up to number of top hit) limited to 500 bc otherwise will take ages
 
-# Extract top docking result from zdock using megadock's decoygen script
-subprocess.run([f"~/DockingSoftware/megadock-4.1.1/decoygen {outfile} {antigen_hydrogens} {OUTPath}zdock.out {top_hit}"], shell=True)
+if int(top_hit) <= 500:
+   subprocess.run([f"~/DockingSoftware/zdock3.0.2/create.pl zdock.out {top_hit}"], shell=True)
+   
+   # Define best hit filename
+   top_hit_filename = f"complex.{top_hit}.pdb"
+   
+   # Create combined resultfile including tophit as docked antigen
+
+   # Output filename
+   resultfile = OUTPath + inputfilename + "_ZDOCK_ranked_result.pdb"
+   # Open antibody file
+   with open(receptor) as file:
+      # Extract contents
+      ab = file.readlines()
+   # Open docked antigen file
+   with open(top_hit_filename) as file:
+      # Extract contents
+      dag = file.readlines()
+   # Combine antibody and docked antigen files
+   AbDag = ab + dag
+   # Write new PDB file
+   with open(resultfile, "w") as file:
+      for line in AbDag:
+      # Skip lines containing 'END'
+         if 'END' not in line.strip('\n'):
+            file.write(line)
+else:
+   print("Top hit is above result 500 - handle separately")
 
 #*************************************************************************
 
