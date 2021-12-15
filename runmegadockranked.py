@@ -121,6 +121,3 @@ with open(resultfile, "w") as file:
          file.write(line)
 
 #*************************************************************************
-
-# Remove megadock.out and megadock.out.zr.out files
-subprocess.run(["rm megadock.out megadock.out.zr.out"], shell=True)
