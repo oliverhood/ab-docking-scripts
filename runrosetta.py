@@ -111,6 +111,9 @@ best_structure_file_compressed = best_structure_file + ".gz"
 # Define new filename for best structure
 rosetta_out = OUTPath + filename + "_Rosetta_result.pdb"
 
+# Check current directory
+print(os.getcwd())
+
 # Decompress best result
 subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"])
 # Copy the file contents to new file
