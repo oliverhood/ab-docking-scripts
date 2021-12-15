@@ -105,7 +105,7 @@ subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/d
 # Get the best docked structure from the scores file
 scores_file = "score_local_dock.sc"
 best_structure = getbestresult(scores_file)
-best_structure_file = OUTPath + best_structure
+best_structure_file = best_structure
 best_structure_file_compressed = best_structure_file + ".gz"
 
 # Define new filename for best structure
