@@ -98,12 +98,12 @@ for i in range(3):
 #*************************************************************************
 
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
-   subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {PDBfile} {OUTPath}"], shell=True)
+   subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {PDBfile} {OUTPath_i}"], shell=True)
    # Get the base filename from the input file
    inputfilename = os.path.basename(PDBfile).split('.')[0]
    # Get the filenames for the split antibody/antigen chains
-   ab_filename = OUTPath + "%s_ab.pdb" % inputfilename
-   ag_filename = OUTPath + "%s_ag.pdb" % inputfilename
+   ab_filename = OUTPath_i + "%s_ab.pdb" % inputfilename
+   ag_filename = OUTPath_i + "%s_ag.pdb" % inputfilename
 
 #*************************************************************************
 
