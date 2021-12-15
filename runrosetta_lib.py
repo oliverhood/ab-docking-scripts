@@ -43,7 +43,9 @@ def combine_input_files(ab_file, ag_file):
    Combine the input antibody and antigen files into a single PDB file for input to Rosetta.
    """
    # Get input filename
-   filename = os.path.basename(ab_file).split('.')[0].split('_')[0:2]
+   filename_1 = os.path.basename(ab_file).split('.')[0].split('_')[0]
+   filename_2 = os.path.basename(ab_file).split('.')[0].split('_')[1]
+   filename = f"{filename_1}_{filename_2}"
    # Define new filename
    outfile = "%s_Rosetta_input.pdb" % filename
    # Open antibody file
