@@ -101,6 +101,9 @@ print(f"Best ZRANK hit is : {top_hit}")
 # Create output Dag files (up to number of top hit) limited to 500 bc otherwise will take ages
 
 if int(top_hit) <= 500:
+   # Copy create_lig to directory
+   subprocess.run([f"cp ~/DockingSoftware/zdock3.0.2/create_lig {OUTPath}"], shell=True)
+   # Run create.pl
    subprocess.run([f"~/DockingSoftware/zdock3.0.2/create.pl zdock.out {top_hit}"], shell=True)
    
    # Define best hit filename
