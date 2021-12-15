@@ -163,6 +163,42 @@ def evaluate_results(OG_file, *args, single_file=True):
 
 #*************************************************************************
 
+def getlowestscore(list):
+   """
+   Take a list of scores as input and output the lowest score.
+   """
+   bestscore = 10
+   for item in list:
+      if item < bestscore:
+         bestscore = item
+   return bestscore
+
+#*************************************************************************
+
+def gethighestscore(list):
+   """
+   Take a list of scores as input and output the highest score.
+   """
+   bestscore = 0
+   for item in list:
+      if item > bestscore:
+         bestscore = item
+   return bestscore
+
+#*************************************************************************
+
+def getnumberhits(list):
+   """
+   Take a list of RMSD values as input and output the number of 'hits', scores below an RMSD of 3.
+   """
+   hits = 0
+   for item in list:
+      if item < 3.0:
+         hits +=1
+   return hits
+
+#*************************************************************************
+
 # Testing functions
 if __name__ == "__main__":
     import doctest
