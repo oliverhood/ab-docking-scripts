@@ -38,6 +38,34 @@ from dockingtools_lib import (getantigenchainid, writefile)
 
 #*************************************************************************
 
+def combine_input_files(ab_file, ag_file):
+   """
+   Combine the input antibody and antigen files into a single PDB file for input to Rosetta.
+   """
+   # Get input filename
+   filename = os.path.basename(ab_file).split('.')[0].split('_')[0:2]
+   # Define new filename
+   outfile = "%s_Rosetta_input.pdb" % filename
+   # Open antibody file
+   with open(ab_file) as file:
+      # Extract contents
+      ab = file.readlines()
+   # Open antigen file
+   with open(ag_file) as file:
+      # Extract contents
+      dag = file.readlines()
+   # Combine antibody and antigen files
+   AbDag = ab + dag
+   # # Write new PDB file
+   # Write new PDB file
+   with open(outfile, "w") as file:
+      for line in AbDag:
+         # Skip lines containing 'END'
+         if 'END' not in line.strip('\n'):
+            file.write(line)
+
+#*************************************************************************
+
 def writeprepack_flags(PDBfile):
    """
    Write the prepack_flags file needed to run the Rosetta prepack protocol.
