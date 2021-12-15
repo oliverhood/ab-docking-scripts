@@ -115,13 +115,11 @@ def evaluate_results(OG_file, *args, single_file=True):
    Take either a single docked antibody/antigen structure, or separate antibody and antigen structures as input, run the relevant runprofit script on the structures and output the results into a results file. (Will later add functionality to determine the proportion of correctly predicted contacts)
 
    >>> evaluate_results('test/test8_OG.pdb', 'test/test8_single.pdb')
-   ['Docking test on test/test8_OG.pdb   07.12.2021', '', 'Method name not specified', 'All atoms RMSD:  10.751', 'CA atoms RMSD:   10.572']
+   ('All atoms RMSD:  10.751', 'CA atoms RMSD:   10.572', 'Correctly predicted residue pairs:       0.24324324324324326', 'Correctly predicted residues (antibody): 0.5789473684210527', 'Correctly predicted residues (antigen):  0.6428571428571429')
    >>> evaluate_results('test/test8_OG.pdb', 'test/test8_ab.pdb', 'test/test8_Dag.pdb')
-   ['Docking test on test/test8_OG.pdb   07.12.2021', '', 'Method name not specified', 'All atoms RMSD:  1.652', 'CA atoms RMSD:   1.622']
+   ('All atoms RMSD:  1.652', 'CA atoms RMSD:   1.622', 'Single PDB file needed as input', 'Single PDB file needed as input', 'Single PDB file needed as input')
 
    """
-   # Initialise results list
-   dockingresults = []
    # Check whether input is single file (antibody+antigen) or separate files (antibody, antigen)
    if len(args) > 1:
       single_file=False
@@ -130,40 +128,38 @@ def evaluate_results(OG_file, *args, single_file=True):
       # Define the docked_file
       docked_file = args[0]
       # Run the relevant profit script, capture results in 'result'
-      result = subprocess.check_output([f"~/ab-docking-scripts/runprofit_single.py {OG_file} {docked_file}"], shell=True)
-      result = str(result, 'utf-8')
+      result_profit = subprocess.check_output([f"~/ab-docking-scripts/runprofit_single.py {OG_file} {docked_file}"], shell=True)
+      result_profit = str(result_profit, 'utf-8')
       # Extract the result lines from output
-      contents = result.split('\n')
+      contents = result_profit.split('\n')
       all_atoms = contents[0]
       CA_atoms = contents[1]
-      # Add method, results to dockingresults
-      dockingresults += [method_title]
-      dockingresults += [all_atoms]
-      dockingresults += [CA_atoms]
-      # Add spacer
-      dockingresults += ""
+      # Get interface evaluation metrics using evaluate_interface.py
+      result_interface = subprocess.check_output([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {docked_file}"], shell=True)
+      result_interface = str(result_interface, 'utf-8')
+      # Extract the result lines from output
+      contents = result_interface.split('\n')
+      res_pairs = contents[2]
+      ab_res = contents[3]
+      ag_res = contents[4]
    # If the input contains separate PDB files for the antibody and docked antigen chains
    if not single_file:
       # Set Title
-      method_title = f"{method}"
       # Define the input files
       Ab_file = args[0]
       Dag_file = args[1]
       # Run the relevant profit script, capture results in 'result'
-      result = subprocess.check_output([f"~/ab-docking-scripts/runprofit.py {OG_file} {Ab_file} {Dag_file}"], shell=True)
-      result = str(result, 'utf-8')
+      result_profit = subprocess.check_output([f"~/ab-docking-scripts/runprofit.py {OG_file} {Ab_file} {Dag_file}"], shell=True)
+      result_profit = str(result_profit, 'utf-8')
       # Extract the result lines from output
-      contents = result.split('\n')
+      contents = result_profit.split('\n')
       all_atoms = contents[0]
       CA_atoms = contents[1]
-      # Add method, results to dockingresults
-      dockingresults += [method_title]
-      dockingresults += [all_atoms]
-      dockingresults += [CA_atoms]
-      # Add spacer
-      dockingresults += ""
+      res_pairs = "Single PDB file needed as input"
+      ab_res = "Single PDB file needed as input"
+      ag_res = "Single PDB file needed as input"
    # Return docking results
-   return dockingresults
+   return all_atoms, CA_atoms, res_pairs, ab_res, ag_res
 
 #*************************************************************************
 
