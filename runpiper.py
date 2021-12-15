@@ -109,7 +109,34 @@ subprocess.run([f"sblu docking cluster -o clustermat.000.00.clusters clustermat.
 # Generate cluster centers without minimising models
 subprocess.run([f"sblu docking gen_cluster_pdb -l 1 clustermat.000.00.clusters ft.000.00 ~/DockingSoftware/piper/prms/rots.prm {ligand_processed} -o lig.000"], shell=True)
 
-# Output PDB file will always be called 'lig.000.00.pdb'
+# Output Dag PDB file will always be called 'lig.000.00.pdb'
+
+#*************************************************************************
+# Combine antibody and docked antigen files to give a single output file
+
+# Get input filename
+inputfilename = os.path.basename(OG_file).split('.')[0]
+# Define output file name
+resultfile = OUTPath + inputfilename + "_Piper_result.pdb"
+# Define Dag filename
+dag_filename = OUTPath + "lig.000.00.pdb"
+# Combine antibody and Dag files
+with open(receptor) as file:
+   # Extract contents
+   ab = file.readlines()
+   # Open docked antigen file
+with open(dag_filename) as file:
+   # Extract contents
+   dag = file.readlines()
+   # Combine antibody and docked antigen files
+AbDag = ab + dag
+# Write new PDB file
+with open(resultfile, "w") as file:
+   for line in AbDag:
+   # Skip lines containing 'END'
+      if 'END' not in line.strip('\n'):
+         file.write(line)
+
 
 #*************************************************************************
 
