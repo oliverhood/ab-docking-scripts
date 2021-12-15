@@ -187,13 +187,13 @@ def gethighestscore(list):
 
 #*************************************************************************
 
-def getnumberhits(list):
+def getnumberhits(list, cutoff=3.0):
    """
    Take a list of RMSD values as input and output the number of 'hits', scores below an RMSD of 3.
    """
    hits = 0
    for item in list:
-      if item < 3.0:
+      if item < cutoff:
          hits +=1
    return hits
 
