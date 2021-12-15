@@ -95,7 +95,7 @@ subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/d
 # Perform docking run
 
 # Write docking_flags
-writedocking_flags(PDBfile, runs)
+writedocking_flags(PDBfile, nstructures=runs, OUTPath=OUTPath)
 
 # Run the docking protocol
 subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/docking_protocol.default.linuxgccrelease @docking_flags"], shell=True)
