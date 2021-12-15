@@ -71,6 +71,10 @@ subprocess.run([f"~/DockingSoftware/piper/protein_prep/prepare.py {receptor}"], 
 # Get original receptor file name
 receptor_name = os.path.basename(receptor).split('.')[0]
 # Define processed receptor filename
+receptor_processed = receptor_name + "_pnon.pdb"
+# Move processed receptor to OUTPath directory
+subprocess.run([f"mv {receptor_processed} {OUTPath}"], shell=True)
+# Define new processed receptor filename
 receptor_processed = OUTPath + receptor_name + "_pnon.pdb"
 
 # Process ligand
@@ -78,6 +82,10 @@ subprocess.run([f"~/DockingSoftware/piper/protein_prep/prepare.py {ligand}"], sh
 # Get original ligand file name
 ligand_name = os.path.basename(ligand).split('.')[0]
 # Define processed ligand filename
+ligand_processed = ligand_name + "_pnon.pdb"
+# Move processed receptor to OUTPath directory
+subprocess.run([f"mv {ligand_processed} {OUTPath}"], shell=True)
+# Define new processed receptor file
 ligand_processed = OUTPath + ligand_name + "_pnon.pdb"
 
 #*************************************************************************
