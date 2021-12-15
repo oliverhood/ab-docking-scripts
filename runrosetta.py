@@ -19,7 +19,7 @@ This program takes a PDB file containing an antibody and an antigen as input, pr
 
 Usage:
 ======
-runrosetta.py PDBfile num_outputs OUTPath
+runrosetta.py PDBfile antibody antigen num_outputs OUTPath
 
 --------------------------------------------------------------------------
 
@@ -36,25 +36,30 @@ V1.0   03.12.2021   Original   By: OECH
 import subprocess
 import sys
 import os
-from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresult)
+from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresult, combine_input_files)
 
 #*************************************************************************
 
 # Define Input Files
-# Processed (splitantibodyantigenchains_rosetta.py) file
+# PDB file
 PDBfile = sys.argv[1]
+# Antibody file
+antibody = sys.argv[2]
+
+# Antigen file
+antigen = sys.argv[3]
 
 # Get number of docking runs to carry out (num_outputs)
 runs = 10
 try:
-   runs = sys.argv[2]
+   runs = sys.argv[4]
 except IndexError:
    runs = 10
 
 # Define OUTPath
 OUTPath = './'
 try:
-   OUTPath = sys.argv[3] + '/'
+   OUTPath = sys.argv[5] + '/'
 except IndexError:
    OUTPath = './'
 
@@ -63,6 +68,17 @@ except IndexError:
 # Create directory to output docked PDBs
 outdir = OUTPath + "docking_out"
 subprocess.run([f"mkdir {outdir}"], shell=True)
+
+#*************************************************************************
+
+# Combine input files into signle PDB
+combine_input_files(antibody, antigen)
+
+# Define combined filename
+# Get input filename
+filename = os.path.basename(PDBfile).split('.')[0]
+# Combined filename
+combined_filename = OUTPath + filename + "_Rosetta_input.pdb"
 
 #*************************************************************************
 
@@ -92,10 +108,8 @@ best_structure = getbestresult(scores_file)
 best_structure_file = OUTPath + best_structure
 best_structure_file_compressed = best_structure_file + ".gz"
 
-# Get input filename
-filename = os.path.basename(PDBfile).split('.')[0]
 # Define new filename for best structure
-rosetta_out = OUTPath + filename + "_docked.pdb"
+rosetta_out = OUTPath + filename + "_Rosetta_result.pdb"
 
 # Decompress best result
 subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"])
