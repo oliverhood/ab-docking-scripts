@@ -105,17 +105,14 @@ subprocess.run(["/home/oliverh/DockingSoftware/rosetta/rosetta/main/source/bin/d
 # Get the best docked structure from the scores file
 scores_file = "score_local_dock.sc"
 best_structure = getbestresult(scores_file)
-best_structure_file = best_structure
+best_structure_file = OUTPath + best_structure
 best_structure_file_compressed = best_structure_file + ".gz"
 
 # Define new filename for best structure
 rosetta_out = OUTPath + filename + "_Rosetta_result.pdb"
 
-# Check current directory
-print(os.getcwd())
-
 # Decompress best result
-subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"])
+subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"], shell=True)
 # Copy the file contents to new file
 subprocess.run([f"cp {outdir}/{best_structure_file} {rosetta_out}"], shell=True)
 
