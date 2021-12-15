@@ -91,7 +91,7 @@ for i in range(3):
    # Get run number
    run = "Run " +str(i)
    # Make new directory to put results in
-   OUTPath_i = OUTPath + f"run{str(i)}"
+   OUTPath_i = OUTPath + f"run{str(i)}/"
    # Make directory
    os.mkdir(OUTPath_i)
 
