@@ -31,7 +31,7 @@ now=$(date +%m_%d_%Y)
 
 # Make directory for docking results
 results_dir=$(./docking_results_$now)
-mkdir $results_dir
+mkdir ./docking_results_$now
 
 # Loop through every PDB file in current directory
 for file in ./*.pdb
