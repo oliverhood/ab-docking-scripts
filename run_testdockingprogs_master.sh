@@ -26,19 +26,19 @@
 #>"""
 #*************************************************************************
 
-# Make directory for docking results
-mkdir ./docking_results
-
 # Get current date
 now=$(date +%m_%d_%Y)
+
+# Make directory for docking results
+mkdir ./docking_results_$now
 
 # Loop through every PDB file in current directory
 for file in ./*.pdb
    do
       # Copy file to docking results directory
-      cp $file ./docking_results
+      cp $file ./docking_results_$now
       # Move to docking results directory
-      cd ./docking_results
+      cd ./docking_results_$now
       # Run testdockingprogs_master with docking_results as the output directory
       ~/ab-docking-scripts/testdockingprogs_master.py $file
       # Get the file name (less .pdb)
