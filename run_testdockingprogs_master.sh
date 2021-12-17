@@ -37,7 +37,7 @@ results_dir=./docking_results_$now
 for file in ./*.pdb
    do
       # Get the file name (less .pdb)
-      filename=(basename $file .pdb)
+      filename=$(basename $file .pdb)
       # Make new directory within docking_results
       mkdir ./$results_dir/$filename
       # Copy file to docking results directory
