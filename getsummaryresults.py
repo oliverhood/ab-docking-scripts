@@ -19,7 +19,7 @@ This program takes the results file from testdockingprogs_master as input and ex
 
 Usage:
 ======
-getsummaryresults.py results_file OUTPath
+getsummaryresults.py results_file
 
 --------------------------------------------------------------------------
 
@@ -38,13 +38,6 @@ import sys, itertools, os
 
 # Define input file
 result_file = sys.argv[1]
-
-# Get output path from command line (if present)
-OUTPath = './'
-try:
-   OUTPath = sys.argv[2] + '/'
-except IndexError:
-   OUTPath = './'
 
 #*************************************************************************
 
