@@ -33,6 +33,7 @@ V1.0   12.11.21   Original   By: OECH
 
 # Import Libraries
 import sys, os, subprocess, time, re, statistics
+from threading import Timer
 from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile
 
 #*************************************************************************
@@ -145,6 +146,8 @@ for i in range(3):
    # Proportion of ag interface residues
    ag_res = results[4]
    dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
 
    # Get floats from result lines
    # all_atoms RMSD
@@ -210,6 +213,8 @@ for i in range(3):
    # Proportion of ag interface residues
    ag_res = results[4]
    dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
 
    # Get floats from result lines
    # all_atoms RMSD
@@ -274,6 +279,8 @@ for i in range(3):
    # Proportion of ag interface residues
    ag_res = results[4]
    dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
 
    # Get floats from result lines
    # all_atoms RMSD
@@ -303,6 +310,8 @@ for i in range(3):
 
    # Indicate end of run
    dockingresults += [f"***** End of Run {str(i)} *****"]
+   # Spacer
+   dockingresults += [" "]
 
 #*************************************************************************
 
