@@ -110,6 +110,8 @@ with open(result_file) as file:
 
 # Print input file name and date of test
 print(f"Docking test on {inputfilename} | {result_date}")
+print(f"===================================")
+print("")
 
 # Print Method results
 for method in all_methods:
@@ -117,8 +119,11 @@ for method in all_methods:
    for result in method:
       print(f"run{i}")
       i = i+1
-      print(result)
+      for line in result:
+         print(line.strip('\n'))
+      print("")
 
 # Print Summary result
-for line in summary_results:
-   print(line)
+for result in summary_results:
+   for line in result:
+      print(line.strip('\n'))
