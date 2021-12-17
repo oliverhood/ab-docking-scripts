@@ -40,13 +40,13 @@ for file in ./*.pdb
       # Move to docking results directory
       cd ./docking_results
       # Run testdockingprogs_master with docking_results as the output directory
-      ~/ab-docking-scripts/testdockingprogs_master.py $file ./docking_results
+      ~/ab-docking-scripts/testdockingprogs_master.py $file
       # Get the file name (less .pdb)
       filename=(basename $file .pdb)
       # Get results filename
       resultsfile=./docking_results/${filename}_dockingresults_*
       # Define output results_file
-      output_results=$(dockingresult_${now})
+      output_results=$('dockingresult_'${now})
       # Run getsummaryresults on results file, run into results file
       ~/ab-docking-scripts/getsummaryresults.py $resultsfile >> $output_results
    done
