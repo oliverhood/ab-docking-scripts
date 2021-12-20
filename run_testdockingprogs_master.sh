@@ -51,7 +51,7 @@ for file in ./*.pdb
       # Get results filename
       resultsfile=./docking_results_*/${filename}/${filename}_dockingresults_*
       # Define output results_file
-      output_results=dockingresult_${now}
+      output_results="dockingresult_${now}"
       # Run getsummaryresults on results file, run into results file
       ~/ab-docking-scripts/getsummaryresults.py $resultsfile >> $output_results
    done
