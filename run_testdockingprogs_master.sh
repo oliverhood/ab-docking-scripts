@@ -27,7 +27,7 @@
 #*************************************************************************
 
 # Get current date
-now=$(date +%m_%d_%Y)
+now=$(date +%d_%m_%Y)
 
 # Make directory for docking results
 mkdir ./docking_results_$now
@@ -49,9 +49,9 @@ for file in ./*.pdb
       # Return to main docking results directory
       cd ..
       # Get results filename
-      resultsfile=./docking_results/${filename}/${filename}_dockingresults_*
+      resultsfile=./docking_results_*/${filename}/${filename}_dockingresults_*
       # Define output results_file
-      output_results=$('dockingresult_'${now})
+      output_results=dockingresult_${now}
       # Run getsummaryresults on results file, run into results file
       ~/ab-docking-scripts/getsummaryresults.py $resultsfile >> $output_results
    done
