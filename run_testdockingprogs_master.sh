@@ -29,27 +29,30 @@
 # Get current date
 now=$(date +%d_%m_%Y)
 
+# Get the starting directory, save to variable
+pwd=`pwd`
+
 # Make directory for docking results
-mkdir ./docking_results_$now
-results_dir=./docking_results_$now
+mkdir ${pwd}/docking_results_$now
+results_dir=${pwd}/docking_results_$now
 
 # Loop through every PDB file in current directory
-for file in ./*.pdb
+for file in ${pwd}/*.pdb
    do
       # Get the file name (less .pdb)
       filename=$(basename $file .pdb)
       # Make new directory within docking_results
-      mkdir ./$results_dir/$filename
+      mkdir ${pwd}/$results_dir/$filename
       # Copy file to docking results directory
-      cp ./$file $results_dir/$filename
+      cp ${pwd}/$file $results_dir/$filename
       # Move to docking results directory
-      cd ./$results_dir/$filename
+      cd ${pwd}/$results_dir/$filename
       # Run testdockingprogs_master with docking_results as the output directory
       ~/ab-docking-scripts/testdockingprogs_master.py $file
       # Return to main docking results directory
-      cd ..
+      cd $pwd
       # Get results filename
-      resultsfile=./docking_results_*/${filename}/${filename}_dockingresults_*
+      resultsfile=${results_dir}/${filename}/${filename}_dockingresults_*
       # Define output results_file
       output_results="dockingresult_${now}"
       # Run getsummaryresults on results file, run into results file
