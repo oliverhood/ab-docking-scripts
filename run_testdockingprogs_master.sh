@@ -42,17 +42,17 @@ for file in ${pwd}/*.pdb
       # Get the file name (less .pdb)
       filename=$(basename $file .pdb)
       # Make new directory within docking_results
-      mkdir ${pwd}/$results_dir/$filename
+      mkdir $results_dir/$filename
       # Copy file to docking results directory
-      cp ${pwd}/$file $results_dir/$filename
+      cp $file $results_dir/$filename
       # Move to docking results directory
-      cd ${pwd}/$results_dir/$filename
+      cd $results_dir/$filename
       # Run testdockingprogs_master with docking_results as the output directory
       ~/ab-docking-scripts/testdockingprogs_master.py $file
       # Return to main docking results directory
       cd $pwd
       # Get results filename
-      resultsfile=${results_dir}/${filename}/${filename}_dockingresults_*
+      resultsfile= find -path ${results_dir}/${filename} -name "${filename}_dockingresults_*"
       # Define output results_file
       output_results="dockingresult_${now}"
       # Run getsummaryresults on results file, run into results file
