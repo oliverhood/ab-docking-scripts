@@ -39,6 +39,8 @@ results_dir=${pwd}/docking_results_$now
 # Loop through every PDB file in current directory
 for file in ${pwd}/*.pdb
    do
+      # Get current date again to find results file
+      now2=$(date +%d_%m_%Y)
       # Get the file name (less .pdb)
       filename=$(basename $file .pdb)
       # Make new directory within docking_results
@@ -52,7 +54,7 @@ for file in ${pwd}/*.pdb
       # Return to main docking results directory
       cd $pwd
       # Get results filename
-      resultsfile= find -path ${results_dir}/${filename} -name "${filename}_dockingresults_*"
+      resultsfile=${results_dir}/${filename}/${filename}_dockingresults_${now2}.results.txt
       # Define output results_file
       output_results="dockingresult_${now}"
       # Run getsummaryresults on results file, run into results file
