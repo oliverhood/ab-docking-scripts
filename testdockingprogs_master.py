@@ -404,8 +404,4 @@ results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}.resul
 # Write results file
 writefile(results_file, dockingresults)
 
-with open(results_file, "w") as file:
-   for line in dockingresults:
-       file.write("%s\n" % line)
-
 #*************************************************************************
