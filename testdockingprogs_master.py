@@ -400,7 +400,7 @@ dockingresults += [" "]
 #*************************************************************************
 
 # Define results file name
-results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}"
+results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}.results.txt"
 # Write results file
 writefile(results_file, dockingresults)
 
