@@ -87,10 +87,16 @@ Rosetta_ag_res = []
 
 #*************************************************************************
 
+# Get the base filename from the input file
+inputfilename = os.path.basename(PDBfile).split('.')[0]
+# Print starting docking
+print(f"Starting docking program on {inputfilename}...")
 # Repeat docking 3 times on PDB file, different orientation each time
 for i in range(3):
    # Get run number
    run = "Run " +str(i)
+   # Print start of run to command line
+   print(f"Starting {run}...")
    # Make new directory to put results in
    OUTPath_i = OUTPath + f"run{str(i)}/"
    # Make directory
@@ -100,8 +106,6 @@ for i in range(3):
 
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
    subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {PDBfile} {OUTPath_i}"], shell=True)
-   # Get the base filename from the input file
-   inputfilename = os.path.basename(PDBfile).split('.')[0]
    # Get the filenames for the split antibody/antigen chains
    ab_filename = OUTPath_i + "%s_ab.pdb" % inputfilename
    ag_filename = OUTPath_i + "%s_ag.pdb" % inputfilename
@@ -110,6 +114,8 @@ for i in range(3):
 
    # MEGADOCK
 
+   # Print starting megadock
+   print("Starting Megadock...")
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -173,10 +179,15 @@ for i in range(3):
    for item in ag_res_float:
       MD_ag_res += [float(item)]
 
+   # Print complete megadock
+   print("Megadock run complete.")
+
 #*************************************************************************
 
    # Piper
 
+   # Print starting piper
+   print("Starting Piper...")
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -240,9 +251,15 @@ for i in range(3):
    for item in ag_res_float:
       Piper_ag_res += [float(item)]
 
+   # Print piper complete
+   print("Piper run complete.")
+
 #*************************************************************************
 
    # Rosetta
+
+   # Starting rosetta
+   print("Starting Rosetta...")
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -306,16 +323,22 @@ for i in range(3):
    for item in ag_res_float:
       Rosetta_ag_res += [float(item)]
 
+   # Rosetta complete
+   print("Rosetta run complete.")
+
 #*************************************************************************
 
    # Indicate end of run
    dockingresults += [f"***** End of Run {str(i)} *****"]
    # Spacer
    dockingresults += [" "]
+   # Indicate end of run
+   print(f"{run} complete.")
 
 #*************************************************************************
 
 # Calculate average scores, best result etc from lists of results
+print("Calculating results...")
 
 # Add header to results file
 dockingresults += ["Summary Evalutation Metrics"]
@@ -398,10 +421,15 @@ dockingresults += ["Antigen residue predictions:   " + str(avg_scores[14])]
 dockingresults += [" "]
 
 #*************************************************************************
-
+# writing results...
+print("Writing results file...")
 # Define results file name
 results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}.results.txt"
 # Write results file
 writefile(results_file, dockingresults)
+
+# Run complete
+print("Results file written.")
+print(f"Docking run on {inputfilename} complete.")
 
 #*************************************************************************
