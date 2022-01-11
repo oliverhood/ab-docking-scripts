@@ -34,7 +34,7 @@ V1.0   12.11.21   Original   By: OECH
 # Import Libraries
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
-from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile
+from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
 
 #*************************************************************************
 
@@ -48,6 +48,19 @@ try:
 except IndexError:
    print('No output directory specified, writing files to current directory')
    OUTPath = './'
+
+#*************************************************************************
+
+# Filter input file for number of antigen chains, end run if no chains or multiple antigen chains present
+agchainid = getantigenchainid(PDBfile)
+
+# Multiple chains
+if agchainid == 'Multiple chains':
+   sys.exit(f"Input file {PDBfile} contains multiple antigen chains, exiting program.")
+
+# No chains
+if agchainid == 'No chains':
+   sys.exit(f"Input file {PDBfile} contains no antigen chains, exiting program.")
 
 #*************************************************************************
 
