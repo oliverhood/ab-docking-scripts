@@ -265,3 +265,39 @@ def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    print("Done")
 
 #*************************************************************************
+
+# Timer function
+def run_program_prompt():
+   """
+   Function to prompt user for input (decide which docking programs to use per run, if no input is given in 10s then default is for program to run).
+   """
+
+   ans = 'y'
+
+   # Define function to return run boolean
+   def run_bool(ans, run=True):
+      if ans == 'y':
+         run=True
+      if ans == 'n':
+         run=False
+      else:
+         print("Answer yes or no")
+      return run
+
+   # Set timer
+   t = Timer(10.0, run_bool())
+
+   while True:
+      t.start()
+      # Ask for input
+      query = input("Run megadock? (y/n):\n")
+      if query:
+         ans = query[0].lower
+         if query[0].lower() == '' or not ans in ['y','n']:
+            print("Answer yes or no")
+         else:
+            run_bool(ans)
+            break
+      else:
+         break
+      t.cancel()
