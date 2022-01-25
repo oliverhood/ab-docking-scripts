@@ -39,7 +39,7 @@ from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, 
 #*************************************************************************
 
 # MEGADOCK Function
-def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
+def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
    """
    Function to run megadock program.
 
@@ -115,7 +115,7 @@ def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
 #*************************************************************************
 
 # Piper function
-def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
+def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
    """
    Function to run Piper program.
 
@@ -191,7 +191,7 @@ def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
 #*************************************************************************
 
 # Rosetta function
-def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
+def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
    """"
    Function to run the Rosetta program.
 
