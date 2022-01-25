@@ -128,7 +128,7 @@ for i in range(3):
    # MEGADOCK
 
    # Print starting megadock
-   print("Starting Megadock...")
+   print("Starting Megadock...", end='')
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -193,14 +193,14 @@ for i in range(3):
       MD_ag_res += [float(item)]
 
    # Print complete megadock
-   print("Megadock run complete.")
+   print("Done")
 
 #*************************************************************************
 
    # Piper
 
    # Print starting piper
-   print("Starting Piper...")
+   print("Starting Piper...", end='')
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -265,14 +265,14 @@ for i in range(3):
       Piper_ag_res += [float(item)]
 
    # Print piper complete
-   print("Piper run complete.")
+   print("Done")
 
 #*************************************************************************
 
    # Rosetta
 
    # Starting rosetta
-   print("Starting Rosetta...")
+   print("Starting Rosetta...", end='')
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -337,7 +337,7 @@ for i in range(3):
       Rosetta_ag_res += [float(item)]
 
    # Rosetta complete
-   print("Rosetta run complete.")
+   print("Done")
 
 #*************************************************************************
 
@@ -351,7 +351,7 @@ for i in range(3):
 #*************************************************************************
 
 # Calculate average scores, best result etc from lists of results
-print("Calculating results...")
+print("Calculating results...", end='')
 
 # Add header to results file
 dockingresults += ["Summary Evalutation Metrics"]
@@ -433,16 +433,19 @@ dockingresults += ["Antibody residue predictions:   " + str(avg_scores[13])]
 dockingresults += ["Antigen residue predictions:   " + str(avg_scores[14])]
 dockingresults += [" "]
 
+# Finish calculating results
+print("Done")
+
 #*************************************************************************
 # writing results...
-print("Writing results file...")
+print("Writing results file...", end='')
 # Define results file name
 results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}.results.txt"
 # Write results file
 writefile(results_file, dockingresults)
 
 # Run complete
-print("Results file written.")
+print("Done")
 print(f"Docking run on {inputfilename} complete.")
 
 #*************************************************************************
