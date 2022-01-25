@@ -32,6 +32,7 @@ V1.0   25.01.22   Original   By: OECH
 #*************************************************************************
 
 # Import libraries
+from cProfile import run
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
 from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
@@ -267,11 +268,11 @@ def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
 #*************************************************************************
 
 # Timer function
-def run_program_prompt():
+def program_prompt(program):
    """
    Function to prompt user for input (decide which docking programs to use per run, if no input is given in 10s then default is for program to run).
    """
-
+   run = True
    ans = 'y'
 
    # Define function to return run boolean
@@ -282,7 +283,6 @@ def run_program_prompt():
          run=False
       else:
          print("Answer yes or no")
-      return run
 
    # Set timer
    t = Timer(10.0, run_bool())
@@ -290,7 +290,7 @@ def run_program_prompt():
    while True:
       t.start()
       # Ask for input
-      query = input("Run megadock? (y/n):\n")
+      query = input(f"Run {program}? (y/n):\n")
       if query:
          ans = query[0].lower
          if query[0].lower() == '' or not ans in ['y','n']:
@@ -301,3 +301,6 @@ def run_program_prompt():
       else:
          break
       t.cancel()
+
+   # Return run
+   return run
