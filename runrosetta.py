@@ -109,11 +109,20 @@ best_structure_file = best_structure
 best_structure_file_compressed = best_structure_file + ".gz"
 
 # Define new filename for best structure
-rosetta_out = OUTPath + filename + "_Rosetta_result.pdb"
+rosetta_hydrogens = OUTPath + filename + "_Rosetta_hydrogens.pdb"
 
 # Decompress best result
 subprocess.run([f"gunzip {outdir}/{best_structure_file_compressed}"], shell=True)
 # Copy the file contents to new file
-subprocess.run([f"cp {outdir}/{best_structure_file} {rosetta_out}"], shell=True)
+subprocess.run([f"cp {outdir}/{best_structure_file} {rosetta_hydrogens}"], shell=True)
+
+#*************************************************************************
+
+# Strip hydrogens from output file (ProFit doesn't like them)
+
+# New filename
+rosetta_out = OUTPath + filename + "_Rosetta_result.pdb"
+# Strip hydrogens using pdbhstrip
+subprocess.run([f"pdbhstrip {rosetta_hydrogens} {rosetta_out}"], shell=True)
 
 #*************************************************************************
