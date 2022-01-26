@@ -145,21 +145,21 @@ for i in range(3):
    # MEGADOCK
    
    if run_megadock_bool:
-      run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults)
+      run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
 
 #*************************************************************************
 
    # Piper
 
    if run_piper_bool:
-      run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults)
+      run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
 
 #*************************************************************************
 
    # Rosetta
 
    if run_rosetta_bool:
-      run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults)
+      run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
 
 #*************************************************************************
 

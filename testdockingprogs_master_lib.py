@@ -40,7 +40,7 @@ from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, 
 #*************************************************************************
 
 # MEGADOCK Function
-def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
+def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res):
    """
    Function to run megadock program.
 
@@ -116,7 +116,7 @@ def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, do
 #*************************************************************************
 
 # Piper function
-def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
+def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res):
    """
    Function to run Piper program.
 
@@ -192,7 +192,7 @@ def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
 #*************************************************************************
 
 # Rosetta function
-def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults):
+def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res):
    """"
    Function to run the Rosetta program.
 
