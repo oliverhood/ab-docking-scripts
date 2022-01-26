@@ -285,7 +285,7 @@ def program_prompt(program):
          print("Answer yes or no")
 
    # Set timer
-   t = Timer(10.0, run_bool('y'))
+   t = Timer(10.0, run_bool(ans))
 
    while True:
       t.start()
