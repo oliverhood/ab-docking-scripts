@@ -290,7 +290,9 @@ def program_prompt(program):
    while True:
       t.start()
       # Ask for input
-      query = input(f"Run {program}? (y/n):\n")
+      # Input string
+      prompt = f"Run {program}? (y/n):\n"
+      query = input(prompt)
       if query:
          ans = query[0].lower
          if query[0].lower() == '' or not ans in ['y','n']:
