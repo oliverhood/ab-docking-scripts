@@ -283,6 +283,7 @@ def program_prompt(program):
          run=False
       else:
          print("Answer yes or no")
+      return run
 
    # Set timer
    t = Timer(10.0, run_bool(ans))
@@ -291,8 +292,7 @@ def program_prompt(program):
       t.start()
       # Ask for input
       # Input string
-      prompt = f"Run {program}? (y/n):\n"
-      query = input(prompt)
+      query = input(f"Run program? (y/n):\n")
       if query:
          ans = query[0].lower
          if query[0].lower() == '' or not ans in ['y','n']:
