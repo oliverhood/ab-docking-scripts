@@ -272,7 +272,7 @@ def program_prompt(program):
    """
    Function to prompt user for input (decide which docking programs to use per run, if no input is given in 10s then default is for program to run).
    """
-   run = True
+   
    ans = 'y'
 
    # Define function to return run boolean
