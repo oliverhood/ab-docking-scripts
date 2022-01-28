@@ -134,8 +134,15 @@ for i in range(3):
 
 #*************************************************************************
 
+   # New filename
+   input_nohydrogens = f"{OUTPath_i}{inputfilename}_input{i}.pdb"
+   # Strip hydrogens from input file
+   subprocess.run([f"pdbhstrip {PDBfile} {input_nohydrogens}"])
+
+#*************************************************************************
+
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
-   subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {PDBfile} {OUTPath_i}"], shell=True)
+   subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {input_nohydrogens} {OUTPath_i}"], shell=True)
    # Get the filenames for the split antibody/antigen chains
    ab_filename = OUTPath_i + "%s_ab.pdb" % inputfilename
    ag_filename = OUTPath_i + "%s_ag.pdb" % inputfilename
@@ -145,21 +152,21 @@ for i in range(3):
    # MEGADOCK
    
    if run_megadock_bool:
-      run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
+      run_megadock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
 
 #*************************************************************************
 
    # Piper
 
    if run_piper_bool:
-      run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
+      run_piper(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
 
 #*************************************************************************
 
    # Rosetta
 
    if run_rosetta_bool:
-      run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
+      run_rosetta(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
 
 #*************************************************************************
 
