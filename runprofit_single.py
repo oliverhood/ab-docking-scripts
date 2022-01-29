@@ -51,11 +51,23 @@ try:
 except IndexError:
    OUTPath = './'
 
+# Get input filenames
+inputfilename = os.path.basename(OG_file).split('.')[0]
+docked_filename = os.path.basename(Docked_file).split('.')[0]
+
+# Define new filenames
+OG_nohydrogens = OUTPath + inputfilename + "_nohydrogens.pdb"
+docked_nohydrogens = OUTPath + docked_filename + "_nohydrogens.pdb"
+
+# Strip hydrogens from input files
+subprocess.run([f"pdbhstrip {OG_file} {OG_nohydrogens}"], shell=True)
+subprocess.run([f"pdbhstrip {Docked_file} {docked_nohydrogens}"], shell=True)
+
 # Write the profit control script
 script = str(writecontrolscript(OG_file))
 
 # Run profit, returning the RMS values across all atoms and across CA atoms
-result = subprocess.check_output("profit -f" + " " + script + " " + OG_file + " " + Docked_file + " | grep 'RMS' | tail -2", shell=True)
+result = subprocess.check_output("profit -f" + " " + script + " " + OG_nohydrogens + " " + docked_nohydrogens + " | grep 'RMS' | tail -2", shell=True)
 # Decode results
 result = str(result, 'utf-8')
 # Split result text into list
