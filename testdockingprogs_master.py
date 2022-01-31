@@ -146,7 +146,7 @@ for i in range(3):
 #*************************************************************************
 
    # New filename
-   input_nohydrogens = f"{OUTPath_i}{inputfilename}_input{i}.pdb"
+   input_nohydrogens = f"{OUTPath_i}{inputfilename}_nohydrogens.pdb"
    # Strip hydrogens from input file
    subprocess.run([f"pdbhstrip {PDBfile} {input_nohydrogens}"], shell=True)
 
@@ -154,6 +154,8 @@ for i in range(3):
 
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
    subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {input_nohydrogens} {OUTPath_i}"], shell=True)
+   # Define input file no hydrogens filename
+   nohydrogens_filename = f"{OUTPath_i}{inputfilename}_nohydrogens"
    # Get the filenames for the split antibody/antigen chains
    ab_filename = OUTPath_i + "%s_ab.pdb" % inputfilename
    ag_filename = OUTPath_i + "%s_ag.pdb" % inputfilename
@@ -184,7 +186,7 @@ for i in range(3):
    # ZDOCK
 
    if run_zdock_bool:
-      run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
+      run_zdock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
 
 #*************************************************************************
 
