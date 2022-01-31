@@ -155,7 +155,7 @@ for i in range(3):
    # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
    subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {input_nohydrogens} {OUTPath_i}"], shell=True)
    # Define input file no hydrogens filename
-   nohydrogens_filename = f"{OUTPath_i}{inputfilename}_nohydrogens"
+   nohydrogens_filename = f"{inputfilename}_nohydrogens"
    # Get the filenames for the split antibody/antigen chains
    ab_filename = OUTPath_i + "%s_ab.pdb" % nohydrogens_filename
    ag_filename = OUTPath_i + "%s_ag.pdb" % nohydrogens_filename
