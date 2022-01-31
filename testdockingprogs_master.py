@@ -148,7 +148,7 @@ for i in range(3):
    # New filename
    input_nohydrogens = f"{OUTPath_i}{inputfilename}_input{i}.pdb"
    # Strip hydrogens from input file
-   subprocess.run([f"pdbhstrip {PDBfile} {input_nohydrogens}"])
+   subprocess.run([f"pdbhstrip {PDBfile} {input_nohydrogens}"], shell=True)
 
 #*************************************************************************
 
