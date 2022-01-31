@@ -267,6 +267,82 @@ def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
 
 #*************************************************************************
 
+# ZDOCK function
+def run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res):
+   """
+   Function to run zdock ranked program.
+
+   """
+   # Print starting zdock
+   print("Starting ZDOCK...", end='')
+   # Get date and time that method is being run at
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
+   # Name docking method for results file
+   method = "ZDOCK |  ZRANK Ranked Output | " + current_time
+   # Add method title to docking results
+   dockingresults += [method]
+
+   # Run zdock ranked on files
+   subprocess.run9[f"~/ab-docking-scripts/runzdock.py {ab_filename} {ag_filename} {OUTPath_i}"]
+
+   # Define output filename
+   zdock_resultfile = OUTPath_i + inputfilename + "__ZDOCK_ranked_result.pdb"
+
+   # Evaluate Docking Result
+   results = evaluate_results(PDBfile, zdock_resultfile)
+
+   # Get result scores, add to dockingresults, list of results
+   dockingresults += ["Scores:"]
+   dockingresults += ["======="]
+   # All atoms RMSD
+   all_atoms = results[0]
+   dockingresults += [all_atoms]
+   # CA atoms RMSD
+   CA_atoms = results[1]
+   dockingresults += [CA_atoms]
+   # Header for proportion results
+   dockingresults += ["Proportion of correctly predicted interface residues (0-1):"]
+   # Proportion of residue contact pairs
+   res_pairs = results[2]
+   dockingresults += [res_pairs]
+   # Proportion of ab interface residues
+   ab_res = results[3]
+   dockingresults += [ab_res]
+   # Proportion of ag interface residues
+   ag_res = results[4]
+   dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
+
+   # Get floats from result lines
+   # all_atoms RMSD
+   all_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   # CA atoms RMSD
+   CA_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
+   # Residue pairs
+   res_pairs_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", res_pairs)
+   # Ab residues
+   ab_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ab_res)
+   # Ag residues
+   ag_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ag_res)
+
+   # Add floats to summary lists
+   for item in all_atoms_float:
+      ZDOCK_all += [float(item)]
+   for item in CA_atoms_float:
+      ZDOCK_ca += [float(item)]
+   for item in res_pairs_float:
+      ZDOCK_res_pairs += [float(item)]
+   for item in ab_res_float:
+      ZDOCK_ab_res += [float(item)]
+   for item in ag_res_float:
+      ZDOCK_ag_res += [float(item)]
+
+   # Print complete zdock
+   print("Done")
+
+#*************************************************************************
+
 # Timer function
 def program_prompt(program):
    """
