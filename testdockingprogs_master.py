@@ -157,36 +157,36 @@ for i in range(3):
    # Define input file no hydrogens filename
    nohydrogens_filename = f"{OUTPath_i}{inputfilename}_nohydrogens"
    # Get the filenames for the split antibody/antigen chains
-   ab_filename = OUTPath_i + "%s_ab.pdb" % inputfilename
-   ag_filename = OUTPath_i + "%s_ag.pdb" % inputfilename
+   ab_filename = OUTPath_i + "%s_ab.pdb" % nohydrogens_filename
+   ag_filename = OUTPath_i + "%s_ag.pdb" % nohydrogens_filename
 
 #*************************************************************************
 
    # MEGADOCK
    
    if run_megadock_bool:
-      run_megadock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
+      run_megadock(input_nohydrogens, nohydrogens_filename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
 
 #*************************************************************************
 
    # Piper
 
    if run_piper_bool:
-      run_piper(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
+      run_piper(input_nohydrogens, nohydrogens_filename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
 
 #*************************************************************************
 
    # Rosetta
 
    if run_rosetta_bool:
-      run_rosetta(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
+      run_rosetta(input_nohydrogens, nohydrogens_filename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
 
 #*************************************************************************
 
    # ZDOCK
 
    if run_zdock_bool:
-      run_zdock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
+      run_zdock(input_nohydrogens, nohydrogens_filename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
 
 #*************************************************************************
 
