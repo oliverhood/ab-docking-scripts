@@ -35,7 +35,7 @@ V1.0   12.11.21   Original   By: OECH
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
 from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
-from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt
+from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock
 
 #*************************************************************************
 
@@ -99,6 +99,13 @@ Rosetta_res_pairs = []
 Rosetta_ab_res = []
 Rosetta_ag_res = []
 
+# ZDOCK
+ZDOCK_all = []
+ZDOCK_ca = []
+ZDOCK_res_pairs = []
+ZDOCK_ab_res = []
+ZDOCK_ag_res = []
+
 #*************************************************************************
 
 # Prompt user for programs to run
@@ -114,6 +121,10 @@ run_piper_bool = True
 # Rosetta
 run_rosetta_bool = True
 #run_rosetta_bool = program_prompt('Rosetta')
+
+# ZDOCK
+run_zdock_bool = True
+#run_zdock_bool = program_prompt('ZDOCK')
 
 #*************************************************************************
 
@@ -170,6 +181,13 @@ for i in range(3):
 
 #*************************************************************************
 
+   # ZDOCK
+
+   if run_zdock_bool:
+      run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
+
+#*************************************************************************
+
    # Indicate end of run
    dockingresults += [f"***** End of Run {str(i)} *****"]
    # Spacer
@@ -189,7 +207,7 @@ dockingresults += ["==========================="]
 # List scoring metrics
 scores_all = [MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res,
 Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res
-]
+, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res]
 
 # Calculate scores for each method
 avg_scores = []
@@ -207,6 +225,7 @@ for item in (scores_all):
 megadock_name = "Megadock-4.1.1 | CPU Single Node | ZRANK Ranked Output"
 piper_name = "Piper 2.0.0"
 rosetta_name = "Rosetta 3.13 | docking_prepack_protocol.default.linuxgccrelease | docking_protocol.default.linuxgccrelease | Best I_sc score"
+zdock_name = "ZDOCK |  ZRANK Ranked Output"
 
 # Megadock
 dockingresults += [megadock_name]
@@ -260,6 +279,24 @@ dockingresults += ["Residue pair predictions:   " + str(avg_scores[12])]
 dockingresults += ["Antibody residue predictions:   " + str(avg_scores[13])]
 # Avg. antigen residues
 dockingresults += ["Antigen residue predictions:   " + str(avg_scores[14])]
+dockingresults += [" "]
+
+# ZDOCK
+dockingresults += [zdock_name]
+# Average RMSD
+dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[15]), "CA atoms:   " + str(avg_scores[16])]
+# Best RMSD
+dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[15]), "CA atoms:   " + str(lowest_scores[16])]
+# Number of good hits
+dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[15])]
+# Header for average proportion values
+dockingresults += ["Average percentage of correctly predicted interface residues"]
+# Avg. proportion of res-pairs
+dockingresults += ["Residue pair predictions:   " + str(avg_scores[17])]
+# Avg. antibody residues
+dockingresults += ["Antibody residue predictions:   " + str(avg_scores[18])]
+# Avg. antigen residues
+dockingresults += ["Antigen residue predictions:   " + str(avg_scores[19])]
 dockingresults += [" "]
 
 # Finish calculating results
