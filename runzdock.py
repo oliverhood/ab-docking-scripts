@@ -98,9 +98,9 @@ print(f"Best ZRANK hit is : {top_hit}")
 
 #*************************************************************************
 
-# Create output Dag files (up to number of top hit) limited to 500 bc otherwise will take ages
+# Create output Dag files (up to number of top hit)
 
-if int(top_hit) <= 500:
+if int(top_hit) <= 2000:
    # Copy create_lig to directory
    subprocess.run([f"cp ~/DockingSoftware/zdock3.0.2/create_lig {OUTPath}"], shell=True)
    # Run create.pl
@@ -130,7 +130,7 @@ if int(top_hit) <= 500:
          if 'END' not in line.strip('\n'):
             file.write(line)
 else:
-   print("Top hit is above result 500 - handle separately")
+   print("Top hit is above result 2000 - handle separately")
 
 #*************************************************************************
 
