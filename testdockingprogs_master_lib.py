@@ -134,7 +134,7 @@ def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
    subprocess.run([f"~/ab-docking-scripts/runpiper.py {PDBfile} {ab_filename} {ag_filename} {OUTPath_i}"], shell=True)
 
    # Define output filename
-   piper_resultfile = OUTPath_i + inputfilename + "_Piper_result.pdb"
+   piper_resultfile = OUTPath_i + inputfilename + "_nohydrogens_Piper_result.pdb"
 
    # Evaluate docking result
    results = evaluate_results(PDBfile, piper_resultfile)
