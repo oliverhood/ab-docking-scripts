@@ -179,7 +179,7 @@ for i in range(3):
    # Rosetta
 
    if run_rosetta_bool:
-      run_rosetta(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
+      run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
 
 #*************************************************************************
 
