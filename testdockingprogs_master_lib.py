@@ -283,7 +283,7 @@ def run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
    dockingresults += [method]
 
    # Run zdock ranked on files
-   subprocess.run[f"~/ab-docking-scripts/runzdock.py {ab_filename} {ag_filename} {OUTPath_i}"]
+   subprocess.run([f"~/ab-docking-scripts/runzdock.py {ab_filename} {ag_filename} {OUTPath_i}"], shell=True)
 
    # Define output filename
    zdock_resultfile = OUTPath_i + inputfilename + "__ZDOCK_ranked_result.pdb"
