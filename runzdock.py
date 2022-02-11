@@ -82,7 +82,7 @@ subprocess.run([f"~/DockingSoftware/zdock3.0.2/zrank {OUTPath}zdock.out 1 2000"]
 min_out = 0
 
 # Read Zrank out file
-with open('zdock.out.zr.out') as file:
+with open(f'{OUTPath}zdock.out.zr.out') as file:
    # Read lines
    rows = file.readlines()
    # Identify highest scoring output
