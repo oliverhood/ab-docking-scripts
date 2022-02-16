@@ -68,3 +68,47 @@ def generate_run_param(ab_filename, ag_filename, OUTPath):
    writefile("run.param", lines)
 
 #*************************************************************************
+
+def get_his_protonation(PDBfile):
+   """
+   Run an input PDB file through the molprobity script provided by Haddock to determine the protonation state of histidines, save protonation states (if HisD or HisE) in a dictionary.
+   """
+   # Initialise res_e list
+   res_e = []
+   # Initialise res_d list
+   res_d = []
+   # Initialise full list
+   full_list = []
+   # Run molprobity on file, save output
+   protonation = subprocess.check_output([f"~/DockingSoftware/haddock-tools/molprobity.py {PDBfile}"], shell=True)
+   # Decode output
+   protonation = str(protonation, 'utf-8')
+   # Split output into list
+   protonation = protonation.split('\n')
+   # Search output for hisD or hisE
+   for line in protonation[2:]:
+      if 'HISE' in line:
+         line.split(' ')
+         res_e += [line[2]]
+      if 'HISD' in line:
+         line.split(' ')
+         res_d += [line[2]]
+   # If res_d not empty
+   if res_d:
+      # Add contents of res_d to full_list
+      for item in res_d:
+         full_list += [f"{item} - HISD"]
+   # If res_e not empty
+   if res_e:
+      # Add contents of res_e to full_list
+      for item in res_e:
+         full_list += [f"{item} - HISE"]
+   # If full_list not empty return contents
+   if full_list:
+      return full_list
+   else:
+      print("No HisE or HisD residues.")
+
+#*************************************************************************
+
+def edit_run_cns()
