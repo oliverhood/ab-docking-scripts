@@ -32,7 +32,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import Libraries
 import sys, os, subprocess, re
-from dockingtools_lib import getantigenchainid
+from dockingtools_lib import getantigenchainid, writefile
 
 #*************************************************************************
 
@@ -83,5 +83,55 @@ with open(int_res) as file:
 
 #*************************************************************************
 
-# Write profit script
+# Get length of antigen chain from file
+with open(complex) as file:
+   # Read rows in file
+   rows = file.readlines()
+   # IDentify terminal antigen chain residue
+   for line in rows:
+      if 'TER' and f"{agchainid}" in line and 'ATOM' not in line:
+         AGcontents = line.split()
+         AGlength = AGcontents[4]
 
+#*************************************************************************
+
+# Generate list of non-interface antigen residues
+ag_NI_res = []
+for i in range(int(AGlength)+1):
+   if str(i) not in ag_int_res:
+      ag_NI_res += [str(agchainid + str(i))]
+
+#*************************************************************************
+
+# Write profit control script
+list_AG_zones = []
+# Add non interface residues to list
+for item in ag_NI_res:
+   string = f"ZONE {item}-{item}"
+   list_AG_zones += [string]
+# Create list of lines to add to script
+script = [list_AG_zones, f"align {agchainid}*:{agchainid}*", "FIT", "ratoms ca"]
+# Get the base filename from the input file
+filename = os.path.basename(complex).split('.')[0]
+# Define the script filename
+scriptname = "%s.prf" % filename
+# Define outfile
+PRFfile = OUTPath + scriptname
+# Write script file
+writefile(PRFfile, script)
+
+#*************************************************************************
+
+# Run profit, returning the RMS values across all atoms and across CA atoms
+result = subprocess.check_output([f"profit -f {PRFfile} {complex} {antigen} | grep 'RMS' | tail -2"], shell=True)
+# Decode results
+result = str(result, 'utf-8')
+# Split result text into list
+result = result.split()
+# Set all_atoms RMSD
+all_atoms = result[1]
+# set CA atoms RMSD
+CA_atoms = result[3]
+# Print RMSD values
+print('All atoms RMSD:   '+all_atoms)
+print('CA atoms RMSD:    '+CA_atoms)
