@@ -81,7 +81,7 @@ generate_run_param(ab_filename, ag_filename, OUTPath)
 #*************************************************************************
 
 # Run haddock2.4 for first time
-subprocess.run([f"/home/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
+subprocess.run([f"/home/oliverh/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
 
 #*************************************************************************
 
