@@ -87,9 +87,9 @@ subprocess.run([f"/home/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shel
 
 # Edit CNS file
 # Determine whether the run should be long or short
-long=True
-if length.lower() == 'short':
-   long=False
+long=False
+if length.lower() == 'long':
+   long=True
 # Edit file
 edit_run_cns(long)
 
