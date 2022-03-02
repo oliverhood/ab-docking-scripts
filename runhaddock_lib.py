@@ -43,9 +43,9 @@ def clean_inputs(antibody, antigen, ab_filename, ag_filename):
    """
    print("Cleaning input files...", end='')
    # clean antibody file using pdb_chain and pdb_seg
-   subprocess.run([f"~/DockingSoftware/pdb-tools/pdbtools pdb_chain.py {antibody} | ~/DockingSoftware/pdb-tools/pdbtools/pdb_seg.py | pdbrenum > {ab_filename}_clean.pdb"], shell=True)
+   subprocess.run([f"/home/oliverh/DockingSoftware/pdb-tools/pdbtools pdb_chain.py {antibody} | /home/oliverh/DockingSoftware/pdb-tools/pdbtools/pdb_seg.py | pdbrenum > {ab_filename}_clean.pdb"], shell=True)
    # Clean antigen file using pdb_chain and pdb_seg
-   subprocess.run([f"~/DockingSoftware/pdb-tools/pdbtools pdb_chain.py {antigen} | ~/DockingSoftware/pdb-tools/pdbtools/pdb_seg.py > {ag_filename}_clean.pdb"], shell=True)
+   subprocess.run([f"/home/oliverh/DockingSoftware/pdb-tools/pdbtools pdb_chain.py {antigen} | /home/oliverh/DockingSoftware/pdb-tools/pdbtools/pdb_seg.py > {ag_filename}_clean.pdb"], shell=True)
    print("Done")
 
 #*************************************************************************
