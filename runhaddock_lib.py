@@ -111,4 +111,29 @@ def get_his_protonation(PDBfile):
 
 #*************************************************************************
 
-def edit_run_cns()
+def edit_run_cns(long=True):
+   """
+   Edit the run.cns file to change length of run. HADDOCK2.4 automatically determines protonation states as default >:( )
+   """
+   # Initiate new list of file contents
+   run_cns_out = []
+   # Open run.cns file
+   run_cns = "./run1/run.cns"
+   # If long = false]
+   if not long:
+      with open(run_cns, "w") as file:
+         lines = file.readlines()
+      # Change length of run (if long = False)
+         for row in lines:
+            if 'structures_0=' in row:
+               run_cns_out += ['{===>} structures_0=200;']
+            if 'structures_1=' in row:
+               run_cns_out += ['{===>} structures_1=10;']
+            if 'anastruc_1=' in row:
+               run_cns_out += ['{===>} anastruc_1=10;']
+            else:
+               run_cns_out += [row]
+         # write new run.cns file
+         file.writelines(run_cns_out)
+         # Close file (?)
+         file.close()
