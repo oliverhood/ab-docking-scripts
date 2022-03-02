@@ -121,7 +121,7 @@ def edit_run_cns(long=True):
    run_cns = "./run1/run.cns"
    # If long = false]
    if not long:
-      with open(run_cns, "w") as file:
+      with open(run_cns) as file:
          lines = file.readlines()
       # Change length of run (if long = False)
          for row in lines:
@@ -133,10 +133,8 @@ def edit_run_cns(long=True):
                run_cns_out += ['{===>} anastruc_1=10;']
             else:
                run_cns_out += [row]
-         # write new run.cns file
-         file.writelines(run_cns_out)
-         # Close file (?)
-         file.close()
+      # write new run.cns file
+      writefile(run_cns, run_cns_out)
 
 #*************************************************************************
 
