@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import sys, os, subprocess
-from runhaddock_lib import clean_inputs, generate_unambig_tbl, generate_run_param, edit_run_cns
+from runhaddock_lib import clean_inputs, generate_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
 
 #*************************************************************************
 
@@ -98,3 +98,18 @@ edit_run_cns(long)
 # Move to run1 directory, run haddock2.4 again
 subprocess.run(["cd run1"], shell=True)
 subprocess.run(["/home/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
+
+#*************************************************************************
+
+# Move back to start directory
+subprocess.run(["cd .."], shell=True)
+
+# Extract result files
+
+# Get base input filename
+inputfilename = ab_filename.split('_ab')[0]
+
+# Extract files
+extract_best_results(inputfilename)
+
+#*************************************************************************
