@@ -137,3 +137,29 @@ def edit_run_cns(long=True):
          file.writelines(run_cns_out)
          # Close file (?)
          file.close()
+
+#*************************************************************************
+
+def extract_best_results(inputfilename):
+   """
+   Extract two result files, one for the best structure with waters simulated and one for the best structure excluding waters.
+   """
+   # Find best non waters result
+   file_list_nowaters = "./run1/structures/it1/file.list"
+   with open(file_list_nowaters) as file:
+      rows = file.readlines()
+      best_result_nw = rows[0]
+      best_result_nw = best_result_nw.split()[0].split(':')[1].split('"')[0]
+
+   # Copy best no waters result to starting directory, give it new name
+   subprocess.run([f"cp ./run1/structures/it1/{best_result_nw} ./{inputfilename}_Haddock_nowaters_result.pdb"], shell=True)
+
+   # Find the best waters result
+   file_list_waters = "./run1/structures/it1/water/file.list"
+   with open(file_list_waters) as file:
+      rows = file.readlines()
+      best_result_w = rows[0]
+      best_result_w = best_result_w.split()[0].split(':')[1].split('"')[0]
+
+   # Copy best waters result to starting directory, giving it new name
+   subprocess.run([f"cp ./run1/structures/it1/water/{best_result_w} ./{inputfilename}_Haddock_waters_result.pdb"], shell=True)

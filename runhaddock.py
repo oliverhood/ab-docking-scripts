@@ -19,7 +19,7 @@ This program takes an antibody file and an antigen file as input for the haddock
 
 Usage:
 ======
-runhaddock.py antibody antigen OUTPath
+runhaddock.py antibody antigen length OUTPath
 
 --------------------------------------------------------------------------
 
@@ -32,3 +32,69 @@ V1.0   15.02.22   Original   By: OECH
 #*************************************************************************
 
 # Import libraries
+import sys, os, subprocess
+from runhaddock_lib import clean_inputs, generate_unambig_tbl, generate_run_param, edit_run_cns
+
+#*************************************************************************
+
+# Get input files
+
+# antibody
+antibody = sys.argv[1]
+
+# antigen
+antigen = sys.argv[2]
+
+# length
+length = sys.argv[3]
+
+# Get output path from command line (if present)
+OUTPath = './'
+try:
+   OUTPath = sys.argv[4] + '/'
+except IndexError:
+   print('No output directory specified, writing files to current directory')
+   OUTPath = './'
+
+#*************************************************************************
+
+# Get input filenames
+
+# Antibody
+ab_filename = os.path.basename(antibody).split('.')[0]
+# Antigen
+ag_filename = os.path.basename(antigen).split('.')[0]
+
+# Clean input files
+clean_inputs(antibody, antigen, ab_filename, ag_filename)
+
+#*************************************************************************
+
+# Generate unambig_tbl file
+generate_unambig_tbl(ab_filename)
+
+#*************************************************************************
+
+# Generate run.param file
+generate_run_param(ab_filename, ag_filename, OUTPath)
+
+#*************************************************************************
+
+# Run haddock2.4 for first time
+subprocess.run([f"/home/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
+
+#*************************************************************************
+
+# Edit CNS file
+# Determine whether the run should be long or short
+long=True
+if length.lower() == 'short':
+   long=False
+# Edit file
+edit_run_cns(long)
+
+#*************************************************************************
+
+# Move to run1 directory, run haddock2.4 again
+subprocess.run(["cd run1"], shell=True)
+subprocess.run(["/home/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
