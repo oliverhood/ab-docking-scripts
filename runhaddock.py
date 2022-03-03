@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import sys, os, subprocess
-from runhaddock_lib import clean_inputs, generate_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
+from runhaddock_lib import clean_inputs, generate_unambig_tbl, rewrite_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
 
 #*************************************************************************
 
@@ -72,6 +72,12 @@ clean_inputs(antibody, antigen, ab_filename, ag_filename)
 
 # Generate unambig_tbl file
 generate_unambig_tbl(ab_filename)
+
+# Define unambig_tbl filename
+unambig_tbl = './antibody-antigen-unambig.tbl'
+
+# Rewrite unambig_tbl file to include segIDs
+rewrite_unambig_tbl(unambig_tbl)
 
 #*************************************************************************
 
