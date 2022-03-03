@@ -96,13 +96,12 @@ edit_run_cns(long)
 #*************************************************************************
 
 # Move to run1 directory, run haddock2.4 again
-subprocess.run(["cd run1"], shell=True)
-subprocess.run(["/home/oliverh/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
+subprocess.run(["cd run1; /home/oliverh/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
 
 #*************************************************************************
 
 # Move back to start directory
-subprocess.run(["cd .."], shell=True)
+subprocess.run(["pwd"], shell=True)
 
 # Extract result files
 
