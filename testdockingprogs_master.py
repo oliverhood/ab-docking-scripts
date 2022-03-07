@@ -35,7 +35,7 @@ V1.0   12.11.21   Original   By: OECH
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
 from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
-from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock
+from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
 
 #*************************************************************************
 
@@ -106,6 +106,20 @@ ZDOCK_res_pairs = []
 ZDOCK_ab_res = []
 ZDOCK_ag_res = []
 
+# Haddock Waters
+Hw_all = []
+Hw_ca = []
+Hw_res_pairs = []
+Hw_ab_res = []
+Hw_ag_res = []
+
+# Haddock nowaters
+Ha_all = []
+Ha_ca = []
+Ha_res_pairs = []
+Ha_ab_res = []
+Ha_ag_res = []
+
 #*************************************************************************
 
 # Prompt user for programs to run
@@ -125,6 +139,10 @@ run_rosetta_bool = True
 # ZDOCK
 run_zdock_bool = True
 #run_zdock_bool = program_prompt('ZDOCK')
+
+# Haddock
+run_haddock_bool = True
+#run_haddock_bool = program_prompt('Haddock')
 
 #*************************************************************************
 
@@ -190,6 +208,13 @@ for i in range(3):
 
 #*************************************************************************
 
+   # Haddock
+
+   if run_haddock_bool:
+      run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res)
+
+#*************************************************************************
+
    # Indicate end of run
    dockingresults += [f"***** End of Run {str(i)} *****"]
    # Spacer
@@ -209,7 +234,7 @@ dockingresults += ["==========================="]
 # List scoring metrics
 scores_all = [MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res,
 Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res, Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res
-, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res]
+, ZDOCK_all, ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res, Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res]
 
 # Calculate scores for each method
 avg_scores = []
@@ -227,7 +252,9 @@ for item in (scores_all):
 megadock_name = "Megadock-4.1.1 | CPU Single Node | ZRANK Ranked Output"
 piper_name = "Piper 2.0.0"
 rosetta_name = "Rosetta 3.13 | docking_prepack_protocol.default.linuxgccrelease | docking_protocol.default.linuxgccrelease | Best I_sc score"
-zdock_name = "ZDOCK |  ZRANK Ranked Output"
+zdock_name = "ZDOCK | ZRANK Ranked Output"
+haddock_waters_name = "Haddock2.4 | Protein-Protein | Waters "
+haddock_nowaters_name = "Haddock2.4 | Protein-Protein | No Waters"
 
 # Megadock
 dockingresults += [megadock_name]
@@ -299,6 +326,42 @@ dockingresults += ["Residue pair predictions:   " + str(avg_scores[17])]
 dockingresults += ["Antibody residue predictions:   " + str(avg_scores[18])]
 # Avg. antigen residues
 dockingresults += ["Antigen residue predictions:   " + str(avg_scores[19])]
+dockingresults += [" "]
+
+# Haddock Waters
+dockingresults += [haddock_waters_name]
+# Average RMSD
+dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[20]), "CA atoms:   " + str(avg_scores[21])]
+# Best RMSD
+dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[20]), "CA atoms:   " + str(lowest_scores[21])]
+# Number of good hits
+dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[20])]
+# Header for average proportion values
+dockingresults += ["Average percentage of correctly predicted interface residues"]
+# Avg. proportion of res-pairs
+dockingresults += ["Residue pair predictions:   " + str(avg_scores[22])]
+# Avg. antibody residues
+dockingresults += ["Antibody residue predictions:   " + str(avg_scores[23])]
+# Avg. antigen residues
+dockingresults += ["Antigen residue predictions:   " + str(avg_scores[24])]
+dockingresults += [" "]
+
+# Haddock Waters
+dockingresults += [haddock_nowaters_name]
+# Average RMSD
+dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[25]), "CA atoms:   " + str(avg_scores[26])]
+# Best RMSD
+dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[25]), "CA atoms:   " + str(lowest_scores[26])]
+# Number of good hits
+dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[25])]
+# Header for average proportion values
+dockingresults += ["Average percentage of correctly predicted interface residues"]
+# Avg. proportion of res-pairs
+dockingresults += ["Residue pair predictions:   " + str(avg_scores[27])]
+# Avg. antibody residues
+dockingresults += ["Antibody residue predictions:   " + str(avg_scores[28])]
+# Avg. antigen residues
+dockingresults += ["Antigen residue predictions:   " + str(avg_scores[29])]
 dockingresults += [" "]
 
 # Finish calculating results
