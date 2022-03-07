@@ -149,7 +149,7 @@ run_haddock_bool = True
 # Get the base filename from the input file
 inputfilename = os.path.basename(PDBfile).split('.')[0]
 # Print starting docking
-print(f"Starting docking program on {inputfilename}...")
+print(f"Starting docking program on {inputfilename}...", flush=True)
 # Repeat docking 3 times on PDB file, different orientation each time
 for i in range(3):
    # Get run number
@@ -225,7 +225,7 @@ for i in range(3):
 #*************************************************************************
 
 # Calculate average scores, best result etc from lists of results
-print("Calculating results...", end='')
+print("Calculating results...", end='', flush=True)
 
 # Add header to results file
 dockingresults += ["Summary Evalutation Metrics"]
@@ -369,7 +369,7 @@ print("Done")
 
 #*************************************************************************
 # writing results...
-print("Writing results file...", end='')
+print("Writing results file...", end='', flush=True)
 # Define results file name
 results_file = f"{OUTPath}{inputfilename}_dockingresults_{current_date_f2}.results.txt"
 # Write results file

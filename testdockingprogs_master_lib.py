@@ -46,7 +46,7 @@ def run_megadock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, do
 
    """
    # Print starting megadock
-   print("Starting Megadock...", end='')
+   print("Starting Megadock...", end='', flush=True)
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -122,7 +122,7 @@ def run_piper(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
 
    """
    # Print starting piper
-   print("Starting Piper...", end='')
+   print("Starting Piper...", end='', flush=True)
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -198,7 +198,7 @@ def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
 
    """
    # Starting rosetta
-   print("Starting Rosetta...", end='')
+   print("Starting Rosetta...", end='', flush=True)
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -274,7 +274,7 @@ def run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
 
    """
    # Print starting zdock
-   print("Starting ZDOCK...", end='')
+   print("Starting ZDOCK...", end='', flush=True)
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
@@ -351,7 +351,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
 
    """
    # Print starting Haddock
-   print("Starting Haddock...", end='')
+   print("Starting Haddock...", end='', flush=True)
    # Get date and time that method is being run at
    current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
    # Name docking method for results file
