@@ -343,6 +343,140 @@ def run_zdock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, docki
 
 #*************************************************************************
 
+# Haddock function
+
+def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res):
+   """
+   Function to run haddock program (with and without waters).
+
+   """
+   # Print starting Haddock
+   print("Starting Haddock...", end='')
+   # Get date and time that method is being run at
+   current_time = time.strftime(r"%d.%m.%Y | %H:%M:%S", time.localtime())
+   # Name docking method for results file
+   method_waters = "Haddock2.4 | Protein-Protein Docking | Waters | " + current_time
+   method_nowaters = "Haddock2.4 | Protein-Protein Docking | No Waters | " + current_time
+   # Add waters method to docking results
+   dockingresults += [method_waters]
+
+   # Run Haddock on input files
+   subprocess.run([f"~/ab-docking-scripts/runhaddock.py {ab_filename} {ag_filename} short {OUTPath_i}"], shell=True)
+
+   # Define output waters filename
+   haddock_waters_resultfile = OUTPath_i + inputfilename + "_Haddock_waters_result.pdb"
+
+   # Evaluate waters docking result
+   results_waters = evaluate_results(PDBfile, haddock_waters_resultfile)
+
+   # Get result scores, add to dockingresults, list of results
+   dockingresults += ["Scores"]
+   dockingresults += ["======="]
+   # All atoms RMSD
+   all_atoms = results_waters[0]
+   dockingresults += [all_atoms]
+   # CA atoms RMSD
+   CA_atoms = results_waters[1]
+   dockingresults += [CA_atoms]
+   # Header for proportion results
+   dockingresults += ["Proportion of correctly predicted interface residues (0-1):"]
+   # Proportion of residue contact pairs
+   res_pairs = results_waters[2]
+   dockingresults += [res_pairs]
+   # Proportion of ab interface residues
+   ab_res = results_waters[3]
+   dockingresults += [ab_res]
+   # Proportion of ag interface residues
+   ag_res = results_waters[4]
+   dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
+
+   # Get floats from result lines
+   # all_atoms RMSD
+   all_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   # CA atoms RMSD
+   CA_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
+   # Residue pairs
+   res_pairs_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", res_pairs)
+   # Ab residues
+   ab_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ab_res)
+   # Ag residues
+   ag_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ag_res)
+
+   # Add floats to summary lists
+   for item in all_atoms_float:
+      Hw_all += [float(item)]
+   for item in CA_atoms_float:
+      Hw_ca += [float(item)]
+   for item in res_pairs_float:
+      Hw_res_pairs += [float(item)]
+   for item in ab_res_float:
+      Hw_ab_res += [float(item)]
+   for item in ag_res_float:
+      Hw_ag_res += [float(item)]
+
+   # Add nowaters method to docking results
+   dockingresults += [method_nowaters]
+
+   # Define output waters filename
+   haddock_nowaters_resultfile = OUTPath_i + inputfilename + "_Haddock_nowaters_result.pdb"
+
+   # Evaluate waters docking result
+   results_nowaters = evaluate_results(PDBfile, haddock_nowaters_resultfile)
+
+   # Get result scores, add to dockingresults, list of results
+   dockingresults += ["Scores"]
+   dockingresults += ["======="]
+   # All atoms RMSD
+   all_atoms = results_nowaters[0]
+   dockingresults += [all_atoms]
+   # CA atoms RMSD
+   CA_atoms = results_nowaters[1]
+   dockingresults += [CA_atoms]
+   # Header for proportion results
+   dockingresults += ["Proportion of correctly predicted interface residues (0-1):"]
+   # Proportion of residue contact pairs
+   res_pairs = results_nowaters[2]
+   dockingresults += [res_pairs]
+   # Proportion of ab interface residues
+   ab_res = results_nowaters[3]
+   dockingresults += [ab_res]
+   # Proportion of ag interface residues
+   ag_res = results_nowaters[4]
+   dockingresults += [ag_res]
+   # Spacer
+   dockingresults += [" "]
+
+   # Get floats from result lines
+   # all_atoms RMSD
+   all_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", all_atoms)
+   # CA atoms RMSD
+   CA_atoms_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", CA_atoms)
+   # Residue pairs
+   res_pairs_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", res_pairs)
+   # Ab residues
+   ab_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ab_res)
+   # Ag residues
+   ag_res_float = re.findall(r"[-+]?\d*\.?\d+|[-+]?\d+", ag_res)
+
+   # Add floats to summary lists
+   for item in all_atoms_float:
+      Ha_all += [float(item)]
+   for item in CA_atoms_float:
+      Ha_ca += [float(item)]
+   for item in res_pairs_float:
+      Ha_res_pairs += [float(item)]
+   for item in ab_res_float:
+      Ha_ab_res += [float(item)]
+   for item in ag_res_float:
+      Ha_ag_res += [float(item)]
+
+   # Print complete haddock
+   print("Done")
+
+#*************************************************************************
+
 # Timer function
 def program_prompt(program):
    """
