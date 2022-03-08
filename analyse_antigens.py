@@ -39,17 +39,31 @@ from dockingtools_lib import getantigenchainid, writefile
 # Define input files
 
 # Complex file
-complex = sys.argv[1]
+PDBfile = sys.argv[1]
 # Free antigen
 antigen = sys.argv[2]
-# Free antibody
-antibody = sys.argv[3]
 # Get output path from command line (if present)
 OUTPath = './'
 try:
-   OUTPath = sys.argv[4] + '/'
+   OUTPath = sys.argv[3] + '/'
 except IndexError:
    OUTPath = './'
+
+#*************************************************************************
+
+# Split input complex into two files
+subprocess.run([f"/home/oliverh/ab-docking-scripts/splitantibodyantigenchains.py {PDBfile}"], shell=True)
+
+# Define split protein filenames
+
+# Define input filename
+inputfilename = os.path.basename(PDBfile).split('.')[0]
+
+# Define antibody filename
+split_antibody = f"{inputfilename}_ab.pdb"
+
+# Define antigen filename
+split_antigen = f"{inputfilename}_ag.pdb"
 
 #*************************************************************************
 
@@ -59,7 +73,7 @@ except IndexError:
 int_res = OUTPath + "int_res"
 
 # Run findif.pl to identify interface residues, writing result to int_res
-subprocess.run(["~/ab-docking-scripts/findif.pl -x " + complex + " " + antigen + " " + antibody + " > " + int_res], shell=True)
+subprocess.run(["~/ab-docking-scripts/findif.pl -x " + complex + " " + split_antigen + " " + split_antibody + " > " + int_res], shell=True)
 
 #*************************************************************************
 
@@ -110,7 +124,11 @@ for item in ag_NI_res:
    string = f"ZONE {item}-{item}"
    list_AG_zones += [string]
 # Create list of lines to add to script
-script = [list_AG_zones, f"align {agchainid}*:{agchainid}*", "FIT", "ratoms ca"]
+script = []
+for item in list_AG_zones:
+   script += [item]
+script += [f"align {agchainid}*:{agchainid}*", "FIT", "ratoms ca"]
+
 # Get the base filename from the input file
 filename = os.path.basename(complex).split('.')[0]
 # Define the script filename
