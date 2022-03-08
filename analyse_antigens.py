@@ -73,7 +73,7 @@ split_antigen = f"{inputfilename}_ag.pdb"
 int_res = OUTPath + "int_res"
 
 # Run findif.pl to identify interface residues, writing result to int_res
-subprocess.run(["~/ab-docking-scripts/findif.pl -x " + complex + " " + split_antigen + " " + split_antibody + " > " + int_res], shell=True)
+subprocess.run(["~/ab-docking-scripts/findif.pl -x " + PDBfile + " " + split_antigen + " " + split_antibody + " > " + int_res], shell=True)
 
 #*************************************************************************
 
@@ -83,7 +83,7 @@ subprocess.run(["~/ab-docking-scripts/findif.pl -x " + complex + " " + split_ant
 ag_int_res = []
 
 # Get antigen chain ID (single chain)
-agchainid = getantigenchainid(complex)
+agchainid = getantigenchainid(PDBfile)
 
 # Read int_res and extract residue numbers
 with open(int_res) as file:
@@ -130,7 +130,7 @@ for item in list_AG_zones:
 script += [f"align {agchainid}*:{agchainid}*", "FIT", "ratoms ca"]
 
 # Get the base filename from the input file
-filename = os.path.basename(complex).split('.')[0]
+filename = os.path.basename(PDBfile).split('.')[0]
 # Define the script filename
 scriptname = "%s.prf" % filename
 # Define outfile
@@ -141,7 +141,7 @@ writefile(PRFfile, script)
 #*************************************************************************
 
 # Run profit, returning the RMS values across all atoms and across CA atoms
-result = subprocess.check_output([f"profit -f {PRFfile} {complex} {antigen} | grep 'RMS' | tail -2"], shell=True)
+result = subprocess.check_output([f"profit -f {PRFfile} {PDBfile} {antigen} | grep 'RMS' | tail -2"], shell=True)
 # Decode results
 result = str(result, 'utf-8')
 # Split result text into list
