@@ -360,11 +360,18 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    # Add waters method to docking results
    dockingresults += [method_waters]
 
+   # Define haddock_out directory name
+   haddock_out = f"{OUTPath_i}/haddock_out"
+   # Create 'Haddock_out' directory
+   subprocess.run([f"mkdir {haddock_out}"], shell=True)
+   # Change to haddock_out directory
+   os.chdir(haddock_out)
+   
    # Run Haddock on input files
-   subprocess.run([f"~/ab-docking-scripts/runhaddock.py {ab_filename} {ag_filename} short {OUTPath_i}"], shell=True)
+   subprocess.run([f"~/ab-docking-scripts/runhaddock.py {ab_filename} {ag_filename} short {haddock_out}"], shell=True)
 
    # Define output waters filename
-   haddock_waters_resultfile = OUTPath_i + inputfilename + "_Haddock_waters_result.pdb"
+   haddock_waters_resultfile = haddock_out + inputfilename + "_Haddock_waters_result.pdb"
 
    # Evaluate waters docking result
    results_waters = evaluate_results(PDBfile, haddock_waters_resultfile)
@@ -420,7 +427,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    dockingresults += [method_nowaters]
 
    # Define output waters filename
-   haddock_nowaters_resultfile = OUTPath_i + inputfilename + "_Haddock_nowaters_result.pdb"
+   haddock_nowaters_resultfile = haddock_out + inputfilename + "_Haddock_nowaters_result.pdb"
 
    # Evaluate waters docking result
    results_nowaters = evaluate_results(PDBfile, haddock_nowaters_resultfile)
