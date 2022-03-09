@@ -105,6 +105,8 @@ if int(top_hit) <= 2000:
    subprocess.run([f"cp ~/DockingSoftware/zdock3.0.2/create_lig {OUTPath}"], shell=True)
    # Make create_lig executable
    subprocess.run([f"chmod +rwx {OUTPath}/create_lig"], shell=True)
+   # Change directory to outpath
+   subprocess.run([f"cd {OUTPath}"])
    # Run create.pl
    subprocess.run([f"~/DockingSoftware/zdock3.0.2/create.pl zdock.out {top_hit}"], shell=True)
    
