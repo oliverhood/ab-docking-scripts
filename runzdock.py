@@ -106,7 +106,7 @@ if int(top_hit) <= 2000:
    # Make create_lig executable
    subprocess.run([f"chmod +rwx ./create_lig"], shell=True)
    # Run create.pl
-   subprocess.run([f"~/DockingSoftware/zdock3.0.2/create.pl zdock.out {top_hit}"], shell=True)
+   subprocess.run([f"~/DockingSoftware/zdock3.0.2/create.pl {OUTPath}zdock.out {top_hit}"], shell=True)
    
    # Define best hit filename
    top_hit_filename = f"complex.{top_hit}.pdb"
