@@ -58,6 +58,15 @@ except IndexError:
 
 #*************************************************************************
 
+# Define name of new directory for Haddock to run in
+haddock_out = "./haddock_out"
+# Create new directory for Haddock to run in
+subprocess.run([f"mkdir {haddock_out}"], shell=True)
+# Move to new directory
+subprocess.run([f"cd {haddock_out}"], shell=True)
+
+#*************************************************************************
+
 # Get input filenames
 
 # Antibody
