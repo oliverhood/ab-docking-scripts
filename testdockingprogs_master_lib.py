@@ -361,7 +361,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    dockingresults += [method_waters]
 
    # Define haddock_out directory name
-   haddock_out = f"{OUTPath_i}/haddock_out"
+   haddock_out = f"{OUTPath_i}/haddock_out/"
    # Create 'Haddock_out' directory
    subprocess.run([f"mkdir {haddock_out}"], shell=True)
    # Change to haddock_out directory
