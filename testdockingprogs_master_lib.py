@@ -364,6 +364,8 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    haddock_out = f"{OUTPath_i}/haddock_out/"
    # Create 'Haddock_out' directory
    subprocess.run([f"mkdir {haddock_out}"], shell=True)
+   # Move input files to haddock_out
+   subprocess.run([f"cp {PDBfile} {ab_filename} {ag_filename} {haddock_out}"], shell=True)
    # Change to haddock_out directory
    os.chdir(haddock_out)
    
