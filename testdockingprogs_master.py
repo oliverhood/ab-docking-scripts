@@ -42,13 +42,15 @@ from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, pr
 # Specify input file
 PDBfile = sys.argv[1]
 
+# Get current working directory
+directory = os.getcwd()
 # Get output path from command line (if present)
-OUTPath = './'
+OUTPath = directory
 try:
    OUTPath = sys.argv[2] + '/'
 except IndexError:
    print('No output directory specified, writing files to current directory')
-   OUTPath = './'
+   OUTPath = directory
 
 #*************************************************************************
 
