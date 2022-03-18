@@ -45,7 +45,7 @@ PDBfile = sys.argv[1]
 # Get current working directory
 directory = os.getcwd()
 # Get output path from command line (if present)
-OUTPath = directory
+OUTPath = directory + "/"
 try:
    OUTPath = sys.argv[2] + '/'
 except IndexError:
