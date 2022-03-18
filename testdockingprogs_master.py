@@ -50,7 +50,7 @@ try:
    OUTPath = sys.argv[2] + '/'
 except IndexError:
    print('No output directory specified, writing files to current directory')
-   OUTPath = directory
+   OUTPath = directory + "/"
 
 #*************************************************************************
 
