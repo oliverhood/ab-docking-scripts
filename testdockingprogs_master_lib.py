@@ -366,6 +366,8 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    subprocess.run([f"mkdir {haddock_out}"], shell=True)
    # Move input files to haddock_out
    subprocess.run([f"cp {PDBfile} {ab_filename} {ag_filename} {haddock_out}"], shell=True)
+   # Find current directory
+   cwd = f"{os.getcwd()}/"
    # Change to haddock_out directory
    os.chdir(haddock_out)
    
@@ -480,6 +482,9 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
       Ha_ab_res += [float(item)]
    for item in ag_res_float:
       Ha_ag_res += [float(item)]
+
+   # Change back to starting directory
+   os.chdir(cwd)
 
    # Print complete haddock
    print("Done")
