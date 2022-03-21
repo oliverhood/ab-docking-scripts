@@ -139,7 +139,7 @@ run_rosetta_bool = True
 #run_rosetta_bool = program_prompt('Rosetta')
 
 # ZDOCK
-run_zdock_bool = True
+run_zdock_bool = False
 #run_zdock_bool = program_prompt('ZDOCK')
 
 # Haddock
