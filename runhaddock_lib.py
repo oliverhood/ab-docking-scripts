@@ -194,12 +194,12 @@ def extract_best_results(inputfilename):
 
 #*************************************************************************
 
-def fix_chain_labelling(PDBfile, resultfile, inputfilename):
+def fix_chain_labelling(PDBfile, resultfile):
    """
    Function to split the antibody chains into H,L chains and to relabel the chains to L,H and <agchainid>.
    """
    # Define output filename
-   outfilename = f"{inputfilename}_split_labelled.pdb"
+   outfilename = f"{resultfile}_split_labelled.pdb"
    # Get agchainid
    agchainid = getantigenchainid(PDBfile)
    # Split ab chains and relabel all chains
