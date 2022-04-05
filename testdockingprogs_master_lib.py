@@ -375,7 +375,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    subprocess.run([f"~/ab-docking-scripts/runhaddock.py {ab_filename} {ag_filename} short {haddock_out}"], shell=True)
 
    # Define output waters filename
-   haddock_waters_resultfile = haddock_out + inputfilename + "_nohydrogens_Haddock_waters_result.pdb"
+   haddock_waters_resultfile = haddock_out + inputfilename + "_nohydrogens_Haddock_waters_result.pdb_split_labelled.pdb"
 
    # Evaluate waters docking result
    results_waters = evaluate_results(PDBfile, haddock_waters_resultfile)
@@ -431,7 +431,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    dockingresults += [method_nowaters]
 
    # Define output waters filename
-   haddock_nowaters_resultfile = haddock_out + inputfilename + "_nohydrogens_Haddock_nowaters_result.pdb"
+   haddock_nowaters_resultfile = haddock_out + inputfilename + "_nohydrogens_Haddock_nowaters_result.pdb_split_labelled.pdb"
 
    # Evaluate waters docking result
    results_nowaters = evaluate_results(PDBfile, haddock_nowaters_resultfile)
