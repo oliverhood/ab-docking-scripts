@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import subprocess
-from dockingtools_lib import writefile
+from dockingtools_lib import writefile, getantigenchainid
 
 #*************************************************************************
 
@@ -191,3 +191,16 @@ def extract_best_results(inputfilename):
 
    # Copy best waters result to starting directory, giving it new name
    subprocess.run([f"cp ./run1/structures/it1/water/{best_result_w} ./{inputfilename}_Haddock_waters_result.pdb"], shell=True)
+
+#*************************************************************************
+
+def fix_chain_labelling(PDBfile, resultfile, inputfilename):
+   """
+   Function to split the antibody chains into H,L chains and to relabel the chains to L,H and <agchainid>.
+   """
+   # Define output filename
+   outfilename = f"{inputfilename}_split_labelled.pdb"
+   # Get agchainid
+   agchainid = getantigenchainid(PDBfile)
+   # Split ab chains and relabel all chains
+   subprocess.run([f"pdbchain {resultfile} | pdbrenum -c L,H,{agchainid} > {outfilename}"], shell=True)
