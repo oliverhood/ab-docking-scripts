@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import sys, os, subprocess
-from runhaddock_lib import clean_inputs, generate_unambig_tbl, rewrite_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
+from runhaddock_lib import clean_inputs, fix_chain_labelling, generate_unambig_tbl, rewrite_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
 
 #*************************************************************************
 
@@ -116,5 +116,21 @@ inputfilename = ab_filename.split('_ab')[0]
 
 # Extract files
 extract_best_results(inputfilename)
+
+#*************************************************************************
+
+# Split antibody chains and relabel chains for final result file
+
+# Define nowaters resultfile
+resultfile_nowaters = f"{inputfilename}_Haddock_nowaters_result.pdb"
+
+# Define waters resultfile
+resultfile_waters = f"{inputfilename}_Haddock_waters_result.pdb"
+
+# Run fix_chain_labelling on nowaters file
+fix_chain_labelling(antigen, resultfile_nowaters)
+
+# Run fix_chain_labelling on waters file
+fix_chain_labelling(antigen, resultfile_waters)
 
 #*************************************************************************
