@@ -197,10 +197,49 @@ def extract_best_results(inputfilename):
 def fix_chain_labelling(PDBfile, resultfile):
    """
    Function to split the antibody chains into H,L chains and to relabel the chains to L,H and <agchainid>.
+
+   >>> fix_chain_labelling('test6.pdb', 'test9.pdb')
+pdbchain test9.pdb | pdbrenum -c L,H,Y > test9.pdb_split_labelled.pdb
+REMARK FILENAME="haddock_out_27.pdb0"
+
+REMARK ===============================================================
+
+REMARK HADDOCK run for haddock_out
+
+REMARK initial structure: haddock_out_887.pdb
+
+REMARK ===============================================================
+
+REMARK            total,bonds,angles,improper,dihe,vdw,elec,air,cdih,coup,rdcs,vean,dani,xpcs,rg
+
+REMARK energies: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+
+REMARK ===============================================================
+
+REMARK            bonds,angles,impropers,dihe,air,cdih,coup,rdcs,vean,dani,xpcs
+
+REMARK rms-dev.: 0,0,0,0,0,0,0, 0, 0, 0, 0
+
    """
    # Define output filename
    outfilename = f"{resultfile}_split_labelled.pdb"
    # Get agchainid
    agchainid = getantigenchainid(PDBfile)
+   # Define executable
+   exe=f"pdbchain {resultfile} | pdbrenum -c L,H,{agchainid} > {outfilename}"
+   # Print executable to make sure it's working
+   print(exe)
    # Split ab chains and relabel all chains
-   subprocess.run([f"pdbchain {resultfile} | pdbrenum -c L,H,{agchainid} > {outfilename}"], shell=True)
+   subprocess.run([exe], shell=True)
+   # Test thingy
+   with open(outfilename) as file:
+      rows = file.readlines()
+      for line in rows[0:10]:
+         print(line)
+
+#*************************************************************************
+
+# Testing functions
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
