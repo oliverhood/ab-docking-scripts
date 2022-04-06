@@ -127,15 +127,15 @@ Ha_ag_res = []
 # Prompt user for programs to run
 
 # Megadock
-run_megadock_bool = True
+run_megadock_bool = False
 #run_megadock_bool = program_prompt('Megadock')
 
 # Piper
-run_piper_bool = True
+run_piper_bool = False
 #run_piper_bool = program_prompt('Piper')
 
 # Rosetta
-run_rosetta_bool = True
+run_rosetta_bool = False
 #run_rosetta_bool = program_prompt('Rosetta')
 
 # ZDOCK
