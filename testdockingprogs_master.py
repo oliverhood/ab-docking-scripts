@@ -253,27 +253,27 @@ if run_megadock_bool:
    MD_ag_res_out = f"{directory}/results/{inputfilename}_MD_ag_res.txt"
 
    # MD_all
-   with open(MD_all_out) as file:
+   with open(MD_all_out, "w") as file:
       for line in MD_all:
          file.write(f"{line} /n")
 
    # MD_ca
-   with open(MD_ca_out) as file:
+   with open(MD_ca_out, "w") as file:
       for line in MD_ca:
          file.write(f"{line} /n")
 
    # MD_res_pairs
-   with open(MD_res_pairs_out) as file:
+   with open(MD_res_pairs_out, "w") as file:
       for line in MD_res_pairs:
          file.write(f"{line} /n")
 
    # MD_ab_res
-   with open(MD_ab_res_out) as file:
+   with open(MD_ab_res_out, "w") as file:
       for line in MD_ab_res:
          file.write(f"{line} /n")
 
    # MD_ag_res
-   with open(MD_ag_res_out) as file:
+   with open(MD_ag_res_out, "w") as file:
       for line in MD_ag_res:
          file.write(f"{line} /n")
 
@@ -287,27 +287,27 @@ if run_piper_bool:
    Piper_ag_res_out = f"{directory}/results/{inputfilename}_Piper_ag_res.txt"
 
    # Piper_all
-   with open(Piper_all_out) as file:
+   with open(Piper_all_out, "w") as file:
       for line in Piper_all:
          file.write(f"{line} /n")
 
    # Piper_ca
-   with open(Piper_ca_out) as file:
+   with open(Piper_ca_out, "w") as file:
       for line in Piper_ca:
          file.write(f"{line} /n")
 
    # Piper_res_pairs
-   with open(Piper_res_pairs_out) as file:
+   with open(Piper_res_pairs_out, "w") as file:
       for line in Piper_res_pairs:
          file.write(f"{line} /n")
 
    # Piper_ab_res
-   with open(Piper_ab_res_out) as file:
+   with open(Piper_ab_res_out, "w") as file:
       for line in Piper_ab_res:
          file.write(f"{line} /n")
 
    # MD_ag_res
-   with open(Piper_ag_res_out) as file:
+   with open(Piper_ag_res_out, "w") as file:
       for line in Piper_ag_res:
          file.write(f"{line} /n")
 
@@ -322,27 +322,27 @@ if run_rosetta_bool:
    Rosetta_ag_res_out = f"{directory}/results/{inputfilename}_Rosetta_ag_res.txt"
 
    # Rosetta_all
-   with open(Rosetta_all_out) as file:
+   with open(Rosetta_all_out, "w") as file:
       for line in Rosetta_all:
          file.write(f"{line} /n")
 
    # Rosetta_ca
-   with open(Rosetta_ca_out) as file:
+   with open(Rosetta_ca_out, "w") as file:
       for line in Rosetta_ca:
          file.write(f"{line} /n")
 
    # Rosetta_res_pairs
-   with open(Rosetta_res_pairs_out) as file:
+   with open(Rosetta_res_pairs_out, "w") as file:
       for line in Rosetta_res_pairs:
          file.write(f"{line} /n")
 
    # Rosetta_ab_res
-   with open(Rosetta_ab_res_out) as file:
+   with open(Rosetta_ab_res_out, "w") as file:
       for line in Rosetta_ab_res:
          file.write(f"{line} /n")
 
    # Rosetta_ag_res
-   with open(Rosetta_ag_res_out) as file:
+   with open(Rosetta_ag_res_out, "w") as file:
       for line in Rosetta_ag_res:
          file.write(f"{line} /n")
 
@@ -357,27 +357,27 @@ if run_zdock_bool:
    ZDOCK_ag_res_out = f"{directory}/results/{inputfilename}_ZDOCK_ag_res.txt"
 
    # ZDOCK_all
-   with open(ZDOCK_all_out) as file:
+   with open(ZDOCK_all_out, "w") as file:
       for line in ZDOCK_all:
          file.write(f"{line} /n")
 
    # ZDOCK_ca
-   with open(ZDOCK_ca_out) as file:
+   with open(ZDOCK_ca_out, "w") as file:
       for line in ZDOCK_ca:
          file.write(f"{line} /n")
 
    # ZDOCK_res_pairs
-   with open(ZDOCK_res_pairs_out) as file:
+   with open(ZDOCK_res_pairs_out, "w") as file:
       for line in ZDOCK_res_pairs:
          file.write(f"{line} /n")
 
    # ZDOCK_ab_res
-   with open(ZDOCK_ab_res_out) as file:
+   with open(ZDOCK_ab_res_out, "w") as file:
       for line in ZDOCK_ab_res:
          file.write(f"{line} /n")
 
    # ZDOCK_ag_res
-   with open(ZDOCK_ag_res_out) as file:
+   with open(ZDOCK_ag_res_out, "w") as file:
       for line in ZDOCK_ag_res:
          file.write(f"{line} /n")
 
@@ -392,27 +392,27 @@ if run_haddock_bool:
    Hw_ag_res_out = f"{directory}/results/{inputfilename}_Hw_ag_res.txt"
 
    # Hw_all
-   with open(Hw_all_out) as file:
+   with open(Hw_all_out, "w") as file:
       for line in Hw_all:
          file.write(f"{line} /n")
 
    # Hw_ca
-   with open(Hw_ca_out) as file:
+   with open(Hw_ca_out, "w") as file:
       for line in Hw_ca:
          file.write(f"{line} /n")
 
    # Hw_res_pairs
-   with open(Hw_res_pairs_out) as file:
+   with open(Hw_res_pairs_out, "w") as file:
       for line in Hw_res_pairs:
          file.write(f"{line} /n")
 
    # Hw_ab_res
-   with open(Hw_ab_res_out) as file:
+   with open(Hw_ab_res_out, "w") as file:
       for line in Hw_ab_res:
          file.write(f"{line} /n")
 
    # Hw_ag_res
-   with open(Hw_ag_res_out) as file:
+   with open(Hw_ag_res_out, "w") as file:
       for line in Hw_ag_res:
          file.write(f"{line} /n")
 
@@ -427,27 +427,27 @@ if run_haddock_bool:
    Ha_ag_res_out = f"{directory}/results/{inputfilename}_Ha_ag_res.txt"
 
    # Ha_all
-   with open(Ha_all_out) as file:
+   with open(Ha_all_out, "w") as file:
       for line in Ha_all:
          file.write(f"{line} /n")
 
    # Ha_ca
-   with open(Ha_ca_out) as file:
+   with open(Ha_ca_out, "w") as file:
       for line in Ha_ca:
          file.write(f"{line} /n")
 
    # Ha_res_pairs
-   with open(Ha_res_pairs_out) as file:
+   with open(Ha_res_pairs_out, "w") as file:
       for line in Ha_res_pairs:
          file.write(f"{line} /n")
 
    # Ha_ab_res
-   with open(Ha_ab_res_out) as file:
+   with open(Ha_ab_res_out, "w") as file:
       for line in Ha_ab_res:
          file.write(f"{line} /n")
 
    # Ha_ag_res
-   with open(Ha_ag_res_out) as file:
+   with open(Ha_ag_res_out, "w") as file:
       for line in Ha_ag_res:
          file.write(f"{line} /n")
 
