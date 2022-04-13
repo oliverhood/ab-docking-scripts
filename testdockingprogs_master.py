@@ -457,10 +457,11 @@ lowest_scores = []
 highest_scores = []
 num_hits = []
 for item in (scores_all):
-   avg_scores += [statistics.mean(item)]
-   lowest_scores += [getlowestscore(item)]
-   highest_scores += [gethighestscore(item)]
-   num_hits += [getnumberhits(item)]
+   if any(item):
+      avg_scores += [statistics.mean(item)]
+      lowest_scores += [getlowestscore(item)]
+      highest_scores += [gethighestscore(item)]
+      num_hits += [getnumberhits(item)]
 
 # Write scores to dockingresults
 # Method names
@@ -472,112 +473,123 @@ haddock_waters_name = "Haddock2.4 | Protein-Protein | Waters "
 haddock_nowaters_name = "Haddock2.4 | Protein-Protein | No Waters"
 
 # Megadock
-dockingresults += [megadock_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[0]), "CA atoms:   " + str(avg_scores[1])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[0]), "CA atoms:   " + str(lowest_scores[1])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[0])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[2])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[3])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[4])]
-dockingresults += [" "]
+# Boolean filter
+if run_megadock_bool:
+   dockingresults += [megadock_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[0]), "CA atoms:   " + str(avg_scores[1])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[0]), "CA atoms:   " + str(lowest_scores[1])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[0])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[2])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[3])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[4])]
+   dockingresults += [" "]
 
 # Piper
-dockingresults += [piper_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[5]), "CA atoms:   " + str(avg_scores[6])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[5]), "CA atoms:   " + str(lowest_scores[6])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[5])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[7])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[8])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[9])]
-dockingresults += [" "]
+# Boolean filter
+if run_piper_bool:   
+   dockingresults += [piper_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[5]), "CA atoms:   " + str(avg_scores[6])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[5]), "CA atoms:   " + str(lowest_scores[6])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[5])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[7])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[8])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[9])]
+   dockingresults += [" "]
 
 # Rosetta
-dockingresults += [rosetta_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[10]), "CA atoms:   " + str(avg_scores[11])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[10]), "CA atoms:   " + str(lowest_scores[11])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[10])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[12])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[13])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[14])]
-dockingresults += [" "]
+# Boolean Filter
+if run_rosetta_bool:
+   dockingresults += [rosetta_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[10]), "CA atoms:   " + str(avg_scores[11])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[10]), "CA atoms:   " + str(lowest_scores[11])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[10])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[12])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[13])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[14])]
+   dockingresults += [" "]
 
 # ZDOCK
-dockingresults += [zdock_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[15]), "CA atoms:   " + str(avg_scores[16])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[15]), "CA atoms:   " + str(lowest_scores[16])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[15])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[17])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[18])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[19])]
-dockingresults += [" "]
+# Boolean filter
+if run_zdock_bool:
+   dockingresults += [zdock_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[15]), "CA atoms:   " + str(avg_scores[16])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[15]), "CA atoms:   " + str(lowest_scores[16])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[15])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[17])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[18])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[19])]
+   dockingresults += [" "]
 
-# Haddock Waters
-dockingresults += [haddock_waters_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[20]), "CA atoms:   " + str(avg_scores[21])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[20]), "CA atoms:   " + str(lowest_scores[21])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[20])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[22])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[23])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[24])]
-dockingresults += [" "]
+# Haddock
+# Boolean Filter
+if run_haddock_bool:
+   # Haddock Waters
+   dockingresults += [haddock_waters_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[20]), "CA atoms:   " + str(avg_scores[21])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[20]), "CA atoms:   " + str(lowest_scores[21])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[20])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[22])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[23])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[24])]
+   dockingresults += [" "]
 
-# Haddock Waters
-dockingresults += [haddock_nowaters_name]
-# Average RMSD
-dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[25]), "CA atoms:   " + str(avg_scores[26])]
-# Best RMSD
-dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[25]), "CA atoms:   " + str(lowest_scores[26])]
-# Number of good hits
-dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[25])]
-# Header for average proportion values
-dockingresults += ["Average percentage of correctly predicted interface residues"]
-# Avg. proportion of res-pairs
-dockingresults += ["Residue pair predictions:   " + str(avg_scores[27])]
-# Avg. antibody residues
-dockingresults += ["Antibody residue predictions:   " + str(avg_scores[28])]
-# Avg. antigen residues
-dockingresults += ["Antigen residue predictions:   " + str(avg_scores[29])]
-dockingresults += [" "]
+   # Haddock Waters
+   dockingresults += [haddock_nowaters_name]
+   # Average RMSD
+   dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[25]), "CA atoms:   " + str(avg_scores[26])]
+   # Best RMSD
+   dockingresults += ["Best Score", "All atoms:   " + str(lowest_scores[25]), "CA atoms:   " + str(lowest_scores[26])]
+   # Number of good hits
+   dockingresults += ["Number of good hits (<3.0 RMSD):   " + str(num_hits[25])]
+   # Header for average proportion values
+   dockingresults += ["Average percentage of correctly predicted interface residues"]
+   # Avg. proportion of res-pairs
+   dockingresults += ["Residue pair predictions:   " + str(avg_scores[27])]
+   # Avg. antibody residues
+   dockingresults += ["Antibody residue predictions:   " + str(avg_scores[28])]
+   # Avg. antigen residues
+   dockingresults += ["Antigen residue predictions:   " + str(avg_scores[29])]
+   dockingresults += [" "]
 
 # Finish calculating results
 print("Done")
