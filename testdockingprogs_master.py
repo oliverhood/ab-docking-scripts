@@ -462,6 +462,11 @@ for item in (scores_all):
       lowest_scores += [getlowestscore(item)]
       highest_scores += [gethighestscore(item)]
       num_hits += [getnumberhits(item)]
+   else:
+      avg_scores += ['N/A']
+      lowest_scores += ['N/A']
+      highest_scores += ['N/A']
+      num_hits += ['N/A']
 
 # Write scores to dockingresults
 # Method names
