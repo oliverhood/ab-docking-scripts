@@ -90,6 +90,7 @@ for item in list_ids:
          # Define docking_results directory
          docking_results = file
    # Try changing to results directory
+   print(f"{path}/{docking_results}/{item}/results")
    try:
       subprocess.run([f"cd {path}/{docking_results}/{item}/results"], shell=True)
    except:
