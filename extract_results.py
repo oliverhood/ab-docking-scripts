@@ -82,6 +82,8 @@ pwd = os.getcwd()
 
 # Move to results directory if there
 for item in list_ids:
+   # Print item name
+   print(item)
    # Get path to location of logfile
    path = os.path.dirname(os.path.realpath(LOGfile))
    # Search through contents of path for docking_results directory
