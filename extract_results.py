@@ -66,7 +66,7 @@ with open(LOGfile) as file:
    for line in rows:
       if 'Starting docking program on' in line:
          # Get filename
-         file_id = line.split(' on ')[1]
+         file_id = line.split(' on ')[1].split('...')[0]
          # Add to list
          list_ids += [file_id]
 
