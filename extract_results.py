@@ -33,7 +33,7 @@ V1.0   21.04.22   Original   By: OECH
 
 # Import libraries
 
-import sys, os, subprocess
+import sys, os, subprocess, json
 
 #*************************************************************************
 
@@ -121,3 +121,78 @@ for item in list_ids:
       Hw_res_pairs_out = f"{item}_Hw_res_pairs.txt"
       Hw_ab_res_out = f"{item}_Hw_ab_res.txt"
       Hw_ag_res_out = f"{item}_Hw_ag_res.txt"
+      # Haddock No waters
+      Ha_all_out = f"{item}_Ha_all.txt"
+      Ha_ca_out = f"{item}_Ha_ca.txt"
+      Ha_res_pairs_out = f"{item}_Ha_res_pairs.txt"
+      Ha_ab_res_out = f"{item}_Ha_ab_res.txt"
+      Ha_ag_res_out = f"{item}_Ha_ag_res.txt"
+      # Extract results from files
+      # Megadock
+      with open(MD_all_out) as file:
+         MD_all = file.readlines()
+      with open(MD_ca_out) as file:
+         MD_ca = file.readlines()
+      with open(MD_res_pairs_out) as file:
+         MD_res_pairs = file.readlines()
+      with open(MD_ab_res_out) as file:
+         MD_ab_res = file.readlines()
+      with open(MD_ag_res_out) as file:
+         MD_ag_res = file.readlines()
+      megadock_dict = {"Megadock":[MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res]}
+      # Piper
+      with open(Piper_all_out) as file:
+         Piper_all = file.readlines()
+      with open(Piper_ca_out) as file:
+         Piper_ca = file.readlines()
+      with open(Piper_res_pairs_out) as file:
+         Piper_res_pairs = file.readlines()
+      with open(Piper_ab_res_out) as file:
+         Piper_ab_res = file.readlines()
+      with open(Piper_ag_res_out) as file:
+         Piper_ag_res = file.readlines()
+      piper_dict = {"Piper":[Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res]}
+      # Rosetta
+      with open(Rosetta_all_out) as file:
+         Rosetta_all = file.readlines()
+      with open(Rosetta_ca_out) as file:
+         Rosetta_ca = file.readlines()
+      with open(Rosetta_res_pairs_out) as file:
+         Rosetta_res_pairs = file.readlines()
+      with open(Rosetta_ab_res_out) as file:
+         Rosetta_ab_res = file.readlines()
+      with open(Rosetta_ag_res_out) as file:
+         Rosetta_ag_res = file.readlines()
+      Rosetta_dict = {"Rosetta":[Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res]}
+      # Haddock waters
+      with open(Hw_all_out) as file:
+         Hw_all = file.readlines()
+      with open(Hw_ca_out) as file:
+         Hw_ca = file.readlines()
+      with open(Hw_res_pairs_out) as file:
+         Hw_res_pairs = file.readlines()
+      with open(Hw_ab_res_out) as file:
+         Hw_ab_res = file.readlines()
+      with open(Hw_ag_res_out) as file:
+         Hw_ag_res = file.readlines()
+      haddock_water_dict = {"Haddock waters":[Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res]}
+      # Haddock no waters
+      with open(Ha_all_out) as file:
+         Ha_all = file.readlines()
+      with open(Ha_ca_out) as file:
+         Ha_ca = file.readlines()
+      with open(Ha_res_pairs_out) as file:
+         Ha_res_pairs = file.readlines()
+      with open(Ha_ab_res_out) as file:
+         Ha_ab_res = file.readlines()
+      with open(Ha_ag_res_out) as file:
+         Ha_ag_res = file.readlines()
+      haddock_nowater_dict = {"Haddock no waters":[Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res]}
+      # Add results dictionaries to main dictionary
+      dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
+
+# Write dict_results to json file
+outputfilename = "results.json"
+# write output json file
+with open(outputfilename, "w") as file:
+   json.dump(dict_results, file)
