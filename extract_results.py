@@ -89,45 +89,40 @@ for item in list_ids:
       if file.startswith('docking_results'):
          # Define docking_results directory
          docking_results = file
-   # Try changing to results directory
-   print(f"{path}/{docking_results}/{item}/results")
-   try:
-      subprocess.run([f"cd {path}/{docking_results}/{item}/results"], shell=True)
-   except:
-      print("No results directory found.")
-   # If cd was sucessful
-   else:
+   # Check if results directory exists
+   results_dir = f"{path}/{docking_results}/{item}/results/"
+   if os.path.isdir(results_dir):
       # Define results file names
       # Megadock
-      MD_all_out = f"{item}_MD_all.txt"
-      MD_ca_out = f"{item}_MD_ca.txt"
-      MD_res_pairs_out = f"{item}_MD_res_pairs.txt"
-      MD_ab_res_out = f"{item}_MD_ab_res.txt"
-      MD_ag_res_out = f"{item}_MD_ag_res.txt"
+      MD_all_out = f"{results_dir}{item}_MD_all.txt"
+      MD_ca_out = f"{results_dir}{item}_MD_ca.txt"
+      MD_res_pairs_out = f"{results_dir}{item}_MD_res_pairs.txt"
+      MD_ab_res_out = f"{results_dir}{item}_MD_ab_res.txt"
+      MD_ag_res_out = f"{results_dir}{item}_MD_ag_res.txt"
       # Piper
-      Piper_all_out = f"{item}_Piper_all.txt"
-      Piper_ca_out = f"{item}_Piper_ca.txt"
-      Piper_res_pairs_out = f"{item}_Piper_res_pairs.txt"
-      Piper_ab_res_out = f"{item}_Piper_ab_res.txt"
-      Piper_ag_res_out = f"{item}_Piper_ag_res.txt"
+      Piper_all_out = f"{results_dir}{item}_Piper_all.txt"
+      Piper_ca_out = f"{results_dir}{item}_Piper_ca.txt"
+      Piper_res_pairs_out = f"{results_dir}{item}_Piper_res_pairs.txt"
+      Piper_ab_res_out = f"{results_dir}{item}_Piper_ab_res.txt"
+      Piper_ag_res_out = f"{results_dir}{item}_Piper_ag_res.txt"
       # Rosetta
-      Rosetta_all_out = f"{item}_Rosetta_all.txt"
-      Rosetta_ca_out = f"{item}_Rosetta_ca.txt"
-      Rosetta_res_pairs_out = f"{item}_Rosetta_res_pairs.txt"
-      Rosetta_ab_res_out = f"{item}_Rosetta_ab_res.txt"
-      Rosetta_ag_res_out = f"{item}_Rosetta_ag_res.txt"
+      Rosetta_all_out = f"{results_dir}{item}_Rosetta_all.txt"
+      Rosetta_ca_out = f"{results_dir}{item}_Rosetta_ca.txt"
+      Rosetta_res_pairs_out = f"{results_dir}{item}_Rosetta_res_pairs.txt"
+      Rosetta_ab_res_out = f"{results_dir}{item}_Rosetta_ab_res.txt"
+      Rosetta_ag_res_out = f"{results_dir}{item}_Rosetta_ag_res.txt"
       # Haddock waters
-      Hw_all_out = f"{item}_Hw_all.txt"
-      Hw_ca_out = f"{item}_Hw_ca.txt"
-      Hw_res_pairs_out = f"{item}_Hw_res_pairs.txt"
-      Hw_ab_res_out = f"{item}_Hw_ab_res.txt"
-      Hw_ag_res_out = f"{item}_Hw_ag_res.txt"
+      Hw_all_out = f"{results_dir}{item}_Hw_all.txt"
+      Hw_ca_out = f"{results_dir}{item}_Hw_ca.txt"
+      Hw_res_pairs_out = f"{results_dir}{item}_Hw_res_pairs.txt"
+      Hw_ab_res_out = f"{results_dir}{item}_Hw_ab_res.txt"
+      Hw_ag_res_out = f"{results_dir}{item}_Hw_ag_res.txt"
       # Haddock No waters
-      Ha_all_out = f"{item}_Ha_all.txt"
-      Ha_ca_out = f"{item}_Ha_ca.txt"
-      Ha_res_pairs_out = f"{item}_Ha_res_pairs.txt"
-      Ha_ab_res_out = f"{item}_Ha_ab_res.txt"
-      Ha_ag_res_out = f"{item}_Ha_ag_res.txt"
+      Ha_all_out = f"{results_dir}{item}_Ha_all.txt"
+      Ha_ca_out = f"{results_dir}{item}_Ha_ca.txt"
+      Ha_res_pairs_out = f"{results_dir}{item}_Ha_res_pairs.txt"
+      Ha_ab_res_out = f"{results_dir}{item}_Ha_ab_res.txt"
+      Ha_ag_res_out = f"{results_dir}{item}_Ha_ag_res.txt"
       # Extract results from files
       # Megadock
       with open(MD_all_out) as file:
@@ -191,12 +186,11 @@ for item in list_ids:
       haddock_nowater_dict = {"Haddock no waters":[Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res]}
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
-
-# Change to starting directory
-os.chdir(pwd)
+   else:
+      print("No results directory found.")
 
 # Write dict_results to json file
-outputfilename = "results.json"
+outputfilename = f"{item}_results.json"
 # write output json file
 with open(outputfilename, "w") as file:
    json.dump(dict_results, file)
