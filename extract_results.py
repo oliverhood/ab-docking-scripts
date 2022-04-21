@@ -191,6 +191,9 @@ for item in list_ids:
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
 
+# Change to starting directory
+os.chdir(pwd)
+
 # Write dict_results to json file
 outputfilename = "results.json"
 # write output json file
