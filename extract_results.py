@@ -192,7 +192,7 @@ for item in list_ids:
       print("No results directory found.")
 
 # Write dict_results to json file
-outputfilename = f"{item}_results.json"
+outputfilename = f"/home/oliverh/pdb_files/results_json/{item}_results.json"
 # write output json file
 with open(outputfilename, "w") as file:
    json.dump(dict_results, file)
