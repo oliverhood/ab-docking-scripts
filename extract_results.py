@@ -127,8 +127,10 @@ for item in list_ids:
       Ha_ag_res_out = f"{results_dir}{item}_Ha_ag_res.txt"
       # Extract results from files
       def func(l):
-         l.remove("")
-         return [float(i) for i in l]
+          while '' in l:
+              l.remove('')
+          return [float(i) for i in l]
+
       func2 = lambda a,b,c,d,e: {"All_atoms":func(a), 
                                  "CA_atoms":func(b), 
                                  "Res_pairs":func(c), 
