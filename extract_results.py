@@ -126,66 +126,74 @@ for item in list_ids:
       Ha_ab_res_out = f"{results_dir}{item}_Ha_ab_res.txt"
       Ha_ag_res_out = f"{results_dir}{item}_Ha_ag_res.txt"
       # Extract results from files
+      def func(l):
+         l.remove("")
+         return [float(i) for i in l]
+      func2 = lambda a,b,c,d,e: {"All_atoms":func(a), 
+                                 "CA_atoms":func(b), 
+                                 "Res_pairs":func(c), 
+                                 "Ab_res":func(d), 
+                                 "Ag_res":func(e)}
       # Megadock
       with open(MD_all_out) as file:
-         MD_all = file.readlines()[0].split(' /n').remove('')
+         MD_all = file.readlines()[0].split(' /n')
       with open(MD_ca_out) as file:
-         MD_ca = file.readlines()[0].split(' /n').remove('')
+         MD_ca = file.readlines()[0].split(' /n')
       with open(MD_res_pairs_out) as file:
-         MD_res_pairs = file.readlines()[0].split(' /n').remove('')
+         MD_res_pairs = file.readlines()[0].split(' /n')
       with open(MD_ab_res_out) as file:
-         MD_ab_res = file.readlines()[0].split(' /n').remove('')
+         MD_ab_res = file.readlines()[0].split(' /n')
       with open(MD_ag_res_out) as file:
-         MD_ag_res = file.readlines()[0].split(' /n').remove('')
-      megadock_dict = {"Megadock":{"All_atoms":MD_all, "CA_atoms":MD_ca, "Res_pairs":MD_res_pairs, "Ab_res":MD_ab_res, "Ag_res":MD_ag_res}}
+         MD_ag_res = file.readlines()[0].split(' /n')
+      megadock_dict = {"Megadock":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
       # Piper
       with open(Piper_all_out) as file:
-         Piper_all = file.readlines()[0].split(' /n').remove('')
+         Piper_all = file.readlines()[0].split(' /n')
       with open(Piper_ca_out) as file:
-         Piper_ca = file.readlines()[0].split(' /n').remove('')
+         Piper_ca = file.readlines()[0].split(' /n')
       with open(Piper_res_pairs_out) as file:
-         Piper_res_pairs = file.readlines()[0].split(' /n').remove('')
+         Piper_res_pairs = file.readlines()[0].split(' /n')
       with open(Piper_ab_res_out) as file:
-         Piper_ab_res = file.readlines()[0].split(' /n').remove('')
+         Piper_ab_res = file.readlines()[0].split(' /n')
       with open(Piper_ag_res_out) as file:
-         Piper_ag_res = file.readlines()[0].split(' /n').remove('')
-      piper_dict = {"Piper":{"All_atoms":Piper_all, "CA_atoms":Piper_ca, "Res_pairs":Piper_res_pairs, "Ab_res":Piper_ab_res, "Ag_res":Piper_ag_res}}
+         Piper_ag_res = file.readlines()[0].split(' /n')
+      piper_dict = {"Piper":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
       # Rosetta
       with open(Rosetta_all_out) as file:
-         Rosetta_all = file.readlines()[0].split(' /n').remove('')
+         Rosetta_all = file.readlines()[0].split(' /n')
       with open(Rosetta_ca_out) as file:
-         Rosetta_ca = file.readlines()[0].split(' /n').remove('')
+         Rosetta_ca = file.readlines()[0].split(' /n')
       with open(Rosetta_res_pairs_out) as file:
-         Rosetta_res_pairs = file.readlines()[0].split(' /n').remove('')
+         Rosetta_res_pairs = file.readlines()[0].split(' /n')
       with open(Rosetta_ab_res_out) as file:
-         Rosetta_ab_res = file.readlines()[0].split(' /n').remove('')
+         Rosetta_ab_res = file.readlines()[0].split(' /n')
       with open(Rosetta_ag_res_out) as file:
-         Rosetta_ag_res = file.readlines()[0].split(' /n').remove('')
-      Rosetta_dict = {"Rosetta":{"All_atoms":Rosetta_all, "CA_atoms":Rosetta_ca, "Res_pairs":Rosetta_res_pairs, "Ab_res":Rosetta_ab_res, "Ag_res":Rosetta_ag_res}}
+         Rosetta_ag_res = file.readlines()[0].split(' /n')
+      Rosetta_dict = {"Rosetta":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
       # Haddock waters
       with open(Hw_all_out) as file:
-         Hw_all = file.readlines()[0].split(' /n').remove('')
+         Hw_all = file.readlines()[0].split(' /n')
       with open(Hw_ca_out) as file:
-         Hw_ca = file.readlines()[0].split(' /n').remove('')
+         Hw_ca = file.readlines()[0].split(' /n')
       with open(Hw_res_pairs_out) as file:
-         Hw_res_pairs = file.readlines()[0].split(' /n').remove('')
+         Hw_res_pairs = file.readlines()[0].split(' /n')
       with open(Hw_ab_res_out) as file:
-         Hw_ab_res = file.readlines()[0].split(' /n').remove('')
+         Hw_ab_res = file.readlines()[0].split(' /n')
       with open(Hw_ag_res_out) as file:
-         Hw_ag_res = file.readlines()[0].split(' /n').remove('')
-      haddock_water_dict = {"Haddock waters":{"All_atoms":Hw_all, "CA_atoms":Hw_ca, "Res_pairs":Hw_res_pairs, "Ab_res":Hw_ab_res, "Ag_res":Hw_ag_res}}
+         Hw_ag_res = file.readlines()[0].split(' /n')
+      haddock_water_dict = {"Haddock waters":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
       # Haddock no waters
       with open(Ha_all_out) as file:
-         Ha_all = file.readlines()[0].split(' /n').remove('')
+         Ha_all = file.readlines()[0].split(' /n')
       with open(Ha_ca_out) as file:
-         Ha_ca = file.readlines()[0].split(' /n').remove('')
+         Ha_ca = file.readlines()[0].split(' /n')
       with open(Ha_res_pairs_out) as file:
-         Ha_res_pairs = file.readlines()[0].split(' /n').remove('')
+         Ha_res_pairs = file.readlines()[0].split(' /n')
       with open(Ha_ab_res_out) as file:
-         Ha_ab_res = file.readlines()[0].split(' /n').remove('')
+         Ha_ab_res = file.readlines()[0].split(' /n')
       with open(Ha_ag_res_out) as file:
-         Ha_ag_res = file.readlines()[0].split(' /n').remove('')
-      haddock_nowater_dict = {"Haddock no waters":{"All_atoms":Ha_all, "CA_atoms":Ha_ca, "Res_pairs":Ha_res_pairs, "Ab_res":Ha_ab_res, "Ag_res":Ha_ag_res}}
+         Ha_ag_res = file.readlines()[0].split(' /n')
+      haddock_nowater_dict = {"Haddock no waters":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
    else:
