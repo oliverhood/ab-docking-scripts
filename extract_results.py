@@ -128,64 +128,64 @@ for item in list_ids:
       # Extract results from files
       # Megadock
       with open(MD_all_out) as file:
-         MD_all = file.readlines()[0].split(' /n')
+         MD_all = file.readlines()[0].split(' /n').remove('')
       with open(MD_ca_out) as file:
-         MD_ca = file.readlines()[0].split(' /n')
+         MD_ca = file.readlines()[0].split(' /n').remove('')
       with open(MD_res_pairs_out) as file:
-         MD_res_pairs = file.readlines()[0].split(' /n')
+         MD_res_pairs = file.readlines()[0].split(' /n').remove('')
       with open(MD_ab_res_out) as file:
-         MD_ab_res = file.readlines()[0].split(' /n')
+         MD_ab_res = file.readlines()[0].split(' /n').remove('')
       with open(MD_ag_res_out) as file:
-         MD_ag_res = file.readlines()[0].split(' /n')
-      megadock_dict = {"Megadock":[MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res]}
+         MD_ag_res = file.readlines()[0].split(' /n').remove('')
+      megadock_dict = {"Megadock":{"All_atoms":MD_all, "CA_atoms":MD_ca, "Res_pairs":MD_res_pairs, "Ab_res":MD_ab_res, "Ag_res":MD_ag_res}}
       # Piper
       with open(Piper_all_out) as file:
-         Piper_all = file.readlines()[0].split(' /n')
+         Piper_all = file.readlines()[0].split(' /n').remove('')
       with open(Piper_ca_out) as file:
-         Piper_ca = file.readlines()[0].split(' /n')
+         Piper_ca = file.readlines()[0].split(' /n').remove('')
       with open(Piper_res_pairs_out) as file:
-         Piper_res_pairs = file.readlines()[0].split(' /n')
+         Piper_res_pairs = file.readlines()[0].split(' /n').remove('')
       with open(Piper_ab_res_out) as file:
-         Piper_ab_res = file.readlines()[0].split(' /n')
+         Piper_ab_res = file.readlines()[0].split(' /n').remove('')
       with open(Piper_ag_res_out) as file:
-         Piper_ag_res = file.readlines()[0].split(' /n')
-      piper_dict = {"Piper":[Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res]}
+         Piper_ag_res = file.readlines()[0].split(' /n').remove('')
+      piper_dict = {"Piper":{"All_atoms":Piper_all, "CA_atoms":Piper_ca, "Res_pairs":Piper_res_pairs, "Ab_res":Piper_ab_res, "Ag_res":Piper_ag_res}}
       # Rosetta
       with open(Rosetta_all_out) as file:
-         Rosetta_all = file.readlines()[0].split(' /n')
+         Rosetta_all = file.readlines()[0].split(' /n').remove('')
       with open(Rosetta_ca_out) as file:
-         Rosetta_ca = file.readlines()[0].split(' /n')
+         Rosetta_ca = file.readlines()[0].split(' /n').remove('')
       with open(Rosetta_res_pairs_out) as file:
-         Rosetta_res_pairs = file.readlines()[0].split(' /n')
+         Rosetta_res_pairs = file.readlines()[0].split(' /n').remove('')
       with open(Rosetta_ab_res_out) as file:
-         Rosetta_ab_res = file.readlines()[0].split(' /n')
+         Rosetta_ab_res = file.readlines()[0].split(' /n').remove('')
       with open(Rosetta_ag_res_out) as file:
-         Rosetta_ag_res = file.readlines()[0].split(' /n')
-      Rosetta_dict = {"Rosetta":[Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res]}
+         Rosetta_ag_res = file.readlines()[0].split(' /n').remove('')
+      Rosetta_dict = {"Rosetta":{"All_atoms":Rosetta_all, "CA_atoms":Rosetta_ca, "Res_pairs":Rosetta_res_pairs, "Ab_res":Rosetta_ab_res, "Ag_res":Rosetta_ag_res}}
       # Haddock waters
       with open(Hw_all_out) as file:
-         Hw_all = file.readlines()[0].split(' /n')
+         Hw_all = file.readlines()[0].split(' /n').remove('')
       with open(Hw_ca_out) as file:
-         Hw_ca = file.readlines()[0].split(' /n')
+         Hw_ca = file.readlines()[0].split(' /n').remove('')
       with open(Hw_res_pairs_out) as file:
-         Hw_res_pairs = file.readlines()[0].split(' /n')
+         Hw_res_pairs = file.readlines()[0].split(' /n').remove('')
       with open(Hw_ab_res_out) as file:
-         Hw_ab_res = file.readlines()[0].split(' /n')
+         Hw_ab_res = file.readlines()[0].split(' /n').remove('')
       with open(Hw_ag_res_out) as file:
-         Hw_ag_res = file.readlines()[0].split(' /n')
-      haddock_water_dict = {"Haddock waters":[Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res]}
+         Hw_ag_res = file.readlines()[0].split(' /n').remove('')
+      haddock_water_dict = {"Haddock waters":{"All_atoms":Hw_all, "CA_atoms":Hw_ca, "Res_pairs":Hw_res_pairs, "Ab_res":Hw_ab_res, "Ag_res":Hw_ag_res}}
       # Haddock no waters
       with open(Ha_all_out) as file:
-         Ha_all = file.readlines()[0].split(' /n')
+         Ha_all = file.readlines()[0].split(' /n').remove('')
       with open(Ha_ca_out) as file:
-         Ha_ca = file.readlines()[0].split(' /n')
+         Ha_ca = file.readlines()[0].split(' /n').remove('')
       with open(Ha_res_pairs_out) as file:
-         Ha_res_pairs = file.readlines()[0].split(' /n')
+         Ha_res_pairs = file.readlines()[0].split(' /n').remove('')
       with open(Ha_ab_res_out) as file:
-         Ha_ab_res = file.readlines()[0].split(' /n')
+         Ha_ab_res = file.readlines()[0].split(' /n').remove('')
       with open(Ha_ag_res_out) as file:
-         Ha_ag_res = file.readlines()[0].split(' /n')
-      haddock_nowater_dict = {"Haddock no waters":[Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res]}
+         Ha_ag_res = file.readlines()[0].split(' /n').remove('')
+      haddock_nowater_dict = {"Haddock no waters":{"All_atoms":Ha_all, "CA_atoms":Ha_ca, "Res_pairs":Ha_res_pairs, "Ab_res":Ha_ab_res, "Ag_res":Ha_ag_res}}
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
    else:
