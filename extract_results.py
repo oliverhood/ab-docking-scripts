@@ -157,7 +157,7 @@ for item in list_ids:
          Piper_ab_res = file.readlines()[0].split(' /n')
       with open(Piper_ag_res_out) as file:
          Piper_ag_res = file.readlines()[0].split(' /n')
-      piper_dict = {"Piper":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
+      piper_dict = {"Piper":func2(Piper_all, Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)}
       # Rosetta
       with open(Rosetta_all_out) as file:
          Rosetta_all = file.readlines()[0].split(' /n')
@@ -169,7 +169,7 @@ for item in list_ids:
          Rosetta_ab_res = file.readlines()[0].split(' /n')
       with open(Rosetta_ag_res_out) as file:
          Rosetta_ag_res = file.readlines()[0].split(' /n')
-      Rosetta_dict = {"Rosetta":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
+      Rosetta_dict = {"Rosetta":func2(Rosetta_all, Rosetta_ca, Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)}
       # Haddock waters
       with open(Hw_all_out) as file:
          Hw_all = file.readlines()[0].split(' /n')
@@ -181,7 +181,7 @@ for item in list_ids:
          Hw_ab_res = file.readlines()[0].split(' /n')
       with open(Hw_ag_res_out) as file:
          Hw_ag_res = file.readlines()[0].split(' /n')
-      haddock_water_dict = {"Haddock waters":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
+      haddock_water_dict = {"Haddock waters":func2(Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res)}
       # Haddock no waters
       with open(Ha_all_out) as file:
          Ha_all = file.readlines()[0].split(' /n')
@@ -193,7 +193,7 @@ for item in list_ids:
          Ha_ab_res = file.readlines()[0].split(' /n')
       with open(Ha_ag_res_out) as file:
          Ha_ag_res = file.readlines()[0].split(' /n')
-      haddock_nowater_dict = {"Haddock no waters":func2(MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)}
+      haddock_nowater_dict = {"Haddock no waters":func2(Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res)}
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
    else:
