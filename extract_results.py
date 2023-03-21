@@ -206,3 +206,6 @@ outputfilename = f"/home/oliverh/pdb_files/results_json/{item}_results.json"
 # write output json file
 with open(outputfilename, "w") as file:
    json.dump(dict_results, file)
+
+# Print that extraction is complete
+print("Results extraction complete.")
