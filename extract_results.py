@@ -199,7 +199,7 @@ for item in list_ids:
       # Add results dictionaries to main dictionary
       dict_results[item] = [megadock_dict, piper_dict, Rosetta_dict, haddock_water_dict, haddock_nowater_dict]
    else:
-      print("No results directory found.")
+      print(f"No results directory found for {item}.")
 
 # Write dict_results to json file
 outputfilename = f"/home/oliverh/pdb_files/results_json/{item}_results.json"

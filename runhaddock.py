@@ -105,6 +105,25 @@ edit_run_cns(long)
 subprocess.run(["cd run1; /home/oliverh/DockingSoftware/haddock2.4/Haddock/RunHaddock.py"], shell=True)
 
 #*************************************************************************
+# def cli():
+#    config_path = sys.argv[1] # "/path/to/config" path to the config file
+#    with open(config_path, 'r') as f:
+#       config = yaml.safe_load(f)  # install pyyaml on macos
+#
+#    return config
+# """
+# config = {"executable": {"megadock": ...,
+#                          "piper": ...}
+#          }
+# """
+#
+#
+# megadock_path = config["executable"]["megadock"]
+# abag = config["dataset"]["abag"]
+# abymod = config["dataset"]["abymod"]
+#
+# python script.py config.yml
+#*************************************************************************
 
 # Move back to start directory
 subprocess.run(["pwd"], shell=True)

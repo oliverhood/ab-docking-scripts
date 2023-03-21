@@ -137,3 +137,18 @@ Script to extract the result values for a docking run if it has been completed. 
   - Path to the logfile written with the testdockingprogs_master.py script
   - Output directory (optional)
 The output is a json file with the suffix '_results.json'.
+
+
+## reproduce data 
+- calling piper 
+```shell
+$ python script.py config.yml 
+```
+
+## config yaml setup 
+```yaml
+executable:
+  megadock: """
+```
+- `megadock`: path to megadock binary executable
+
