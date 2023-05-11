@@ -94,6 +94,7 @@ for item in list_ids:
         # Print statement that file produced full results
         print(f"{item} has results, copying output PDBs")
         # Define result file locations and names
+        og = f"{path}/{docking_results}/{item}/{item}.pdb"
         megadock_0 = f"{output_dir_0}{item}_MegadockRanked_result.pdb"
         piper_0 = f"{output_dir_0}{item}_nohydrogens_Piper_result.pdb"
         rosetta_0 = f"{output_dir_0}{item}_Rosetta_result.pdb"
@@ -104,7 +105,7 @@ for item in list_ids:
         # Make output directory
         subprocess.run([f"mkdir {out_dir_combined_0}"], shell=True)
         # Copy the files to new directory
-        subprocess.run([f"cp {megadock_0} {piper_0} {rosetta_0} {haddock_waters_0} {haddock_nowaters_0} {out_dir_combined_0}"], shell=True)
+        subprocess.run([f"cp {megadock_0} {piper_0} {rosetta_0} {haddock_waters_0} {haddock_nowaters_0} {og} {out_dir_combined_0}"], shell=True)
     # Fail line
     else:
         print(f"No results directory found for {item}.")
@@ -116,6 +117,7 @@ for item in list_ids:
         # Print statement that file produced full results
         print(f"{item} has results, copying output PDBs")
         # Define result file locations and names
+        og = f"{path}/{docking_results}/{item}/{item}.pdb"
         megadock_1 = f"{output_dir_1}{item}_MegadockRanked_result.pdb"
         piper_1 = f"{output_dir_1}{item}_nohydrogens_Piper_result.pdb"
         rosetta_1 = f"{output_dir_1}{item}_Rosetta_result.pdb"
@@ -126,7 +128,7 @@ for item in list_ids:
         # Make output directory
         subprocess.run([f"mkdir {out_dir_combined_1}"], shell=True)
         # Copy the files to new directory
-        subprocess.run([f"cp {megadock_1} {piper_1} {rosetta_1} {haddock_waters_1} {haddock_nowaters_1} {out_dir_combined_1}"], shell=True)
+        subprocess.run([f"cp {megadock_1} {piper_1} {rosetta_1} {haddock_waters_1} {haddock_nowaters_1} {og} {out_dir_combined_1}"], shell=True)
     # Fail line
     else:
         print(f"No results directory found for {item}.")
@@ -138,6 +140,7 @@ for item in list_ids:
         # Print statement that file produced full results
         print(f"{item} has results, copying output PDBs")
         # Define result file locations and names
+        og = f"{path}/{docking_results}/{item}/{item}.pdb"
         megadock_2 = f"{output_dir_2}{item}_MegadockRanked_result.pdb"
         piper_2 = f"{output_dir_2}{item}_nohydrogens_Piper_result.pdb"
         rosetta_2 = f"{output_dir_2}{item}_Rosetta_result.pdb"
@@ -149,7 +152,7 @@ for item in list_ids:
         subprocess.run([f"mkdir {out_dir_combined_2}"], shell=True)
         # Copy the files to new directory
         subprocess.run(
-            [f"cp {megadock_2} {piper_2} {rosetta_2} {haddock_waters_2} {haddock_nowaters_2} {out_dir_combined_2}"],
+            [f"cp {megadock_2} {piper_2} {rosetta_2} {haddock_waters_2} {haddock_nowaters_2} {og} {out_dir_combined_2}"],
             shell=True)
     # Fail line
     else:
