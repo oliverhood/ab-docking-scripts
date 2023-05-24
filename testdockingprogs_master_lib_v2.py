@@ -114,7 +114,7 @@ def run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
 
 # Haddock function
 
-def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Ha_all, Ha_ca, Ha_res_pairs, Ha_ab_res, Ha_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res):
+def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i):
    """
    Function to run haddock program (with and without waters).
 

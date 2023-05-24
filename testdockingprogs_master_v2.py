@@ -36,7 +36,7 @@ V2.0   24.05.23   Modified   By: OECH
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
 from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
-from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
+from testdockingprogs_master_lib_v2 import run_megadock, run_piper, run_rosetta, run_haddock
 
 #*************************************************************************
 
@@ -143,32 +143,21 @@ for i in range(3):
    # MEGADOCK
 
    if run_megadock_bool:
-       run_megadock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all,
-                    MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
+       run_megadock(inputfilename, ab_filename, ag_filename, OUTPath_i)
 
 #*************************************************************************
 
    # Piper
 
    if run_piper_bool:
-       run_piper(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all,
-                 Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
+       run_piper(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i)
 
 #*************************************************************************
 
    # Rosetta
 
    if run_rosetta_bool:
-       run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca,
-                   Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
-
-#*************************************************************************
-
-   # ZDOCK
-
-   if run_zdock_bool:
-       run_zdock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all,
-                 ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
+       run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i)
 
 #*************************************************************************
 
