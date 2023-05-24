@@ -71,11 +71,6 @@ if agchainid == 'No chains':
 # Get today's date
 current_date = time.strftime(r"%d.%m.%Y", time.localtime())
 current_date_f2 = time.strftime(r"%d_%m_%Y", time.localtime())
-# Create Results file header
-header = "Docking test on " + PDBfile + "   " + current_date
-spacer = ""
-# Create list starting with results file header
-dockingresults = [header,spacer]
 
 #*************************************************************************
 
@@ -168,10 +163,6 @@ for i in range(3):
 
 #*************************************************************************
 
-   # Indicate end of run
-   dockingresults += [f"***** End of Run {str(i)} *****"]
-   # Spacer
-   dockingresults += [" "]
    # Indicate end of run
    print(f"{run} complete.")
 
