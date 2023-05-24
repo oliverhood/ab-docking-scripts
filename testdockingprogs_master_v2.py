@@ -103,3 +103,86 @@ run_zdock_bool = False
 # Haddock
 run_haddock_bool = True
 #run_haddock_bool = program_prompt('Haddock')
+
+#*************************************************************************
+
+# Get the base filename from the input file
+inputfilename = os.path.basename(PDBfile).split('.')[0]
+# Print starting docking
+print(f"Starting docking program on {inputfilename}...", flush=True)
+# Repeat docking 3 times on PDB file, different orientation each time
+for i in range(3):
+   # Get run number
+   run = "Run " +str(i)
+   # Print start of run to command line
+   print(f"Starting {run}...")
+   # Make new directory to put results in
+   OUTPath_i = OUTPath + f"run{str(i)}/"
+   # Make directory
+   os.mkdir(OUTPath_i)
+
+#*************************************************************************
+
+   # New filename
+   input_nohydrogens = f"{OUTPath_i}{inputfilename}_nohydrogens.pdb"
+   # Strip hydrogens from input file
+   subprocess.run([f"pdbhstrip {PDBfile} {input_nohydrogens}"], shell=True)
+
+#*************************************************************************
+
+   # Split input file into antibody/antigen components (using splitantibodyantigenchains.py)
+   subprocess.run([f"~/ab-docking-scripts/splitantibodyantigenchains.py {input_nohydrogens} {OUTPath_i}"], shell=True)
+   # Define input file no hydrogens filename
+   nohydrogens_filename = f"{inputfilename}_nohydrogens"
+   # Get the filenames for the split antibody/antigen chains
+   ab_filename = OUTPath_i + "%s_ab.pdb" % nohydrogens_filename
+   ag_filename = OUTPath_i + "%s_ag.pdb" % nohydrogens_filename
+
+#*************************************************************************
+
+   # MEGADOCK
+
+   if run_megadock_bool:
+       run_megadock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all,
+                    MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
+
+#*************************************************************************
+
+   # Piper
+
+   if run_piper_bool:
+       run_piper(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Piper_all,
+                 Piper_ca, Piper_res_pairs, Piper_ab_res, Piper_ag_res)
+
+#*************************************************************************
+
+   # Rosetta
+
+   if run_rosetta_bool:
+       run_rosetta(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Rosetta_all, Rosetta_ca,
+                   Rosetta_res_pairs, Rosetta_ab_res, Rosetta_ag_res)
+
+#*************************************************************************
+
+   # ZDOCK
+
+   if run_zdock_bool:
+       run_zdock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, ZDOCK_all,
+                 ZDOCK_ca, ZDOCK_res_pairs, ZDOCK_ab_res, ZDOCK_ag_res)
+
+#*************************************************************************
+
+   # Haddock
+
+   if run_haddock_bool:
+       run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Ha_all, Ha_ca,
+                   Ha_res_pairs, Ha_ab_res, Ha_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res)
+
+#*************************************************************************
+
+   # Indicate end of run
+   dockingresults += [f"***** End of Run {str(i)} *****"]
+   # Spacer
+   dockingresults += [" "]
+   # Indicate end of run
+   print(f"{run} complete.")
