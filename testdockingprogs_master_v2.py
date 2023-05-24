@@ -164,8 +164,7 @@ for i in range(3):
    # Haddock
 
    if run_haddock_bool:
-       run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, Ha_all, Ha_ca,
-                   Ha_res_pairs, Ha_ab_res, Ha_ag_res, Hw_all, Hw_ca, Hw_res_pairs, Hw_ab_res, Hw_ag_res)
+       run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i)
 
 #*************************************************************************
 
@@ -175,3 +174,8 @@ for i in range(3):
    dockingresults += [" "]
    # Indicate end of run
    print(f"{run} complete.")
+
+#*************************************************************************
+
+# Indicate end of docking runs
+print(f"All 3 docking runs on {inputfilename} complete.")
