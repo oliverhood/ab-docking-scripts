@@ -134,5 +134,5 @@ print("")
 #*************************************************************************
 
 # Remove interim files
-subprocess.run(["rm ./*_contacts"], shell=true)
+subprocess.run(["rm ./*_contacts"], shell=True)
 
