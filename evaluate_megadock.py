@@ -40,7 +40,7 @@ filename = sys.argv[1]
 #*************************************************************************
 
 # Get input name (not sure if sys arg takes full path or just dir name)
-filename_stripped = filename.split('/')[-1]
+filename_stripped = filename #.split('/')[-1]
 
 # Get PWD
 pwd = os.getcwd()
