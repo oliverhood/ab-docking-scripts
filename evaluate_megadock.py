@@ -126,3 +126,8 @@ output_5 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_
 #for item in evaluation_outputs:
 #    print(item)
 
+#*************************************************************************
+
+# Remove interim files
+subprocess.run(["rm ./*_contacts"], shell=true)
+
