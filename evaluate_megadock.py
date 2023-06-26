@@ -71,6 +71,7 @@ rank_1 = f"{target_dir}/rank_1.pdb"
 # Run evaluation
 output_1 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_1}"], shell=True))
 
+print("")
 # save evaluation
 #evaluation_outputs += ["Rank 1:"]
 #evaluation_outputs += [output_1]
@@ -82,6 +83,7 @@ rank_2 = f"{target_dir}/rank_2.pdb"
 # Run evaluation
 output_2 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_2}"], shell=True))
 
+print("")
 # save evaluation
 #evaluation_outputs += ["Rank 2:"]
 #evaluation_outputs += [output_2]
@@ -93,6 +95,7 @@ rank_3 = f"{target_dir}/rank_3.pdb"
 # Run evaluation
 output_3 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_3}"], shell=True))
 
+print("")
 # save evaluation
 #evaluation_outputs += ["Rank 3:"]
 #evaluation_outputs += [output_3]
@@ -104,6 +107,7 @@ rank_4 = f"{target_dir}/rank_4.pdb"
 # Run evaluation
 output_4 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_4}"], shell=True))
 
+print("")
 # save evaluation
 #evaluation_outputs += ["Rank 4:"]
 #evaluation_outputs += [output_4]
@@ -115,6 +119,7 @@ rank_5 = f"{target_dir}/rank_5.pdb"
 # Run evaluation
 output_5 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_5}"], shell=True))
 
+print("")
 # save evaluation
 #evaluation_outputs += ["Rank 5:"]
 #evaluation_outputs += [output_5]
