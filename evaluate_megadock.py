@@ -62,7 +62,7 @@ evaluation_outputs += [filename_stripped]
 #*************************************************************************
 
 # Evaluate each output
-print(filename_stripped)
+print(filename_stripped, flush=True)
 
 # rank1
 print("Rank1:")
