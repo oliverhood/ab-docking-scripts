@@ -208,7 +208,7 @@ for res_pair in docked_dict_contacts_res_pair.keys():
 # Calculating interface CDR metrics
 
 # Loading Reference JSON file
-with open('~/ab-docking-scripts/nr1797_cdr_identifiers.json') as reference_file:
+with open('/home/oliverh/ab-docking-scripts/nr1797_cdr_identifiers.json') as reference_file:
    reference_data_list = json.load(reference_file)
 
 # Extract dict from list
