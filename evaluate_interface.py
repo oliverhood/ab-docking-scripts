@@ -34,7 +34,7 @@ V1.0   14.12.2021   Original   By: OECH
 
 # Import libraries
 
-import sys, subprocess, os
+import sys, subprocess, os, json
 from dockingtools_lib import getantigenchainid
 
 #*************************************************************************
@@ -205,12 +205,65 @@ for res_pair in docked_dict_contacts_res_pair.keys():
 
 #*************************************************************************
 
+# Calculating interface CDR metrics
+
+# Loading Reference JSON file
+with open('~/ab-docking-scripts/nr1797_cdr_identifiers.json') as reference_file:
+   reference_data_list = json.load(reference_file)
+
+# Extract dict from list
+reference_data = reference_data_list[0]
+
+# Getting base filename for dict search (incase pdb at front)
+if 'pdb' in OG_filename:
+   reference_filename = OG_filename.split('pdb')[1]
+else:
+   reference_filename = OG_filename
+
+# Retrieve CDRs for OG file
+reference_CDR_res = reference_data[reference_filename]
+
+# Get ground truth interface CDR residues
+true_CDR_int_res = []
+
+for residue in OG_ab_residues:
+    if residue in reference_CDR_res:
+        true_CDR_int_res += [residue]
+
+# Number of true CDRs int
+count_true_CDR_res = len(true_CDR_int_res)
+
+# Get all model CDR res, check if true or not
+predicted_true_CDR_int_res = [] # Initialising true list
+predicted_false_CDR_int_res = [] # Initialising false list
+
+# Looping through model ab residues
+for residue in docked_ab_residues:
+    if residue in true_CDR_int_res: # True CDR interface residues
+        predicted_true_CDR_int_res += [residue]
+    else:
+        if residue in reference_CDR_res: # False CDR interface residues
+            predicted_false_CDR_int_res += [residue]
+
+# Get integers of true/false interface CDR predictions
+# true
+count_predicted_true_CDR_res = len(predicted_true_CDR_int_res)
+# false
+count_predicted_false_CDR_res = len(predicted_false_CDR_int_res)
+
+# Calculate proportions for true
+true_CDR_predicted_proportion = count_predicted_true_CDR_res/count_true_CDR_res
+
+
+#*************************************************************************
+
 # Print evaluation results
 print(f"Proportion of correctly predicted interface residues (0-1):")
 print(f"============================================================")
 print(f"Correctly predicted residue pairs:       {res_pair_proportion}")
 print(f"Correctly predicted residues (antibody): {ab_res_proportion}")
 print(f"Correctly predicted residues (antigen):  {ag_res_proportion}")
+print(f"Correctly predicted interface CDR residues: {true_CDR_predicted_proportion}")
 print(f"Number of correctly predicted contacts: {count_correct_num_contacts}")
 print(f"Number of correctly predicted residue pairs: {correct_res_pairs}")
 print(f"Number of correctly predicted ab residues: {correct_ab_res}")
@@ -218,3 +271,7 @@ print(f"Number of correctly predicted ag residues: {correct_ag_res}")
 print(f"Number of original ab residues: {OG_total_ab_res}")
 print(f"Number of original ag residues: {OG_total_ag_res}")
 print(f"Number of original res pairs: {OG_total_res_pairs}")
+print(f"Number of original (true total) interface CDR residues: {count_true_CDR_res}")
+print(f"Number of correctly predicted interface CDR residues: {count_predicted_true_CDR_res}")
+print(f"Number of incorrectly predicted interface CDR residues: {count_predicted_false_CDR_res}")
+
