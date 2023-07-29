@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Program: evaluate_megadock
-File:    evaluate_megadock.py
+Program: evaluate_2000_decoys
+File:    evaluate_2000_decoys.py
 
 Version:  V1.0
 Date:     26.06.23
-Function:   Run evaluate_interface on outputs of CL's megadock Docking
+Function:   Run evaluate_interface on full list of 2000 Megadock outputs
 Author: Oliver E. C. Hood
 
 --------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Usage:
 
 Revision History:
 =================
-V1.0   26.06.23   Original   By: OECH
+V1.0   29.07.23   Original   By: OECH
 
 """
 
