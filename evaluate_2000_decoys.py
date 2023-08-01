@@ -60,7 +60,7 @@ evaluation_outputs = {}
 evaluation_output = []
 
 # Add filename
-evaluation_outputs += [filename_stripped]
+evaluation_outputs['PDB ID'] = filename_stripped
 
 #*************************************************************************
 
