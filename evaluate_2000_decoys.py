@@ -42,11 +42,14 @@ filename = sys.argv[1]
 # Get input name (not sure if sys arg takes full path or just dir name)
 filename_stripped = filename.split('/')[1].split('-')[1] # 2nd split to get rid of decoy_complexes text
 
+# get filename semi-stripped
+filename_semi_stripped = filename.split('/')[1]
+
 # Get PWD
 pwd = os.getcwd()
 
 # Define target directory
-target_dir = f"{pwd}/{filename}"
+target_dir = f"{pwd}/{filename_semi_stripped}"
 
 # Find OG file
 OG_file = f"/home/oliverh/data/test_files/pdb{filename_stripped}.pdb"
