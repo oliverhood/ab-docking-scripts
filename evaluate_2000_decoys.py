@@ -66,16 +66,26 @@ evaluation_outputs['PDB ID'] = filename_stripped
 
 # Evaluation function
 def evaluate_decoy(decoyfile, OG_file):
-    output = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {decoyfile}"], shell=True))
+    proc = subprocess.Popen(f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {decoyfile}", stdout=subprocess.PIPE)
+    output = proc.stdout.read()
     return(output)
 
 #*************************************************************************
 
 # iterate through each decoy
 
-for decoy in range(2001):
-    decoy_number = f"decoy.{decoy}" # Get decoy.x identifier
-    decoyfilename = f"decoy.{decoy}.pdb" # get actual decoy filename
+#for decoy in range(2001):
+#    decoy_number = f"decoy.{decoy}" # Get decoy.x identifier
+#    decoyfilename = f"decoy.{decoy}.pdb" # get actual decoy filename
+#    evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
+#    evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
+
+# Temp decoy list for test
+decoys = [1110,1555,1690,28,573]
+
+for item in decoys:
+    decoy_number = f"decoy.{item}" # Get decoy.x identifier
+    decoyfilename = f"decoy.{item}.pdb" # get actual decoy filename
     evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
     evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
 
