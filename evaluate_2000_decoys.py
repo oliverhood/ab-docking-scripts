@@ -70,7 +70,7 @@ evaluation_outputs['PDB ID'] = filename_stripped
 # Evaluation function
 def evaluate_decoy(decoyfile, OG_file):
     proc = subprocess.Popen(f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {decoyfile}", stdout=subprocess.PIPE)
-    output = proc.stdout.read()
+    output = proc.communicate()
     return(output)
 
 #*************************************************************************
