@@ -85,7 +85,7 @@ decoys = [1110,1555,1690,28,573]
 
 for item in decoys:
     decoy_number = f"decoy.{item}" # Get decoy.x identifier
-    decoyfilename = f"decoy.{item}.pdb" # get actual decoy filename
+    decoyfilename = f"{target_dir}/decoy.{item}.pdb" # get actual decoy filename
     evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
     evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
 
