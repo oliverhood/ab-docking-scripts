@@ -46,7 +46,7 @@ filename_stripped = filename.split('/')[1].split('-')[1] # 2nd split to get rid 
 pwd = os.getcwd()
 
 # Define target directory
-target_dir = f"{pwd}/{filename_stripped}"
+target_dir = f"{pwd}/{filename}"
 
 # Find OG file
 OG_file = f"/home/oliverh/data/test_files/pdb{filename_stripped}.pdb"
