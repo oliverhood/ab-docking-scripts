@@ -69,7 +69,18 @@ evaluation_outputs['PDB ID'] = filename_stripped
 
 # Evaluation function
 def evaluate_decoy(decoyfile, OG_file):
-    output = subprocess.check_output([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {decoyfile}"], shell=True)
+    output = []
+    infile = decoyfile.split('.pdb')[0]
+    outfile = f"{infile}_eval.txt"
+    # Run evaluation script, write to results file
+    subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {decoyfile} >> {outfile}"], shell=True) 
+    # Save contents of results file to output
+    with open(outfile) as file:
+        contents = file.readlines()
+        for line in contents:
+            output += [line]
+    # Delete results file (cleanliness)
+    subprocess.run([f"rm {outfile}"], shell=True)
     return(output)
 
 #*************************************************************************
