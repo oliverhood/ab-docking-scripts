@@ -78,7 +78,8 @@ def evaluate_decoy(decoyfile, OG_file):
     with open(outfile) as file:
         contents = file.readlines()
         for line in contents:
-            output += [line]
+            clean_line = line.split('\n')[0]
+            output += [clean_line]
     # Delete results file (cleanliness)
     subprocess.run([f"rm {outfile}"], shell=True)
     return(output)
