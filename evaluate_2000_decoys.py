@@ -88,20 +88,20 @@ def evaluate_decoy(decoyfile, OG_file):
 
 # iterate through each decoy
 
-#for decoy in range(2001):
-#    decoy_number = f"decoy.{decoy}" # Get decoy.x identifier
-#    decoyfilename = f"decoy.{decoy}.pdb" # get actual decoy filename
-#    evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
-#    evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
-
-# Temp decoy list for test
-decoys = [1110,1555,1690,28,573]
-
-for item in decoys:
-    decoy_number = f"decoy.{item}" # Get decoy.x identifier
-    decoyfilename = f"{target_dir}/decoy.{item}.pdb" # get actual decoy filename
+for decoy in range(2001):
+    decoy_number = f"decoy.{decoy}" # Get decoy.x identifier
+    decoyfilename = f"decoy.{decoy}.pdb" # get actual decoy filename
     evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
     evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
+
+# Temp decoy list for test
+#decoys = [1110,1555,1690,28,573]
+
+#for item in decoys:
+#    decoy_number = f"decoy.{item}" # Get decoy.x identifier
+#    decoyfilename = f"{target_dir}/decoy.{item}.pdb" # get actual decoy filename
+#    evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
+#    evaluation_outputs[decoy_number] = evaluation # add evaluation output to dictionary
 
 #*************************************************************************
 
