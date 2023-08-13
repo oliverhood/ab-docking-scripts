@@ -88,7 +88,7 @@ def evaluate_decoy(decoyfile, OG_file):
 
 # iterate through each decoy
 
-for decoy in range(2001):
+for decoy in range(1,2001):
     decoy_number = f"decoy.{decoy}" # Get decoy.x identifier
     decoyfilename = f"{target_dir}/decoy.{decoy}.pdb" # get actual decoy filename
     evaluation = evaluate_decoy(decoyfilename, OG_file) # run evaluation
