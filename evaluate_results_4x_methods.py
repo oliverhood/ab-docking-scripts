@@ -63,10 +63,10 @@ def evaluate_decoy(decoyfile, OG_file):
 list_ids = []
 
 # Run ls > list_pdbs.txt
-subprocess.run([f"cd run3; ls >> list_pdbs.txt; cd .."], shell=True)
+subprocess.run([f"cd run2; ls >> list_pdbs.txt; cd .."], shell=True)
 
 # Open txt file
-with open('run3/list_pdbs.txt') as file:
+with open('run2/list_pdbs.txt') as file:
     contents = file.readlines()
     for item in contents:
         if '_Megadock' in item:
