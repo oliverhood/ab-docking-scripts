@@ -220,40 +220,45 @@ if 'pdb' in OG_filename:
 else:
    reference_filename = OG_filename
 
+try:
 # Retrieve CDRs for OG file
-reference_CDR_res = reference_data[reference_filename]
+   reference_CDR_res = reference_data[reference_filename]
 
-# Get ground truth interface CDR residues
-true_CDR_int_res = []
+   # Get ground truth interface CDR residues
+   true_CDR_int_res = []
 
-for residue in OG_ab_residues:
-    if residue in reference_CDR_res:
-        true_CDR_int_res += [residue]
+   for residue in OG_ab_residues:
+      if residue in reference_CDR_res:
+         true_CDR_int_res += [residue]
 
-# Number of true CDRs int
-count_true_CDR_res = len(true_CDR_int_res)
+   # Number of true CDRs int
+   count_true_CDR_res = len(true_CDR_int_res)
 
-# Get all model CDR res, check if true or not
-predicted_true_CDR_int_res = [] # Initialising true list
-predicted_false_CDR_int_res = [] # Initialising false list
+   # Get all model CDR res, check if true or not
+   predicted_true_CDR_int_res = [] # Initialising true list
+   predicted_false_CDR_int_res = [] # Initialising false list
 
-# Looping through model ab residues
-for residue in docked_ab_residues:
-    if residue in true_CDR_int_res: # True CDR interface residues
-        predicted_true_CDR_int_res += [residue]
-    else:
-        if residue in reference_CDR_res: # False CDR interface residues
-            predicted_false_CDR_int_res += [residue]
+   # Looping through model ab residues
+   for residue in docked_ab_residues:
+      if residue in true_CDR_int_res: # True CDR interface residues
+         predicted_true_CDR_int_res += [residue]
+      else:
+         if residue in reference_CDR_res: # False CDR interface residues
+               predicted_false_CDR_int_res += [residue]
 
-# Get integers of true/false interface CDR predictions
-# true
-count_predicted_true_CDR_res = len(predicted_true_CDR_int_res)
-# false
-count_predicted_false_CDR_res = len(predicted_false_CDR_int_res)
+   # Get integers of true/false interface CDR predictions
+   # true
+   count_predicted_true_CDR_res = len(predicted_true_CDR_int_res)
+   # false
+   count_predicted_false_CDR_res = len(predicted_false_CDR_int_res)
 
-# Calculate proportions for true
-true_CDR_predicted_proportion = count_predicted_true_CDR_res/count_true_CDR_res
-
+   # Calculate proportions for true
+   true_CDR_predicted_proportion = count_predicted_true_CDR_res/count_true_CDR_res
+except:
+   count_predicted_true_CDR_res = "No reference"
+   count_predicted_false_CDR_res = "No reference"
+   true_CDR_predicted_proportion = "No reference"
+   count_true_CDR_res = "No reference"
 
 #*************************************************************************
 
