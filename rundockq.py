@@ -61,11 +61,11 @@ def run_dockq(model, native):
    # Collect DockQ metrics
    with open(outfile) as file:
       contents = file.readlines()
-      output += float(contents[25].split('\n')[0].split(' ')[1]) # DockQ
-      output += float(contents[24].split('\n')[0].split(' ')[1]) # LRMS
-      output += float(contents[23].split('\n')[0].split(' ')[1]) # iRMS
-      output += float(contents[22].split('\n')[0].split(' ')[1]) # Fnonnat
-      output += float(contents[21].split('\n')[0].split(' ')[1]) # Fnat
+      output += [contents[25].split('\n')[0].split(' ')[1]] # DockQ
+      output += [contents[24].split('\n')[0].split(' ')[1]] # LRMS
+      output += [contents[23].split('\n')[0].split(' ')[1]] # iRMS
+      output += [contents[22].split('\n')[0].split(' ')[1]] # Fnonnat
+      output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
    # Delete results file (cleanliness)
    subprocess.run([f"rm {outfile}"], shell=True)
    # Return out
