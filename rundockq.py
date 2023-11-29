@@ -32,7 +32,6 @@ V1.0   29.11.23   Original   By: OECH
 
 # Import Libraries
 import subprocess, json, os
-from runhaddock_lib import fix_chain_labelling
 
 #*************************************************************************
 
@@ -87,9 +86,6 @@ for complex in list_ids:
       rosetta = f"run{i}/{complex}_Rosetta_result.pdb"
       haddock_nw = f"run{i}/{complex}_nohydrogens_Haddock_nowaters_result.pdb"
       haddock_w = f"run{i}/{complex}_nohydrogens_Haddock_waters_result.pdb"
-      # Fix haddock chain labelling
-      fix_chain_labelling(native, haddock_nw)
-      fix_chain_labelling(native, haddock_w)
       # Run DockQ
       dockq_results = {}
       # Megadock
