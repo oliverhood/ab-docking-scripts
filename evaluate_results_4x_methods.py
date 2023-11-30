@@ -96,11 +96,11 @@ def collect_results(pdb_id, run: int):
     rosetta_out = evaluate_decoy(rosetta_in, OG_file)
     output_dict["Rosetta"] = rosetta_out
     # Haddock no waters
-    haddock_nw_in = f"{run}/{pdb_id}_nohydrogens_Haddock_nowaters_result.pdb"
+    haddock_nw_in = f"{run}/{pdb_id}_nohydrogens_Haddock_nowaters_result.pdb_split_labelled.pdb"
     haddock_nw_out = evaluate_decoy(haddock_nw_in, OG_file)
     output_dict["Haddock No Waters"] = haddock_nw_out
     # Haddock waters
-    haddock_w_in = f"{run}/{pdb_id}_nohydrogens_Haddock_waters_result.pdb"
+    haddock_w_in = f"{run}/{pdb_id}_nohydrogens_Haddock_waters_result.pdb_split_labelled.pdb"
     haddock_w_out = evaluate_decoy(haddock_w_in, OG_file)
     output_dict["Haddock Waters"] = haddock_w_out
     # Write dict to list
