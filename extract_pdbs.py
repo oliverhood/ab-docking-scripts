@@ -121,8 +121,8 @@ for item in list_ids:
         megadock_1 = f"{output_dir_1}{item}_MegadockRanked_result.pdb"
         piper_1 = f"{output_dir_1}{item}_nohydrogens_Piper_result.pdb"
         rosetta_1 = f"{output_dir_1}{item}_Rosetta_result.pdb"
-        haddock_waters_1 = f"{output_dir_1}/haddock_out/{item}_nohydrogens_Haddock_waters_result.pdb"
-        haddock_nowaters_1 = f"{output_dir_1}/haddock_out/{item}_nohydrogens_Haddock_nowaters_result.pdb"
+        haddock_waters_1 = f"{output_dir_1}/haddock_out/{item}_nohydrogens_Haddock_waters_result.pdb_split_labelled.pdb"
+        haddock_nowaters_1 = f"{output_dir_1}/haddock_out/{item}_nohydrogens_Haddock_nowaters_result.pdb_split_labelled.pdb"
         # Define output directory
         out_dir_combined_1 = "/home/oliverh/data/pdb_files/output_PDBs/run1"
         # Make output directory
@@ -145,9 +145,9 @@ for item in list_ids:
         piper_2 = f"{output_dir_2}{item}_nohydrogens_Piper_result.pdb"
         rosetta_2 = f"{output_dir_2}{item}_Rosetta_result.pdb"
         haddock_waters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_waters_result.pdb"
-        haddock_nowaters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_nowaters_result.pdb"
+        haddock_nowaters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_nowaters_result.pdb_split_labelled.pdb"
         # Define output directory
-        out_dir_combined_2 = "/home/oliverh/data/pdb_files/output_PDBs/run2"
+        out_dir_combined_2 = "/home/oliverh/data/pdb_files/output_PDBs/run2_split_labelled.pdb"
         # Make output directory
         subprocess.run([f"mkdir {out_dir_combined_2}"], shell=True)
         # Copy the files to new directory
