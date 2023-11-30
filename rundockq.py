@@ -84,8 +84,8 @@ for complex in list_ids:
       megadock = f"run{i}/{complex}_MegadockRanked_result.pdb"
       piper = f"run{i}/{complex}_nohydrogens_Piper_result.pdb"
       rosetta = f"run{i}/{complex}_Rosetta_result.pdb"
-      haddock_nw = f"run{i}/{complex}_nohydrogens_Haddock_nowaters_result.pdb"
-      haddock_w = f"run{i}/{complex}_nohydrogens_Haddock_waters_result.pdb"
+      haddock_nw = f"run{i}/{complex}_nohydrogens_Haddock_nowaters_result.pdb_pdb_split_labelled.pdb"
+      haddock_w = f"run{i}/{complex}_nohydrogens_Haddock_waters_result.pdb_pdb_split_labelled.pdb"
       # Run DockQ
       dockq_results = {}
       # Megadock
