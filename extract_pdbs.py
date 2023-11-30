@@ -144,7 +144,7 @@ for item in list_ids:
         megadock_2 = f"{output_dir_2}{item}_MegadockRanked_result.pdb"
         piper_2 = f"{output_dir_2}{item}_nohydrogens_Piper_result.pdb"
         rosetta_2 = f"{output_dir_2}{item}_Rosetta_result.pdb"
-        haddock_waters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_waters_result.pdb_split_labelled.pdb""
+        haddock_waters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_waters_result.pdb_split_labelled.pdb"
         haddock_nowaters_2 = f"{output_dir_2}/haddock_out/{item}_nohydrogens_Haddock_nowaters_result.pdb_split_labelled.pdb"
         # Define output directory
         out_dir_combined_2 = "/home/oliverh/data/pdb_files/output_PDBs/run2"
