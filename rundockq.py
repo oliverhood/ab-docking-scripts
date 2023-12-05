@@ -112,5 +112,5 @@ for complex in list_ids:
 
 # Dump to JSON
 outputfilename = "dockq_results.json"
-with open(outputfilename, "w'") as file:
+with open(outputfilename, "w") as file:
    json.dump(output_dict, file)
