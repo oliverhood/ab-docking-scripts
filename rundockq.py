@@ -69,7 +69,7 @@ def run_dockq(model, native):
       output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
    # Delete results file (cleanliness)
    subprocess.run([f"rm {outfile}"], shell=True)
-   print(f"DockQ run on {model} complete", flush=True)
+   print(f"Done", flush=True)
    # Return out
    return(output)
 
