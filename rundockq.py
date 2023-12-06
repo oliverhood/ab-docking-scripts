@@ -53,6 +53,7 @@ for item in files:
 
 # Function to run DockQ
 def run_dockq(model, native):
+   print(f"Running DockQ on {model}", flush=True)
    output = []
    infile = model.split('.pdb')[0]
    outfile=f"{infile}_dockq.txt"
@@ -68,6 +69,7 @@ def run_dockq(model, native):
       output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
    # Delete results file (cleanliness)
    subprocess.run([f"rm {outfile}"], shell=True)
+   print(f"DockQ run on {model} complete", flush=True)
    # Return out
    return(output)
 
