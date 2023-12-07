@@ -58,18 +58,22 @@ def run_dockq(model, native):
    infile = model.split('.pdb')[0]
    outfile=f"{infile}_dockq.txt"
    # Run DockQ, write to outfile
-   subprocess.run([f"dockq.sh {model} {native} -model_chain1 H L -native_chain1 H L -no_needle >> {outfile}"], shell=True)
-   # Collect DockQ metrics
-   with open(outfile) as file:
-      contents = file.readlines()
-      output += [contents[25].split('\n')[0].split(' ')[1]] # DockQ
-      output += [contents[24].split('\n')[0].split(' ')[1]] # LRMS
-      output += [contents[23].split('\n')[0].split(' ')[1]] # iRMS
-      output += [contents[22].split('\n')[0].split(' ')[1]] # Fnonnat
-      output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
-   # Delete results file (cleanliness)
-   subprocess.run([f"rm {outfile}"], shell=True)
-   print(f"Done", flush=True)
+   try:
+      subprocess.run([f"dockq.sh {model} {native} -model_chain1 H L -native_chain1 H L -no_needle >> {outfile}"], shell=True)
+      # Collect DockQ metrics
+      with open(outfile) as file:
+         contents = file.readlines()
+         output += [contents[25].split('\n')[0].split(' ')[1]] # DockQ
+         output += [contents[24].split('\n')[0].split(' ')[1]] # LRMS
+         output += [contents[23].split('\n')[0].split(' ')[1]] # iRMS
+         output += [contents[22].split('\n')[0].split(' ')[1]] # Fnonnat
+         output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
+      # Delete results file (cleanliness)
+      subprocess.run([f"rm {outfile}"], shell=True)
+      print(f"Done", flush=True)
+   # Key error exception
+   except:
+      output += ["Error"]
    # Return out
    return(output)
 
