@@ -79,7 +79,7 @@ def run_dockq(model, native):
 
 #*************************************************************************
 # Initiate output_dict
-output_list = []
+output_dict = {}
 
 # Run DockQ on each run
 for complex in list_ids:
@@ -113,13 +113,7 @@ for complex in list_ids:
       # Add to complex_dict
       complex_dict[f"run{i}"] = dockq_results
    # Add complex dict to output dict
-   output_list += [complex_dict]
-
-#*************************************************************************
-
-# Writing output list to dict to dump to JSON
-output_dict = {}
-output_dict["PDBs"] = output_list
+   output_dict[complex] = complex_dict
 
 #*************************************************************************
 
