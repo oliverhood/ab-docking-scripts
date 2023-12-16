@@ -79,11 +79,12 @@ def run_dockq(model, native):
 
 #*************************************************************************
 # Initiate output_dict
-output_dict = {}
+output_list = []
 
 # Run DockQ on each run
 for complex in list_ids:
    complex_dict = {} #dict for each PDB
+   complex_dict["PDB_id"] = complex
    for i in range(3): # Add run to dict
       # Filenames
       native = f"run{i}/{complex}.pdb"
@@ -112,7 +113,13 @@ for complex in list_ids:
       # Add to complex_dict
       complex_dict[f"run{i}"] = dockq_results
    # Add complex dict to output dict
-   output_dict[complex] = complex_dict
+   output_list += [complex_dict]
+
+#*************************************************************************
+
+# Writing output list to dict to dump to JSON
+output_dict = {}
+output_dict["PDBs"] = output_list
 
 #*************************************************************************
 
