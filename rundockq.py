@@ -32,6 +32,7 @@ V1.0   29.11.23   Original   By: OECH
 
 # Import Libraries
 import subprocess, json, os
+from dockingtools_lib import getantigenchainid
 
 #*************************************************************************
 
@@ -57,9 +58,11 @@ def run_dockq(model, native):
    output = []
    infile = model.split('.pdb')[0]
    outfile=f"{infile}_dockq.txt"
+   # Get ag chain ID
+   agchainid = getantigenchainid(native)
    # Run DockQ, write to outfile
    try:
-      subprocess.run([f"dockq.sh {model} {native} -model_chain1 H L -native_chain1 H L -no_needle >> {outfile}"], shell=True)
+      subprocess.run([f"dockq.sh {model} {native} -model_chain1 H L -model_chain2 {agchainid} -native_chain1 H L -native_chain2 {agchainid} -no_needle >> {outfile}"], shell=True)
       # Collect DockQ metrics
       with open(outfile) as file:
          contents = file.readlines()
