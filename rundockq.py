@@ -66,11 +66,23 @@ def run_dockq(model, native):
       # Collect DockQ metrics
       with open(outfile) as file:
          contents = file.readlines()
-         output += [contents[25].split('\n')[0].split(' ')[1]] # DockQ
-         output += [contents[24].split('\n')[0].split(' ')[1]] # LRMS
-         output += [contents[23].split('\n')[0].split(' ')[1]] # iRMS
-         output += [contents[22].split('\n')[0].split(' ')[1]] # Fnonnat
-         output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
+         metrics = contents[17:]
+         for m in metrics:
+            if 'DockQ' in m:
+               output += [m.split('\n')[0].split(' ')[1]]
+            if 'LRMS' in m:
+               output += [m.split('\n')[0].split(' ')[1]]
+            if 'iRMS' in m:
+               output += [m.split('\n')[0].split(' ')[1]]
+            if 'Fnonnat' in m:
+               output += [m.split('\n')[0].split(' ')[1]]
+            if 'Fnat' in m:
+               output += [m.split('\n')[0].split(' ')[1]]
+         #output += [contents[25].split('\n')[0].split(' ')[1]] # DockQ
+         #output += [contents[24].split('\n')[0].split(' ')[1]] # LRMS
+         #output += [contents[23].split('\n')[0].split(' ')[1]] # iRMS
+         #output += [contents[22].split('\n')[0].split(' ')[1]] # Fnonnat
+         #output += [contents[21].split('\n')[0].split(' ')[1]] # Fnat
       # Delete results file (cleanliness)
       subprocess.run([f"rm {outfile}"], shell=True)
       print(f"Done", flush=True)
