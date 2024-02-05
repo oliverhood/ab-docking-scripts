@@ -99,7 +99,6 @@ output_dict = {}
 # Run DockQ on each run
 for complex in list_ids:
    complex_dict = {} #dict for each PDB
-   complex_dict["PDB_id"] = complex
    for i in range(3): # Add run to dict
       # Filenames
       native = f"run{i}/{complex}.pdb"
