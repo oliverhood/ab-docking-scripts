@@ -25,6 +25,7 @@ Usage:
 Revision History:
 =================
 V1.0   26.06.23   Original   By: OECH
+V2.0   17.03.24   Modified for new results directory structure   By: OECH
 
 """
 
@@ -49,7 +50,7 @@ pwd = os.getcwd()
 target_dir = f"{pwd}/{filename_stripped}"
 
 # Find OG file
-OG_file = f"/home/oliverh/data/test_files/pdb{filename_stripped}.pdb"
+OG_file = f"/home/oliverh/data/CL_OH_megadock_redo/complex_files/pdb{filename_stripped}.pdb"
 
 #*************************************************************************
 
@@ -66,7 +67,7 @@ print(filename_stripped, flush=True)
 
 # rank1
 print("Rank1:", flush=True)
-rank_1 = f"{target_dir}/rank_1.pdb"
+rank_1 = f"{target_dir}/{filename_stripped}_1.pdb"
 
 # Run evaluation
 output_1 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_1}"], shell=True))
@@ -78,7 +79,7 @@ print("", flush=True)
 
 # rank2
 print("Rank2:", flush=True)
-rank_2 = f"{target_dir}/rank_2.pdb"
+rank_2 = f"{target_dir}/{filename_stripped}_2.pdb"
 
 # Run evaluation
 output_2 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_2}"], shell=True))
@@ -90,7 +91,7 @@ print("", flush=True)
 
 # rank3
 print("Rank3:", flush=True)
-rank_3 = f"{target_dir}/rank_3.pdb"
+rank_3 = f"{target_dir}/{filename_stripped}_3.pdb"
 
 # Run evaluation
 output_3 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_3}"], shell=True))
@@ -102,7 +103,7 @@ print("", flush=True)
 
 # rank4
 print("Rank4:", flush=True)
-rank_4 = f"{target_dir}/rank_4.pdb"
+rank_4 = f"{target_dir}/{filename_stripped}_4.pdb"
 
 # Run evaluation
 output_4 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_4}"], shell=True))
@@ -114,7 +115,7 @@ print("", flush=True)
 
 # rank5
 print("Rank5:", flush=True)
-rank_5 = f"{target_dir}/rank_5.pdb"
+rank_5 = f"{target_dir}/{filename_stripped}_5.pdb"
 
 # Run evaluation
 output_5 = str(subprocess.run([f"~/ab-docking-scripts/evaluate_interface.py {OG_file} {rank_5}"], shell=True))
