@@ -38,3 +38,8 @@ assets/fftw-3.3.10.tar.gz
 assets/zrank_linux_64bit.tar.gz
 assets/haddock.tar.gz
 assets/piper.tar.gz
+test/interim/int_res
+test/interim/pdb1a2y_0P_ab_pnon.pdb
+test/interim/pdb1a2y_0P_ag_pnon.pdb
+test/interim/pdb1a2y_0P_pnon_maskfile.pdb
+test/interim/pdb1a2y_0P_pnon.pdb
