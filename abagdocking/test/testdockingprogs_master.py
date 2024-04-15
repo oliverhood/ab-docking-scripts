@@ -34,8 +34,8 @@ V1.0   12.11.21   Original   By: OECH
 # Import Libraries
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
-from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
-from testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
+from abagdocking.common.dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
+from .testdockingprogs_master_lib import run_megadock, run_piper, run_rosetta, program_prompt, run_zdock, run_haddock
 
 #*************************************************************************
 
@@ -183,7 +183,7 @@ for i in range(3):
 #*************************************************************************
 
    # MEGADOCK
-   
+
    if run_megadock_bool:
       run_megadock(input_nohydrogens, inputfilename, ab_filename, ag_filename, OUTPath_i, dockingresults, MD_all, MD_ca, MD_res_pairs, MD_ab_res, MD_ag_res)
 
@@ -499,7 +499,7 @@ if run_megadock_bool:
 
 # Piper
 # Boolean filter
-if run_piper_bool:   
+if run_piper_bool:
    dockingresults += [piper_name]
    # Average RMSD
    dockingresults += [f"Average RMSD", "All atoms:   " + str(avg_scores[5]), "CA atoms:   " + str(avg_scores[6])]

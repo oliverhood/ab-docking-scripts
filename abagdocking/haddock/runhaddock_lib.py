@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import subprocess
-from dockingtools_lib import writefile, getantigenchainid
+from abagdocking.common.dockingtools_lib import writefile, getantigenchainid
 
 #*************************************************************************
 
@@ -73,13 +73,13 @@ def rewrite_unambig_tbl(unambig_tbl):
          segA = str(line.split(') (')[0])
          segB = str(line.split(') (')[1])
          # Replace empty segID with new segID
-         new_segA = segA.replace('  ', ' A ')     
+         new_segA = segA.replace('  ', ' A ')
          new_segB = segB.replace('  ', ' B ')
          # Combine segs into single line
          new_line = f"{new_segA}) ({new_segB}"
          # Add new line to contents
          contents += [new_line]
-   
+
    # Define unambig tbl name
    unambig_tbl_name = 'antibody-antigen-unambig.tbl'
    # Write new file

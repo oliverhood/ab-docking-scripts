@@ -33,7 +33,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import libraries
 import sys, os, subprocess
-from runhaddock_lib import clean_inputs, fix_chain_labelling, generate_unambig_tbl, rewrite_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
+from .runhaddock_lib import clean_inputs, fix_chain_labelling, generate_unambig_tbl, rewrite_unambig_tbl, generate_run_param, edit_run_cns, extract_best_results
 
 #*************************************************************************
 

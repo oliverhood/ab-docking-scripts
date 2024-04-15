@@ -4,7 +4,7 @@ Program: runmegadockranked
 File:    runmegadockranked.py
 
 Version: V1.0
-Date:    18.11.21 
+Date:    18.11.21
 Function: Run input antibody and antigen files through the Megadock docking algorithm and extract the top-ranked docked ligand into a new PDB file.
 
 Author: Oliver E. C. Hood
@@ -37,7 +37,7 @@ V1.0   19.11.2021   Original   By: OECH
 import sys
 import os
 import subprocess
-from runprofit_lib import combineabdagfiles
+from abagdocking.profit.runprofit_lib import combineabdagfiles
 
 #*************************************************************************
 # Get input files

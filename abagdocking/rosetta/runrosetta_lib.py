@@ -34,7 +34,7 @@ V1.0   03.12.2021   Original   By: OECH
 # Import Libraries
 
 import os
-from dockingtools_lib import (getantigenchainid, writefile)
+from abagdocking.common.dockingtools_lib import (getantigenchainid, writefile)
 
 #*************************************************************************
 
@@ -91,20 +91,20 @@ def writeprepack_flags(PDBfile):
    # Write list of prepack_flags contents
    flags = [
       # Location of the rosetta database
-      "-database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database", 
+      "-database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database",
       # Spacer
-      "", 
+      "",
       # Input filename
-      f"-in:file:s {filename}_Rosetta_input.pdb", 
+      f"-in:file:s {filename}_Rosetta_input.pdb",
       # Docking partners (Heavy/Light chain, Antigen chain)
-      f"-docking:partners HL_{agchainid}", 
+      f"-docking:partners HL_{agchainid}",
       # Spacer
-      "", 
+      "",
       # Common flags (given by Rosetta protocol)
-      "-ex1", 
-      "-ex2aro", 
+      "-ex1",
+      "-ex2aro",
       # Spacer
-      "", 
+      "",
       # Output file suffix
       "-out:suffix _prepack"]
    # Define flags filename
@@ -134,7 +134,7 @@ def writedocking_flags(PDBfile, nstructures=25, OUTPath='./'):
    -ex2aro
    <BLANKLINE>
    -out:suffix _local_dock
-  
+
    """
    # Get the antigen chain ID from the input PDB file
    agchainid = getantigenchainid(PDBfile)
@@ -145,26 +145,26 @@ def writedocking_flags(PDBfile, nstructures=25, OUTPath='./'):
    # Write list of docking_flags contents
    flags = [
       # Location of the rosetta database
-      "-database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database", 
+      "-database /home/oliverh/DockingSoftware/rosetta/rosetta/main/database",
       # Spacer
-      "", 
+      "",
       # Input file
-      f"-in:file:s {prepacked_filename}", 
+      f"-in:file:s {prepacked_filename}",
       # Docking partners (Heavy/Light chain, Antigen chain)
-      f"-docking:partners HL_{agchainid}", 
+      f"-docking:partners HL_{agchainid}",
       # Write output PDBs to new directory
-      f"-out:path:pdb {OUTPath}/docking_out/", 
+      f"-out:path:pdb {OUTPath}/docking_out/",
       # Gzip files to save space
-      "-out:pdb_gz", 
+      "-out:pdb_gz",
       # Number of output structures
-      f"-nstruct {nstructures}", 
+      f"-nstruct {nstructures}",
       # Spacer
-      "", 
+      "",
       # Common flags (given by Rosetta protocol)
-      "-ex1", 
-      "-ex2aro", 
+      "-ex1",
+      "-ex2aro",
       # Spacer
-      "", 
+      "",
       # Output file suffix
       "-out:suffix _local_dock"]
    # Define flags filename

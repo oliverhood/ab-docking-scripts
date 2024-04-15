@@ -4,7 +4,7 @@ Program: runprofit
 File:    runprofit.py
 
 Version: V1.0
-Date:    
+Date:
 Function: Process the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit.
 
 Author: Oliver E. C. Hood
@@ -45,7 +45,7 @@ V1.0   11.11.21   Original   By: OECH
 
 import sys
 import subprocess
-from runprofit_lib import (combineabdagfiles, writecontrolscript)
+from .runprofit_lib import (combineabdagfiles, writecontrolscript)
 
 #*************************************************************************
 

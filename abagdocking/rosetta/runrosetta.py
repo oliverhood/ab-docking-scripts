@@ -36,7 +36,7 @@ V1.0   03.12.2021   Original   By: OECH
 import subprocess
 import sys
 import os
-from runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresult, combine_input_files)
+from .runrosetta_lib import (writeprepack_flags, writedocking_flags, getbestresult, combine_input_files)
 
 #*************************************************************************
 

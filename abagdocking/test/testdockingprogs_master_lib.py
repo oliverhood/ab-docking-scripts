@@ -35,7 +35,7 @@ V1.0   25.01.22   Original   By: OECH
 from cProfile import run
 import sys, os, subprocess, time, re, statistics
 from threading import Timer
-from dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
+from abagdocking.common.dockingtools_lib import evaluate_results, getlowestscore, gethighestscore, getnumberhits, writefile, getantigenchainid
 
 #*************************************************************************
 
@@ -370,7 +370,7 @@ def run_haddock(PDBfile, inputfilename, ab_filename, ag_filename, OUTPath_i, doc
    cwd = f"{os.getcwd()}/"
    # Change to haddock_out directory
    os.chdir(haddock_out)
-   
+
    # Run Haddock on input files
    subprocess.run([f"~/ab-docking-scripts/runhaddock.py {ab_filename} {ag_filename} short {haddock_out}"], shell=True)
 
@@ -496,7 +496,7 @@ def program_prompt(program):
    """
    Function to prompt user for input (decide which docking programs to use per run, if no input is given in 10s then default is for program to run).
    """
-   
+
    ans = 'y'
 
    # Define function to return run boolean

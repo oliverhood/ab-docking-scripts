@@ -4,7 +4,7 @@ Program: evaluate_interface
 File:    evaluate_interface.py
 
 Version:  V1.0
-Date:     14.12.2021 
+Date:     14.12.2021
 Function: Take an original PDB file containing an antibody-antigen complex and another PDB file containing a docked antibody-antigen complex as input then calculate the percentage of correctly predicted interface residues and contacts.
 
 Author: Oliver E. C. Hood
@@ -35,7 +35,7 @@ V1.0   14.12.2021   Original   By: OECH
 # Import libraries
 
 import sys, subprocess, os
-from dockingtools_lib import getantigenchainid
+from abagdocking.common.dockingtools_lib import getantigenchainid
 
 #*************************************************************************
 

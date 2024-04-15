@@ -32,7 +32,7 @@ V1.0   15.02.22   Original   By: OECH
 
 # Import Libraries
 import sys, os, subprocess, re
-from dockingtools_lib import getantigenchainid, writefile
+from abagdocking.common.dockingtools_lib import getantigenchainid, writefile
 
 #*************************************************************************
 

@@ -4,7 +4,7 @@ Program: runprofit_single
 File:    runprofit_single.py
 
 Version: V1.0
-Date:    
+Date:
 Function: Process the output files of docking algorithms run on split antibody/antigen structures to compare them to the original antibody/antigen structures using ProFit. Input is in the form of a single PDB file containing both the antibody and docked antigen chains.
 
 Author: Oliver E. C. Hood
@@ -35,7 +35,7 @@ V1.0   06.12.2021   Original   By: OECH
 
 import sys, os
 import subprocess
-from runprofit_lib import (writecontrolscript)
+from .runprofit_lib import (writecontrolscript)
 
 #*************************************************************************
 

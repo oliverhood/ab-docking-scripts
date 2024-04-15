@@ -38,7 +38,7 @@ import os
 import sys
 import subprocess
 import re
-from dockingtools_lib import getantigenchainid
+from abagdocking.common.dockingtools_lib import getantigenchainid
 
 #*************************************************************************
 

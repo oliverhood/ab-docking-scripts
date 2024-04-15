@@ -31,10 +31,12 @@
 
 #"""
 #*************************************************************************
+resultDir=$1
+outDir=${2:-$PWD/result_files}
 # Make Directory to put docked structures in
-mkdir result_files
+mkdir -p $outDir
 # Loop through result directories to extract docked structures
-for file in ./run*
+for file in $resultDir/run*
    do
       # Copy the the megadock result
       cp ${file}/1yqv_0_abDag.pdb result_files/${file}_megadock.pdb
