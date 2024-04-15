@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Program: runpiper
 File:    runpiper.py
@@ -34,119 +33,256 @@ V1.0   25.11.2021   Original   By: OECH
 
 """
 
-#*************************************************************************
-
-# Import Libraries
-
+# basic
 import os
 import sys
-import subprocess
+import shutil
+from pathlib import Path
+from loguru import logger
+import argparse, textwrap
+# abagdocking
+import abagdocking
+from abagdocking.utils.util import call_script, timing_context
+from abagdocking.utils.maskNIres import main as mask_ni_res
 
-#*************************************************************************
+# ==================== Configuration ====================
+BASE = Path(abagdocking.__file__).parent
+SCRIPTS_CONFIG = {
+    "prepare": BASE.parent
+    / "assets"
+    / "docking-tools"
+    / "piper"
+    / "script"
+    / "run-prepare.sh",
+    "piper": BASE.parent / "assets" / "docking-tools" / "piper" / "piper",
+    "prms": BASE.parent / "assets" / "docking-tools" / "piper" / "prms",
+    "maskNIres": BASE / "utils" / "maskNIres.py",
+    "sblu": Path(shutil.which("sblu")),
+}
 
-# Define input files
+# assert all scripts are found
+for k, v in SCRIPTS_CONFIG.items():
+    try:
+        assert v.exists()
+    except FileNotFoundError:
+        logger.error(f"Cannot find the {k} script at {v}")
+        sys.exit(1)
 
-# Define original (unsplit) PDB file
-OG_file = sys.argv[1]
 
-# Define receptor (antibody) file
-receptor = sys.argv[2]
+# ==================== Function ====================
+def cli() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawTextHelpFormatter,
+        description="Filter out problematic AbM numbered file identifiers.",
+        epilog=textwrap.dedent(
+            """
+        Example usage:
+            python
+        """
+        ),
+    )
+    parser.add_argument(
+        "-c", "--complex", type=Path, help="The original complex PDB file"
+    )
+    parser.add_argument(
+        "-r", "--receptor", type=Path, help="The receptor (antibody) file"
+    )
+    parser.add_argument("-l", "--ligand", type=Path, help="The ligand (antigen) file")
+    parser.add_argument(
+        "-o", "--outdir", tpye=Path, default=Path.cwd(), help="The output directory"
+    )
+    parser.add_argument(
+        "-prepare",
+        "--prepare",
+        type=Path,
+        default=SCRIPTS_CONFIG["prepare"],
+        help="The path to the piper prepare.py",
+    )
+    parser.add_argument(
+        "-piper",
+        "--piper",
+        type=Path,
+        default=SCRIPTS_CONFIG["piper"],
+        help="The path to the piper executable",
+    )
 
-# Define ligand (antigen) file
-ligand = sys.argv[3]
+    args = parser.parse_args()
 
-# Get outpath from command line (if present)
-OUTPath = './'
+    return args
+
+
+# extract as a method
+def prepare_input_file(file: Path, output_dir: Path) -> Path:
+    run_ret = call_script([PREPARE, str(file)])
+    file_original = file.parent / f"{file.stem}_pnon.pdb"
+    file_processed = output_dir / f"{file.stem}_pnon.pdb"
+    shutil.copy2(file_original, file_processed)
+    # if file_processed is not file_original then remove original
+    if file_original != file_processed:
+        os.unlink(file_original)
+    return file_processed
+
+
+# ==================== Main ====================
+# args = cli()
+base=Path("/acrm/bsmhome/ucbtiue/UCL/projects/abagdocking/ab-docking-scripts/test")
+args = argparse.Namespace(
+    complex=base/"pdb1a2y_0P.mar",
+    receptor=base/"pdb1a2y_0P_ab.pdb",
+    ligand=base/"pdb1a2y_0P_ag.pdb",
+    outdir=base,
+    prepare=SCRIPTS_CONFIG["prepare"],
+    piper=SCRIPTS_CONFIG["piper"],
+)
+
+# process args
+complex: Path = args.complex  # original (unsplit) PDB file
+receptor: Path = args.receptor  # receptor (antibody) file
+ligand: Path = args.ligand  # ligand (antigen) file
+outdir: Path = args.outdir
+interim: Path = outdir.joinpath("interim")
+interim.mkdir(exist_ok=True, parents=True)
+
+# PIPER executable path
+PREPARE: Path = args.prepare
+PIPER: Path = args.piper
+
 try:
-   OUTPath = sys.argv[4] + '/'
-except IndexError:
-   OUTPath = './'
+    assert PREPARE.exists()
+except FileNotFoundError:
+    logger.error(f"Cannot find the prepare.py script at {PREPARE}")
+    sys.exit(1)
 
-#*************************************************************************
+try:
+    assert PIPER.exists()
+except FileNotFoundError:
+    logger.error(f"Cannot find the piper executable at {PIPER}")
+    sys.exit(1)
 
-# Process input files
+# ----------------------------------------
+# Prepare input files
+# ----------------------------------------
+logger.info("Preparing input files ...")
+complex_processed = prepare_input_file(complex, interim)
+receptor_processed = prepare_input_file(receptor, interim)
+ligand_processed = prepare_input_file(ligand, interim)
+logger.info("Done.")
 
-# Process receptor
-subprocess.run([f"~/DockingSoftware/piper/protein_prep/prepare.py {receptor}"], shell=True)
-# Get original receptor file name
-receptor_name = os.path.basename(receptor).split('.')[0]
-# Define processed receptor filename
-receptor_processed = receptor_name + "_pnon.pdb"
-# Move processed receptor to OUTPath directory
-subprocess.run([f"mv {receptor_processed} {OUTPath}"], shell=True)
-# Define new processed receptor filename
-receptor_processed = OUTPath + receptor_name + "_pnon.pdb"
-
-# Process ligand
-subprocess.run([f"~/DockingSoftware/piper/protein_prep/prepare.py {ligand}"], shell=True)
-# Get original ligand file name
-ligand_name = os.path.basename(ligand).split('.')[0]
-# Define processed ligand filename
-ligand_processed = ligand_name + "_pnon.pdb"
-# Move processed receptor to OUTPath directory
-subprocess.run([f"mv {ligand_processed} {OUTPath}"], shell=True)
-# Define new processed receptor file
-ligand_processed = OUTPath + ligand_name + "_pnon.pdb"
-
-#*************************************************************************
+# ----------------------------------------
 # Mask non-interface residues
+# ----------------------------------------
+logger.info("Masking non-interface residues ...")
+mask_filepath = mask_ni_res(
+    complex=complex_processed,
+    receptor=receptor_processed,
+    ligand=ligand_processed,
+    outdir=interim,
+)
+logger.info(f"Done. Masked residues written to {mask_filepath}.")
 
-# Write maskfile using maskNIres.py
-subprocess.run([f"~/ab-docking-scripts/maskNIres.py {OG_file} {receptor} {ligand} {OUTPath}"], shell=True)
-
-# Define maskfile name (+location)
-OG_filename = os.path.basename(OG_file).split('.')[0]
-maskfile = OUTPath + OG_filename + "_maskfile.pdb"
-
-
-#*************************************************************************
 
 # Run piper on processed files
-subprocess.run([f"~/DockingSoftware/piper/piper --maskrec={maskfile} -p ~/DockingSoftware/piper/prms/atoms.prm -f ~/DockingSoftware/piper/prms/coeffs.0.0.6.antibody.prm -r ~/DockingSoftware/piper/prms/rots.prm {receptor_processed} {ligand_processed}"], shell=True)
+# subprocess.run([f"~/DockingSoftware/piper/piper --maskrec={maskfile} -p ~/DockingSoftware/piper/prms/atoms.prm -f ~/DockingSoftware/piper/prms/coeffs.0.0.6.antibody.prm -r ~/DockingSoftware/piper/prms/rots.prm {receptor_processed} {ligand_processed}"], shell=True)
+logger.info(f"Running piper ...")
+with timing_context("piper"):
+    call_script(
+        [
+            str(PIPER),
+            "--maskrec",
+            str(mask_filepath),
+            "-p",
+            str(SCRIPTS_CONFIG["prms"] / "atoms.prm"),
+            "-f",
+            str(SCRIPTS_CONFIG["prms"] / "coeffs.0.0.6.antibody.prm"),
+            "-r",
+            str(SCRIPTS_CONFIG["prms"] / "rots.prm"),
+            str(receptor_processed),
+            str(ligand_processed),
+        ]
+    )
+logger.info(f"Done.")
 
-#*************************************************************************
-
+sys.exit(0)
+# TODO: continue rewriting
+# ----------------------------------------
 # Process piper output files
-
+# ----------------------------------------
 # Create pairwise RMSD matrices
-subprocess.run([f"sblu measure pwrmsd -n 1000 --only-CA --only-interface --rec {receptor_processed} -o clustermat.000.00 {ligand_processed} ft.000.00 ~/DockingSoftware/piper/prms/rots.prm"], shell=True)
+# subprocess.run([f"sblu measure pwrmsd -n 1000 --only-CA --only-interface --rec {receptor_processed} -o clustermat.000.00 {ligand_processed} ft.000.00 ~/DockingSoftware/piper/prms/rots.prm"], shell=True)
+call_script(
+    [
+        str(SCRIPTS_CONFIG["sblu"]),
+        "measure",
+        "pwrmsd",
+        "-n",
+        "1000",
+        "--only-CA",
+        "--only-interface",
+        "--rec",
+        str(receptor_processed),
+        "-o",
+        str(interim / "clustermat.000.00"),
+        str(ligand_processed),
+        "ft.000.00",
+        str(SCRIPTS_CONFIG["prms"] / "rots.prm"),
+    ]
+)
 
 # Run clustering on the matrix
-subprocess.run([f"sblu docking cluster -o clustermat.000.00.clusters clustermat.000.00"], shell=True)
+# subprocess.run([f"sblu docking cluster -o clustermat.000.00.clusters clustermat.000.00"], shell=True)
+call_script(
+    [
+        str(SCRIPTS_CONFIG["sblu"]),
+        "docking",
+        "cluster",
+        "-o",
+        str(interim / "clustermat.000.00.clusters"),
+        "clustermat.000.00",
+    ]
+)
 
 # Generate cluster centers without minimising models
-subprocess.run([f"sblu docking gen_cluster_pdb -l 1 clustermat.000.00.clusters ft.000.00 ~/DockingSoftware/piper/prms/rots.prm {ligand_processed} -o lig.000"], shell=True)
+# subprocess.run([f"sblu docking gen_cluster_pdb -l 1 clustermat.000.00.clusters ft.000.00 ~/DockingSoftware/piper/prms/rots.prm {ligand_processed} -o lig.000"], shell=True)
+call_script(
+    [
+        str(SCRIPTS_CONFIG["sblu"]),
+        "docking",
+        "gen_cluster_pdb",
+        "-l",
+        "1",
+        str(interim / "clustermat.000.00.clusters"),
+        "ft.000.00",
+        str(SCRIPTS_CONFIG["prms"] / "rots.prm"),
+        str(ligand_processed),
+        "-o",
+        str(interim / "lig.000"),
+    ]
+)
 
 # Output Dag PDB file will always be called 'lig.000.00.pdb'
 
-#*************************************************************************
-# Combine antibody and docked antigen files to give a single output file
+# *************************************************************************
+# ----------------------------------------
+# Combine `ab` and `docked ag`
+# ----------------------------------------
+result_file = outdir / Path(complex).stem + "_Piper_result.pdb"
 
-# Get input filename
-inputfilename = os.path.basename(OG_file).split('.')[0]
-# Define output file name
-resultfile = OUTPath + inputfilename + "_Piper_result.pdb"
 # Define Dag filename
 dag_filename = "lig.000.00.pdb"
-# Combine antibody and Dag files
-with open(receptor) as file:
-   # Extract contents
-   ab = file.readlines()
-   # Open docked antigen file
-with open(dag_filename) as file:
-   # Extract contents
-   dag = file.readlines()
-   # Combine antibody and docked antigen files
-AbDag = ab + dag
-# Write new PDB file
-with open(resultfile, "w") as file:
-   for line in AbDag:
-   # Skip lines containing 'END'
-      if 'END' not in line.strip('\n'):
-         file.write(line)
+
+with open(result_file, "w") as f:
+    for file in [receptor, dag_filename]:
+        with open(file) as f1:
+            for l in f1:
+                # skip lines containing 'END'
+                if "END" not in l:
+                    f.write(l)
 
 
-#*************************************************************************
-
+# ----------------------------------------
+# Clean up
+# ----------------------------------------
 # Remove unneeded files (keeping ft.000.00 bc it takes so long to generate, better safe than sorry!)
-subprocess.run([f"rm clustermat.000.00 clustermat.000.00.clusters"], shell=True)
+os.unlink("clustermat.000.00")
+os.unlink("clustermat.000.00.clusters")
+# subprocess.run([f"rm clustermat.000.00 clustermat.000.00.clusters"], shell=True)
