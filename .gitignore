@@ -30,3 +30,9 @@ env/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+assets/bioplib-V3.11.tar.gz
+assets/bioptools-V1.10.tar.gz
+assets/DockQ.tar.gz
+assets/fftw-3.3.10.tar.gz
+assets/zrank_linux_64bit.tar.gz
