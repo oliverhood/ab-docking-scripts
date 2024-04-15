@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Program: maskNIres
 File     maskNIres.py
@@ -30,136 +29,164 @@ V1.0   28.11.21   Original   By: OECH
 
 """
 
-#*************************************************************************
+# basic
+from pathlib import Path
+import argparse, textwrap
 
-# Import Libraries
+# custom
+import abagdocking
+from abagdocking.utils.util import call_script
+from loguru import logger
 
-import os
-import sys
-import subprocess
-import re
+# ==================== Configuration ====================
+BASE = Path(abagdocking.__file__).parent
+SCRIPT_CONFIG = {"find_interface": BASE / "common" / "findif.pl"}
 
-#*************************************************************************
 
-# Define input files
-# Original PDB file
-OG_file = sys.argv[1]
-# Antibody file
-Ab_file = sys.argv[2]
-# Antigen file
-Ag_file = sys.argv[3]
-# Get output path from command line (if present)
-OUTPath = './'
-try:
-   OUTPath = sys.argv[4] + '/'
-except IndexError:
-   OUTPath = './'
+# ==================== Function ====================
+def cli() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawTextHelpFormatter,
+        description="Filter out problematic AbM numbered file identifiers.",
+        epilog=textwrap.dedent(
+            """
+        Example usage:
+            python
+        """
+        ),
+    )
+    parser.add_argument(
+        "-c", "--complex", type=Path, help="The original complex PDB file"
+    )
+    parser.add_argument(
+        "-r", "--receptor", type=Path, help="The receptor (antibody) file"
+    )
+    parser.add_argument("-l", "--ligand", type=Path, help="The ligand (antigen) file")
+    parser.add_argument(
+        "-o",
+        "--outdir",
+        type=Path,
+        default=Path.cwd(),
+        help="The output path for the mask file",
+    )
+    args = parser.parse_args()
 
-#*************************************************************************
-# Find interface residues
+    return args
 
-# Define location for interface residues file
-int_res = OUTPath + "int_res"
 
-# Run findif.pl to identify interface residues, writing result to int_res
-subprocess.run(["~/ab-docking-scripts/findif.pl -x " + OG_file + " " + Ab_file + " " + Ag_file + " > " + int_res], shell=True)
+# ==================== Main ====================
+def main(complex: Path, receptor: Path, ligand: Path, outdir: Path):
+    outdir.mkdir(exist_ok=True, parents=True)
 
-#*************************************************************************
-Hres = []
-Lres = []
+    # assert files exist
+    assert complex.exists(), f"Complex file {complex} does not exist"
+    assert receptor.exists(), f"Receptor file {receptor} does not exist"
+    assert ligand.exists(), f"Ligand file {ligand} does not exist"
 
-# Read int_res and extract residue numbers
-with open(int_res) as file:
-   # Read rows in file
-   rows = file.readlines()
-   # Identify heavy and light chain residues
-   for line in rows:
-      # Heavy chain
-      if 'H' in line:
-         contents = re.compile("([a-zA-Z]+)([0-9]+)").match(line)
-         Hres += [contents.group(2)]
-      # Light chain
-      if 'L' in line:
-         contents = re.compile("([a-zA-Z]+)([0-9]+)").match(line)
-         Lres += [contents.group(2)]
+    # ----------------------------------------
+    # Find interface residues
+    # ----------------------------------------
+    # Define location for interface residues file
+    int_res_filepath = outdir / "int_res"
 
-#*************************************************************************
-# Get length of heavy and light chains
+    with open(int_res_filepath, "w") as file:
+        call_script(
+            [
+                str(SCRIPT_CONFIG["find_interface"]),
+                str(complex),
+                str(receptor),
+                str(ligand),
+            ],
+            stdout=file,
+        )
+    logger.info(f"Interface residues written to {int_res_filepath}")
 
-# Set Hlength and Llength as variables
-Hlength = ''
-Llength = ''
+    h_int_res = []
+    l_int_res = []
+    # Read int_res and extract residue numbers
+    with open(int_res_filepath) as file:
+        # Identify heavy and light chain residues
+        for l in file:
+            # Heavy chain
+            if "H" in l:
+                # contents = re.compile("([a-zA-Z]+)([0-9]+)").match(line)
+                h_int_res += [l.strip()]
+            # Light chain
+            if "L" in l:
+                # contents = re.compile("([a-zA-Z]+)([0-9]+)").match(l)
+                l_int_res += [l.strip()]
 
-# Get length of Heavy and Light chains from antibody file
-with open(Ab_file) as file:
-   # Read rows in file
-   rows = file.readlines()
-   # Identify terminal heavy chain residue
-   for line in rows:
-      if 'TER ' and 'H' in line and 'ATOM' not in line:
-         Hcontents = line.split()
-         Hlength = Hcontents[4]
-      if 'TER ' and 'L' in line and 'ATOM' not in line:
-            Lcontents = line.split()
-            Llength = Lcontents[4]
+    # ----------------------------------------
+    # Get PDB lines for residues not in interface
+    # ----------------------------------------
+    non_int_atom_lines = []
+    # Opem Ab file
+    with open(receptor) as file:
+        for l in file:
+            # Filter 'ATOM' lines
+            if l.startswith("ATOM"):
+                chain_label = l[21]
+                res_number = int(l[22:26].strip())
+                ins_code = l[26].strip()
+                res_label = f"{chain_label}{res_number}{ins_code}"
+                # Filter through heavy chain residues
+                if chain_label == "H" and res_label not in h_int_res:
+                    non_int_atom_lines += [l]
+                if chain_label == "L" and res_label not in l_int_res:
+                    non_int_atom_lines += [l]
 
-#*************************************************************************
- # Create lists of residues to be blocked
+    # ----------------------------------------
+    # Write 'Mask' file
+    # ----------------------------------------
+    # Write maskfile.pdb
+    with open(outdir / f"{complex.stem}_maskfile.pdb", "w") as file:
+        for l in non_int_atom_lines:
+            file.write(l)
+    masked_file = outdir / f"{complex.stem}_maskfile.pdb"
+    logger.info(f"Mask file written to {masked_file}")
 
-# Heavy chain
-Hblock = []
-for i in range(int(Hlength)+1):
-   if str(i) not in Hres:
-      Hblock += [str(i)]
-# Light chain
-Lblock = []
-for i in range(int(Llength)+1):
-   if str(i) not in Lres:
-      Lblock += [str(i)]
+    # ----------------------------------------
+    # Clean up
+    # ----------------------------------------
+    # os.unlink(int_res_filepath)
 
-#*************************************************************************
-# Get PDB lines for residues not in interface
+    return masked_file
 
-#Define PDB lines list
-PDBline = []
-# Opem Ab file
-with open(Ab_file) as file:
-   rows = file.readlines()
-   # Loop through lines
-   for line in rows:
-      # Filter 'ATOM' lines
-      if 'ATOM' in line:
-         # Split line
-         contents = line.split()
-         # Filter through heavy chain residues
-         if contents[4] == 'H':
-            # Extract residue ID (number)
-            resid = contents[5]
-            if resid in Hblock:
-               PDBline += [line]
-         if contents[4] == 'L':
-            # Extract residue ID (number)
-            resid = contents[5]
-            if resid in Lblock:
-               PDBline += [line]
 
-#*************************************************************************
-# Write 'Mask' file
+def app():
+    args = cli()
+    main(
+        complex=args.complex,
+        receptor=args.receptor,
+        ligand=args.ligand,
+        outdir=args.outdir,
+    )
 
-# Get the base filename from the input file
-filename = os.path.basename(OG_file).split('.')[0]
 
-# Define output filename
-outfile = OUTPath + filename + '_maskfile.pdb'
+def dev():
+    args = argparse.Namespace(
+        complex=Path(
+            "/acrm/bsmhome/ucbtiue/UCL/projects/abagdocking/ab-docking-scripts/test/outdir/pdb1a2y_0P_pnon.pdb"
+        ),
+        receptor=Path(
+            "/acrm/bsmhome/ucbtiue/UCL/projects/abagdocking/ab-docking-scripts/test/outdir/pdb1a2y_0P_ab_pnon.pdb"
+        ),
+        ligand=Path(
+            "/acrm/bsmhome/ucbtiue/UCL/projects/abagdocking/ab-docking-scripts/test/outdir/pdb1a2y_0P_ag_pnon.pdb"
+        ),
+        outdir=Path(
+            "/acrm/bsmhome/ucbtiue/UCL/projects/abagdocking/ab-docking-scripts/test"
+        ),
+    )
+    main(
+        complex=args.complex,
+        receptor=args.receptor,
+        ligand=args.ligand,
+        outdir=args.outdir,
+    )
 
-# Write maskfile.pdb
-with open(outfile, "w") as file:
-   for line in PDBline:
-      file.write(line)
 
-#*************************************************************************
-
-# Clean up
-
-# Remove 'int_res' file
-subprocess.run([f"rm {int_res}"], shell=True)
+if __name__ == "__main__":
+    # # dev
+    # dev()
+    app()

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Program: splitantibodyantigenchains_rosetta
-File:    splitantibodyantigenchains_rosetta.py
+Program: split_abag_chains_rosetta
+File:    split_abag_chains_rosetta.py
 
 Version:  V1.0
 Date:     01.12.21
-Function: Extract and process antigen and antibody chains from a PDB file 
+Function: Extract and process antigen and antibody chains from a PDB file
           for input to docking algorithms.
 
 Author: Oliver E. C. Hood
@@ -20,7 +20,7 @@ This program takes a PDB file containing the structure of an antibody (that may 
 
 Usage:
 ======
-splitantibodyantigenchains_rosetta.py PDBFILE OUTPath
+split_abag_chains_rosetta.py PDBFILE OUTPath
 
 --------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ V1.0   01.12.21   Original   By: OECH
 import sys
 import os
 import random
-from splitantibodyantigenchains_lib import (getantigenchainid, extractantibodychains, extractantigenchain)
+from .split_abag_chains_lib import (get_antigen_chain_label, extract_antibody_chains, extract_antigen_chain)
 
 #*************************************************************************
 
@@ -48,14 +48,14 @@ try:
 except IndexError:
    OUTPath = ''
 # Get the antigen's chain id
-agchainid = getantigenchainid(PDBfile)
+agchainid = get_antigen_chain_label(PDBfile)
 
 # Filter out files with multiple or no antigen chains
 if agchainid != 'Multiple chains' and agchainid != 'No chains':
    # Extract antibody chains from PDB
-   antibody_chains = extractantibodychains(PDBfile)
+   antibody_chains = extract_antibody_chains(PDBfile)
    # Extract and process antigen chain from PDB
-   processed_antigen_chain = extractantigenchain(PDBfile)
+   processed_antigen_chain = extract_antigen_chain(PDBfile)
    # Initialise the list of file lines
    file_lines = []
    # Split antibody chain into lines
