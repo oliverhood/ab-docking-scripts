@@ -1,3 +1,4 @@
+import os
 import time
 import shutil
 import tempfile
@@ -58,3 +59,16 @@ def timing_context(msg: str):
     minutes = int((elapsed_time % 3600) // 60)
     seconds = int(elapsed_time % 60)
     logger.info(f"Finished {msg} in {hours} hours, {minutes} minutes, {seconds} seconds")
+
+
+# write a context function to change the working directory
+@contextlib.contextmanager
+def temporarily_change_dir(new_dir: str = None):
+    """Context manager that changes the working directory temporarily."""
+    old_dir = os.getcwd()
+    new_dir = new_dir or old_dir
+    os.chdir(new_dir)
+    try:
+        yield
+    finally:
+        os.chdir(old_dir)
