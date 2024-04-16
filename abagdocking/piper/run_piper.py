@@ -44,7 +44,7 @@ import argparse, textwrap
 # abagdocking
 import abagdocking
 from abagdocking.utils.maskNIres import main as mask_ni_res
-from abagdocking.utils.util import call_script, timing_context, temporarily_change_dir
+from abagdocking.utils.util import call_script, timing_context, temporarily_change_dir, skip_if_output_exists
 
 # ==================== Configuration ====================
 BASE = Path(abagdocking.__file__).parent
@@ -265,69 +265,85 @@ def main(args):
     # ----------------------------------------
     # Mask non-interface residues
     # ----------------------------------------
-    masked_filepath = mask_non_interface_residues(
-        complex=complex_processed,
-        receptor=receptor_processed,
-        ligand=ligand_processed,
-        outdir=interim,
-    )
+    opath = interim / f"{complex_processed.stem}_maskfile.pdb"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            masked_filepath = mask_non_interface_residues(
+                complex=complex_processed,
+                receptor=receptor_processed,
+                ligand=ligand_processed,
+                outdir=interim,
+            )
 
     # ----------------------------------------
     # Run PIPER
     # ----------------------------------------
-    run_piper(
-        piper_executable=PIPER,
-        maskrec=masked_filepath,
-        prm_atoms=SCRIPTS_CONFIG["prms"] / "atoms.prm",
-        prm_coeffs=SCRIPTS_CONFIG["prms"] / "coeffs.0.0.6.antibody.prm",
-        prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
-        receptor=receptor_processed,
-        ligand=ligand_processed,
-        work_dir=interim,
-    )
+    opath = interim / "ft.000.00"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            run_piper(
+                piper_executable=PIPER,
+                maskrec=masked_filepath,
+                prm_atoms=SCRIPTS_CONFIG["prms"] / "atoms.prm",
+                prm_coeffs=SCRIPTS_CONFIG["prms"] / "coeffs.0.0.6.antibody.prm",
+                prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
+                receptor=receptor_processed,
+                ligand=ligand_processed,
+                work_dir=interim,
+            )
 
     # ----------------------------------------
     # Process piper output
     # ----------------------------------------
-    gen_pairwise_rmsd_matrix(
-        sblu_executable=SCRIPTS_CONFIG["sblu"],
-        only_interface=True,
-        rec=receptor_processed,
-        out_filepath=interim / "clustermat.000.00",
-        ligand=ligand_processed,
-        piper_out_filepath=interim / "ft.000.00",
-        prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
-        only_CA=True,
-        n=1000,
-    )
+    opath = interim / "clustermat.000.00"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            gen_pairwise_rmsd_matrix(
+                sblu_executable=SCRIPTS_CONFIG["sblu"],
+                only_interface=True,
+                rec=receptor_processed,
+                out_filepath=interim / "clustermat.000.00",
+                ligand=ligand_processed,
+                piper_out_filepath=interim / "ft.000.00",
+                prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
+                only_CA=True,
+                n=1000,
+            )
 
+    opath = interim / "clustermat.000.00.clusters"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            cluster_on_matrix(
+                sblu_executable=SCRIPTS_CONFIG["sblu"],
+                clustermat=interim / "clustermat.000.00",
+                out_filepath=interim / "clustermat.000.00.clusters",
+            )
 
-    cluster_on_matrix(
-        sblu_executable=SCRIPTS_CONFIG["sblu"],
-        clustermat=interim / "clustermat.000.00",
-        out_filepath=interim / "clustermat.000.00.clusters",
-    )
-
-
-    gen_cluster_centers(
-        sblu_executable=SCRIPTS_CONFIG["sblu"],
-        clustermat=interim / "clustermat.000.00.clusters",
-        piper_out_filepath=interim / "ft.000.00",
-        prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
-        ligand=ligand_processed,
-        out_prefix=interim / "lig.000",
-    )
+    opath = interim / "lig.000.00.pdb"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            gen_cluster_centers(
+                sblu_executable=SCRIPTS_CONFIG["sblu"],
+                clustermat=interim / "clustermat.000.00.clusters",
+                piper_out_filepath=interim / "ft.000.00",
+                prm_rots=SCRIPTS_CONFIG["prms"] / "rots.prm",
+                ligand=ligand_processed,
+                out_prefix=interim / "lig.000",
+            )
 
     # Output PDB file called 'lig.000.00.pdb'
 
     # ----------------------------------------
     # Combine `ab` and `docked ag` (dag)
     # ----------------------------------------
-    combine_ab_docked_ag(
-        ab=receptor_processed,
-        docked_ag=interim / "lig.000.00.pdb",
-        out_filepath=outdir / f"{complex.stem}_Piper_result.pdb",
-    )
+    opath = outdir / f"{complex.stem}_Piper_result.pdb"
+    with skip_if_output_exists(opath) as execute:
+        if execute:
+            combine_ab_docked_ag(
+                ab=receptor_processed,
+                docked_ag=interim / "lig.000.00.pdb",
+                out_filepath=outdir / f"{complex.stem}_Piper_result.pdb",
+            )
 
     # ----------------------------------------
     # Clean up
