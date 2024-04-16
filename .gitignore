@@ -43,3 +43,5 @@ test/interim/pdb1a2y_0P_ab_pnon.pdb
 test/interim/pdb1a2y_0P_ag_pnon.pdb
 test/interim/pdb1a2y_0P_pnon_maskfile.pdb
 test/interim/pdb1a2y_0P_pnon.pdb
+experiments/
+assets/docking-tools
