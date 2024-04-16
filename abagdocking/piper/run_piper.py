@@ -117,6 +117,16 @@ def run_piper(
 ):
     """Run piper on processed files."""
     logger.info(f"Running piper ...")
+    # turn into absolute paths
+    piper_executable = piper_executable.resolve()
+    maskrec = maskrec.resolve()
+    prm_atoms = prm_atoms.resolve()
+    prm_coeffs = prm_coeffs.resolve()
+    prm_rots = prm_rots.resolve()
+    receptor = receptor.resolve()
+    ligand = ligand.resolve()
+    work_dir = work_dir or Path.cwd()
+    # run in work_dir
     with timing_context("piper"):
         with temporarily_change_dir(str(work_dir)):
             call_script(
@@ -265,8 +275,8 @@ def main(args):
     # ----------------------------------------
     # Mask non-interface residues
     # ----------------------------------------
-    opath = interim / f"{complex_processed.stem}_maskfile.pdb"
-    with skip_if_output_exists(opath) as execute:
+    masked_filepath = interim / f"{complex_processed.stem}_maskfile.pdb"
+    with skip_if_output_exists(masked_filepath) as execute:
         if execute:
             masked_filepath = mask_non_interface_residues(
                 complex=complex_processed,
@@ -332,7 +342,6 @@ def main(args):
             )
 
     # Output PDB file called 'lig.000.00.pdb'
-
     # ----------------------------------------
     # Combine `ab` and `docked ag` (dag)
     # ----------------------------------------
