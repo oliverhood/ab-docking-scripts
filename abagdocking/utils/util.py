@@ -72,3 +72,28 @@ def temporarily_change_dir(new_dir: str = None):
         yield
     finally:
         os.chdir(old_dir)
+
+
+@contextlib.contextmanager
+def skip_if_output_exists(output_path: str):
+    """
+    Context manager that skips the block of code if the output file already exists.
+    # Example usage
+    output_path = 'path/to/your/output/file.txt'
+
+    with skip_if_output_exists(output_path) as execute:
+        if execute:
+            # Place the code you want to skip if the output file exists here
+            logger.info(f"Creating output file at {output_path}...")
+            # Simulate creating a file
+            with open(output_path, 'w') as f:
+                f.write("Some data")
+        else:
+            # This else block is optional and can be omitted if not needed
+            logger.info("Skipped file creation.")
+    """
+    if os.path.exists(output_path):
+        logger.info(f"Output file {output_path} already exists, skipped.")
+        yield False  # return False to indicate that the block of code is skipped
+    else:
+        yield True   # return True to indicate that the block of code is run
