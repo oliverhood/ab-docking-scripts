@@ -169,8 +169,9 @@ for i in range(1):
 
    # Indicate end of run
    print(f"{run} complete.")
+   i = i
 
 #*************************************************************************
 
 # Indicate end of docking runs
-print(f"All 3 docking runs on {inputfilename} complete.")
+print(f"All {i} docking runs on {inputfilename} complete.")
